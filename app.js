@@ -169,21 +169,24 @@ document.getElementById('refreshBtn').addEventListener('click', () => {
 
         if (!Array.isArray(archives)) archives = [];
 
-        // Archiver les opérations actuelles
+        // Ajouter les opérations à l'historique archivé
         archives.push([...transactions]);
         localStorage.setItem(ARCHIVE_KEY, JSON.stringify(archives));
 
-        // Vider l'historique actuel
+        // Vider uniquement les opérations de l'historique actuel
         transactions = [];
         localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
     }
 
-    // Actualiser les affichages
-    loadTransactions();
+    // Conserver le solde enregistré
+    currentBalance = Number(localStorage.getItem(BALANCE_KEY)) || currentBalance;
+    balanceEl.textContent = money(currentBalance);
+
+    // Actualiser les deux historiques
     renderData();
     renderArchive();
 
-    notify('Historique actualisé et opérations archivées.');
+    notify('Historique archivé. Solde conservé.');
 });
 
 document.getElementById('closeBtn').addEventListener('click', () => {
