@@ -139,14 +139,13 @@ if (window.location.hostname === 'ch1rikum0.github.io') {
     tablet.classList.remove('hidden');
 }
 
-
- 
 const navButtons = document.querySelectorAll('.nav-btn');
 
 const pages = {
     compta: document.getElementById('page-compta'),
     rachat: document.getElementById('page-rachat'),
-    drogue: document.getElementById('page-drogue')
+    drogue: document.getElementById('page-drogue'),
+    historique: document.getElementById('page-historique')
 };
 
 const pageTitle = document.getElementById('pageTitle');
