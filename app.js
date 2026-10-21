@@ -174,7 +174,8 @@ function renderArchive() {
     }).join('');
 }
 
-document.getElementById('submitBtn').addEventListener('click', () => {
+
+document.getElementById('submitBtn').addEventListener('click', async () => {
     const amount = Number(amountEl.value);
 
     if (!Number.isFinite(amount) || amount <= 0) {
@@ -182,36 +183,105 @@ document.getElementById('submitBtn').addEventListener('click', () => {
         return;
     }
 
-    const operation = {
-        type: typeEl.value,
-        amount: Math.round(amount * 100) / 100,
-        description: descriptionEl.value.trim(),
-        date: new Date().toLocaleString('fr-FR')
-    };
+    const button = document.getElementById('submitBtn');
+    button.disabled = true;
 
-    transactions.unshift(operation);
-    
-    currentBalance += operation.type === 'entree'
-    ? operation.amount
-    : -operation.amount;
+    try {
+        // 1. Lire le solde actuel partagé
+        const { data: comptaRow, error: balanceError } =
+            await supabaseClient
+                .from('compta')
+                .select('id, solde')
+                .limit(1)
+                .maybeSingle();
 
-localStorage.setItem(BALANCE_KEY, String(currentBalance));
-    
-    if (!saveTransactions()) {
-    transactions.shift();
+        if (balanceError) throw balanceError;
 
-    currentBalance -= operation.type === 'entree'
-        ? operation.amount
-        : -operation.amount;
+        if (!comptaRow) {
+            throw new Error('Aucune ligne trouvée dans la table compta.');
+        }
 
-    localStorage.setItem(BALANCE_KEY, String(currentBalance));
-    return;
-}
+        const operation = {
+            type: typeEl.value,
+            montant: Math.round(amount * 100) / 100,
+            description: descriptionEl.value.trim(),
+            date_operation: new Date().toISOString(),
+            joueur: 'Local',
+            archivee: false
+        };
 
-    renderData();
-    amountEl.value = '';
-    descriptionEl.value = '';
-    notify('Opération enregistrée localement.', 'success');
+        const ancienSolde = Number(comptaRow.solde) || 0;
+
+        const nouveauSolde = ancienSolde +
+            (operation.type === 'entree'
+                ? operation.montant
+                : -operation.montant);
+
+        // 2. Enregistrer l'opération dans Supabase
+        const { data: operationEnregistree, error: insertError } =
+            await supabaseClient
+                .from('operations')
+                .insert([operation])
+                .select()
+                .single();
+
+        if (insertError) throw insertError;
+
+        // 3. Mettre à jour le solde partagé
+        const { error: updateError } = await supabaseClient
+            .from('compta')
+            .update({
+                solde: nouveauSolde,
+                updated_at: new Date().toISOString()
+            })
+            .eq('id', comptaRow.id);
+
+        if (updateError) {
+            // Annuler l'opération si le solde n'a pas pu être mis à jour
+            const { error: rollbackError } = await supabaseClient
+                .from('operations')
+                .delete()
+                .eq('id', operationEnregistree.id);
+
+            if (rollbackError) {
+                console.error('Erreur lors de l’annulation :', rollbackError);
+            }
+
+            throw updateError;
+        }
+
+        // 4. Actualiser l'affichage
+        currentBalance = nouveauSolde;
+
+        transactions.unshift({
+            id: operationEnregistree.id,
+            type: operationEnregistree.type,
+            amount: Number(operationEnregistree.montant) || 0,
+            description: operationEnregistree.description || '',
+            date: new Date(
+                operationEnregistree.date_operation
+            ).toLocaleString('fr-FR'),
+            player: operationEnregistree.joueur || 'Local'
+        });
+
+        renderData();
+
+        amountEl.value = '';
+        descriptionEl.value = '';
+
+        notify('Opération enregistrée dans Supabase.', 'success');
+
+    } catch (error) {
+        console.error('Erreur d’enregistrement :', error);
+        notify('Erreur lors de l’enregistrement. Consulte la console.', 'error');
+
+        // Recharger les données pour retrouver l'état du serveur
+        await loadSharedBalance();
+        await loadSharedOperations();
+
+    } finally {
+        button.disabled = false;
+    }
 });
 
 document.getElementById('refreshBtn').addEventListener('click', () => {
