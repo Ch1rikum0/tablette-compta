@@ -151,19 +151,23 @@ const pages = {
 
 const pageTitle = document.getElementById('pageTitle');
 const pageSubtitle = document.getElementById('pageSubtitle');
+const pageIcon = document.getElementById('pageIcon');
 
 const pageInfo = {
     compta: {
         title: 'Comptabilité',
         subtitle: "Tableau de gestion de l'entreprise"
+        icon: '🏦'
     },
     rachat: {
         title: "Rachat d'objet",
         subtitle: "Gestion des rachats d'objets"
+        icon: '📦'
     },
     drogue: {
         title: 'Drogue',
         subtitle: "Gestion de l'activite drogue"
+        icon: '🌿'
     }
 };
 
@@ -189,10 +193,11 @@ navButtons.forEach(button => {
         button.classList.add('active');
 
         // Mettre à jour le titre
-        if (pageInfo[selectedPage]) {
-            pageTitle.textContent = pageInfo[selectedPage].title;
-            pageSubtitle.textContent = pageInfo[selectedPage].subtitle;
-        }
+       if (pageInfo[selectedPage]) {
+    pageTitle.textContent = pageInfo[selectedPage].title;
+    pageSubtitle.textContent = pageInfo[selectedPage].subtitle;
+    pageIcon.textContent = pageInfo[selectedPage].icon;
+}
     });
 });
 
