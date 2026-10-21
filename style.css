@@ -221,9 +221,9 @@ th, td { white-space: nowrap; }}
         padding: 14px 8px;
     }
 
-    .sidebar-brand {
-    flex-direction: column;
-    align-items: flex-start;
+   .sidebar-brand {
+    flex-direction: row;
+    align-items: center;
     margin-bottom: 20px;
 }
 
