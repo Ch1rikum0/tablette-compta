@@ -1,3 +1,4 @@
+console.log("Version JavaScript de la tablette chargée");
 
 const tablet = document.getElementById('tablet');
 const balanceEl = document.getElementById('balance');
