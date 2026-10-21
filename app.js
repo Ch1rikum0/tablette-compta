@@ -167,6 +167,11 @@ const pageInfo = {
         title: 'Drogue',
         subtitle: "Gestion de l'activite drogue",
         icon: '🌿'
+    },
+     historique: {
+        title: 'Historique',
+        subtitle: 'Historique des opérations comptables',
+        icon: '📜'
     }
 };
 
