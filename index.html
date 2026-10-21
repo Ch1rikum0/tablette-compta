@@ -141,14 +141,37 @@
 
         <!-- PAGE DROGUE -->
        
+       
         <section class="page" id="page-historique">
             <article class="panel">
                 <h3 style="margin-bottom: 20px;">Historique</h3>
                 <p class="muted" style="margin-top: 0; padding-top: 10px;">
-                    Historique des opérations comptables.
+                    Anciennes opérations comptables archivées.
                 </p>
+        
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Joueur</th>
+                                <th class="right">Montant</th>
+                            </tr>
+                        </thead>
+                        <tbody id="archiveHistory">
+                            <tr>
+                                <td colspan="5" class="empty">
+                                    Aucune opération archivée.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </article>
         </section>
+
 
         <div id="toast" class="toast hidden"></div>
         <footer>Tablette Comptabilite <span>•</span> FiveM</footer>
