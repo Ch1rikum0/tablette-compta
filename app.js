@@ -135,5 +135,9 @@ window.addEventListener('message', event => {
     }
 });
 
+if (window.location.hostname === 'ch1rikum0.github.io') {
+    tablet.classList.remove('hidden');
+}
+
 loadTransactions();
 renderData();
