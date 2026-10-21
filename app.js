@@ -138,7 +138,8 @@ if (window.location.hostname === 'ch1rikum0.github.io') {
     tablet.classList.remove('hidden');
 }
 
-// Navigation entre les onglets
+
+ // Navigation entre les pages
 document.querySelectorAll('.nav-btn').forEach(button => {
     button.addEventListener('click', () => {
         const page = button.dataset.page;
@@ -155,15 +156,27 @@ document.querySelectorAll('.nav-btn').forEach(button => {
         });
 
         const titles = {
-            compta: 'Comptabilité',
-            rachat: "Rachat d'objet",
-            drogue: 'Drogue'
+            compta: {
+                title: 'Comptabilité',
+                subtitle: "Tableau de gestion de l'entreprise"
+            },
+            rachat: {
+                title: "Rachat d'objet",
+                subtitle: "Gestion des rachats d'objets"
+            },
+            drogue: {
+                title: 'Drogue',
+                subtitle: "Gestion de l'activite drogue"
+            }
         };
 
-        document.getElementById('pageTitle').textContent =
-            titles[page] || 'Tablette';
+        const selected = titles[page] || titles.compta;
+
+        document.getElementById('pageTitle').textContent = selected.title;
+        document.getElementById('pageSubtitle').textContent = selected.subtitle;
     });
 });
+
 
 loadTransactions();
 renderData();
