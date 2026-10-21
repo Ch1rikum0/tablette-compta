@@ -12,7 +12,10 @@ document.getElementById('closeBtn').style.display = 'none';
 
 const STORAGE_KEY = 'tablette-compta-operations-v1';
 const ARCHIVE_KEY = 'tablette-compta-archives-v1';
+const BALANCE_KEY = 'tablette-compta-solde-v1';
+
 let transactions = [];
+let currentBalance = Number(localStorage.getItem(BALANCE_KEY)) || 0;
 
 function money(value) {
     return `${Math.round(value).toLocaleString('fr-FR')} $`;
@@ -57,11 +60,7 @@ function saveTransactions() {
 }
 
 function renderData() {
-    const balance = transactions.reduce((total, tx) => {
-        return total + (tx.type === 'entree' ? tx.amount : -tx.amount);
-    }, 0);
-
-    balanceEl.textContent = money(balance);
+   balanceEl.textContent = money(currentBalance);
 
     if (!transactions.length) {
         historyEl.innerHTML =
@@ -134,11 +133,23 @@ document.getElementById('submitBtn').addEventListener('click', () => {
     };
 
     transactions.unshift(operation);
+    
+    currentBalance += operation.type === 'entree'
+    ? operation.amount
+    : -operation.amount;
 
+localStorage.setItem(BALANCE_KEY, String(currentBalance));
+    
     if (!saveTransactions()) {
-        transactions.shift();
-        return;
-    }
+    transactions.shift();
+
+    currentBalance -= operation.type === 'entree'
+        ? operation.amount
+        : -operation.amount;
+
+    localStorage.setItem(BALANCE_KEY, String(currentBalance));
+    return;
+}
 
     renderData();
     amountEl.value = '';
