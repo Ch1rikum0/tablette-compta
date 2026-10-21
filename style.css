@@ -226,15 +226,7 @@ th, td { white-space: nowrap; }}
 }
 
 
-/* Espacement des pages Rachat et Drogue */
-#page-rachat article.panel h3,
-#page-drogue article.panel h3 {
+#page-rachat h3,
+#page-drogue h3 {
     margin-bottom: 20px !important;
-}
-
-#page-rachat article.panel p.muted,
-#page-drogue article.panel p.muted {
-    margin-top: 0 !important;
-    padding-top: 10px !important;
-    display: block !important;
 }
