@@ -230,3 +230,15 @@ th, td { white-space: nowrap; }}
 #page-drogue {
     padding-top: 25px;
 }
+
+
+#page-rachat h3,
+#page-drogue h3 {
+    margin-bottom: 16px;
+}
+
+#page-rachat .muted,
+#page-drogue .muted {
+    margin-top: 0;
+    line-height: 1.6;
+}
