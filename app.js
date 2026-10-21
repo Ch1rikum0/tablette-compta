@@ -1,5 +1,32 @@
 console.log("Version JavaScript de la tablette chargée");
 
+const SUPABASE_URL = "https://reqrvqliaakvptcpazkm.supabase.co/rest/v1/";
+const SUPABASE_KEY = "sb_publishable_YoXG0Gn6rftPxYZfrxS7wg_oNJzAPYf";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+async function loadSharedBalance() {
+    const { data, error } = await supabaseClient
+        .from('compta')
+        .select('id, balance')
+        .limit(1)
+        .maybeSingle();
+
+    if (error) {
+        console.error('Erreur de lecture du solde :', error);
+        notify('Impossible de charger le solde partagé.', 'error');
+        return;
+    }
+
+    if (data) {
+        currentBalance = Number(data.balance) || 0;
+        renderData();
+    }
+}
+
 const tablet = document.getElementById('tablet');
 const balanceEl = document.getElementById('balance');
 const historyEl = document.getElementById('history');
