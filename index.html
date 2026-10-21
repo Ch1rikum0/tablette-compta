@@ -7,7 +7,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main id="tablet" class="tablet">
+<main id="tablet" class="tablet">
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon">$</div>
+            <h2>Entreprise</h2>
+        </div>
+
+        <p class="nav-label">MENU PRINCIPAL</p>
+
+        <button class="nav-btn active" data-page="compta">
+            <span>▤</span> Comptabilité
+        </button>
+
+        <button class="nav-btn" data-page="rachat">
+            <span>▣</span> Rachat d'objet
+        </button>
+
+        <button class="nav-btn" data-page="drogue">
+            <span>◆</span> Drogue
+        </button>
+    </aside>
+
+    <div class="main-content">
         <header class="topbar">
             <div class="brand">
                 <div class="brand-icon">$</div>
@@ -18,7 +40,8 @@
             </div>
             <button id="closeBtn" class="icon-btn" aria-label="Fermer">✕</button>
         </header>
-
+        
+<div class="page active" id="page-compta">
         <section class="balance-card">
             <div>
                 <p class="eyebrow">SOLDE DISPONIBLE</p>
@@ -82,10 +105,43 @@
                 </table>
             </div>
         </section>
+</div>
 
-        <div id="toast" class="toast hidden"></div>
+<section class="page" id="page-rachat">
+    <article class="panel">
+        <h3>Rachat d'objet</h3>
+        <p class="muted">Gestion des rachats d'objets à venir.</p>
+    </article>
+</section>
+
+<section class="page" id="page-drogue">
+    <article class="panel">
+        <h3>Drogue</h3>
+        <p class="muted">Espace dédié à ton activité RP.</p>
+    </article>
+</section>
+
+</div>
+
+<section class="page" id="page-rachat">
+    <article class="panel">
+        <h3>Rachat d'objet</h3>
+        <p class="muted">Gestion des rachats d'objets à venir.</p>
+    </article>
+</section>
+
+<section class="page" id="page-drogue">
+    <article class="panel">
+        <h3>Drogue</h3>
+        <p class="muted">Espace dédié à ton activité RP.</p>
+    </article>
+</section>
+        
+    <div id="toast" class="toast hidden"></div>
         <footer>Tablette Comptabilite <span>•</span> FiveM</footer>
     </main>
-    <script src="app.js"></script>
+        <script src="app.js"></script>
+    </div>
+</main>
 </body>
 </html>
