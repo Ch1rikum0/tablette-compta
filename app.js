@@ -68,8 +68,7 @@ function renderData() {
             '<tr><td colspan="5" class="empty">Aucune opération enregistrée.</td></tr>';
         return;
     }
-    
-    
+
 function renderArchive() {
     const archiveHistoryEl = document.getElementById('archiveHistory');
 
@@ -96,21 +95,6 @@ function renderArchive() {
             <td>${escapeHtml(tx.date || '')}</td>
             <td>${incoming ? 'Entrée' : 'Sortie'}</td>
             <td>${escapeHtml(tx.description || '')}</td>
-            <td>Local</td>
-            <td class="right ${incoming ? 'amount-in' : 'amount-out'}">
-                ${incoming ? '+' : '−'} ${money(tx.amount)}
-            </td>
-        </tr>`;
-    }).join('');
-}
-    
-    historyEl.innerHTML = transactions.map(tx => {
-        const incoming = tx.type === 'entree';
-
-        return `<tr>
-            <td>${escapeHtml(tx.date)}</td>
-            <td>${incoming ? 'Entrée' : 'Sortie'}</td>
-            <td>${escapeHtml(tx.description)}</td>
             <td>Local</td>
             <td class="right ${incoming ? 'amount-in' : 'amount-out'}">
                 ${incoming ? '+' : '−'} ${money(tx.amount)}
@@ -147,7 +131,6 @@ document.getElementById('submitBtn').addEventListener('click', () => {
     notify('Opération enregistrée localement.', 'success');
 });
 
-
 document.getElementById('refreshBtn').addEventListener('click', () => {
     if (transactions.length > 0) {
         let archives = [];
@@ -160,12 +143,27 @@ document.getElementById('refreshBtn').addEventListener('click', () => {
 
         if (!Array.isArray(archives)) archives = [];
 
+        // Archiver les opérations actuelles
         archives.push([...transactions]);
 
         localStorage.setItem(ARCHIVE_KEY, JSON.stringify(archives));
+
+        // Vider l'historique actuel
         transactions = [];
         localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
+
+        // Actualiser les affichages
+        historyEl.innerHTML =
+            '<tr><td colspan="5" class="empty">Aucune opération.</td></tr>';
+
+        renderArchive();
+
+        // Mettre à jour le solde si la fonction existe
+        if (typeof renderBalance === 'function') {
+            renderBalance();
+        }
     }
+});
 
     loadTransactions();
     renderData();
