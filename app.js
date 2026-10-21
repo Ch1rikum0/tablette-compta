@@ -5,7 +5,12 @@ const SUPABASE_KEY = "sb_publishable_YoXG0Gn6rftPxYZfrxS7wg_oNJzAPYf";
 
 const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
-    SUPABASE_KEY
+    SUPABASE_KEY,
+    {
+        db: {
+            schema: 'public'
+        }
+    }
 );
 
 async function loadSharedBalance() {
