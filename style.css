@@ -224,3 +224,9 @@ th, td { white-space: nowrap; }}
         padding: 14px;
     }
 }
+
+
+#page-rachat,
+#page-drogue {
+    padding-top: 25px;
+}
