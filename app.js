@@ -16,7 +16,7 @@ const supabaseClient = window.supabase.createClient(
 async function loadSharedBalance() {
     const { data, error } = await supabaseClient
         .from('compta')
-        .select('id, balance')
+        .select('id, solde')
         .limit(1)
         .maybeSingle();
 
@@ -27,7 +27,7 @@ async function loadSharedBalance() {
     }
 
     if (data) {
-        currentBalance = Number(data.balance) || 0;
+        currentBalance = Number(data.solde) || 0;
         renderData();
     }
 }
