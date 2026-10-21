@@ -11,6 +11,7 @@ const toastEl = document.getElementById('toast');
 document.getElementById('closeBtn').style.display = 'none';
 
 const STORAGE_KEY = 'tablette-compta-operations-v1';
+const ARCHIVE_KEY = 'tablette-compta-archives-v1';
 let transactions = [];
 
 function money(value) {
