@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tablette de comptabilite</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main id="tablet" class="tablet hidden">
+        <header class="topbar">
+            <div class="brand">
+                <div class="brand-icon">€</div>
+                <div>
+                    <h1>Comptabilite</h1>
+                    <p>Tableau de gestion de l'entreprise</p>
+                </div>
+            </div>
+            <button id="closeBtn" class="icon-btn" aria-label="Fermer">✕</button>
+        </header>
+
+        <section class="balance-card">
+            <div>
+                <p class="eyebrow">SOLDE DISPONIBLE</p>
+                <h2 id="balance">0,00 €</h2>
+                <p class="muted">Solde de la comptabilite de l'entreprise</p>
+            </div>
+            <div class="balance-symbol">€</div>
+        </section>
+
+        <section class="actions">
+            <article class="panel transaction-panel">
+                <h3>Nouvelle operation</h3>
+                <p class="muted">Enregistre une entree ou une sortie d'argent.</p>
+                <label for="type">Type d'operation</label>
+                <select id="type">
+                    <option value="entree">Entree d'argent</option>
+                    <option value="sortie">Sortie d'argent</option>
+                </select>
+
+                <label for="amount">Montant (€)</label>
+                <input id="amount" type="number" min="0.01" step="0.01" placeholder="Ex. 2500">
+
+                <label for="description">Motif (facultatif)</label>
+                <input id="description" type="text" maxlength="100" placeholder="Ex. Facture, salaire...">
+
+                <button id="submitBtn" class="primary-btn">Enregistrer l'operation</button>
+                <p class="small muted">Les operations sont verifiees par le serveur.</p>
+            </article>
+
+            <article class="panel link-panel">
+                <div class="link-icon">↗</div>
+                <h3>Outil externe</h3>
+                <p class="muted">Ouvre le site de comptabilite configure par l'administrateur.</p>
+                <button id="externalBtn" class="secondary-btn">Ouvrir le lien externe</button>
+                <p id="externalHint" class="small muted">Lien configure dans config.lua</p>
+            </article>
+        </section>
+
+        <section class="panel history-panel">
+            <div class="history-heading">
+                <div>
+                    <h3>Historique des operations</h3>
+                    <p class="muted">Les operations les plus recentes apparaissent en premier.</p>
+                </div>
+                <button id="refreshBtn" class="refresh-btn">Actualiser ↻</button>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Operation</th>
+                            <th>Motif</th>
+                            <th>Joueur</th>
+                            <th class="right">Montant</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history">
+                        <tr><td colspan="5" class="empty">Chargement des donnees...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div id="toast" class="toast hidden"></div>
+        <footer>Tablette Comptabilite <span>•</span> FiveM</footer>
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>
