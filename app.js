@@ -69,6 +69,21 @@ function renderData() {
         return;
     }
 
+    historyEl.innerHTML = transactions.map(tx => {
+        const incoming = tx.type === 'entree';
+
+        return `<tr>
+            <td>${escapeHtml(tx.date || '')}</td>
+            <td>${incoming ? 'Entrée' : 'Sortie'}</td>
+            <td>${escapeHtml(tx.description || '')}</td>
+            <td>Local</td>
+            <td class="right ${incoming ? 'amount-in' : 'amount-out'}">
+                ${incoming ? '+' : '−'} ${money(tx.amount)}
+            </td>
+        </tr>`;
+    }).join('');
+}
+
 function renderArchive() {
     const archiveHistoryEl = document.getElementById('archiveHistory');
 
