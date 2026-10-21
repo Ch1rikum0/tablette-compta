@@ -145,33 +145,20 @@ document.getElementById('refreshBtn').addEventListener('click', () => {
 
         // Archiver les opérations actuelles
         archives.push([...transactions]);
-
         localStorage.setItem(ARCHIVE_KEY, JSON.stringify(archives));
 
         // Vider l'historique actuel
         transactions = [];
         localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
-
-        // Actualiser les affichages
-        historyEl.innerHTML =
-            '<tr><td colspan="5" class="empty">Aucune opération.</td></tr>';
-
-        renderArchive();
-
-        // Mettre à jour le solde si la fonction existe
-        if (typeof renderBalance === 'function') {
-            renderBalance();
-        }
     }
-});
 
+    // Actualiser les affichages
     loadTransactions();
     renderData();
     renderArchive();
 
     notify('Historique actualisé et opérations archivées.');
 });
-
 
 document.getElementById('closeBtn').addEventListener('click', () => {
     tablet.classList.add('hidden');
