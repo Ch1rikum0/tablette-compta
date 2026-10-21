@@ -114,10 +114,9 @@ th, td { white-space: nowrap; }}
 }
 
 .sidebar-brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 25px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
 }
 
 .sidebar-brand .brand-icon {
