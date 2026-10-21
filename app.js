@@ -147,11 +147,33 @@ document.getElementById('submitBtn').addEventListener('click', () => {
     notify('Opération enregistrée localement.', 'success');
 });
 
+
 document.getElementById('refreshBtn').addEventListener('click', () => {
+    if (transactions.length > 0) {
+        let archives = [];
+
+        try {
+            archives = JSON.parse(localStorage.getItem(ARCHIVE_KEY)) || [];
+        } catch (error) {
+            archives = [];
+        }
+
+        if (!Array.isArray(archives)) archives = [];
+
+        archives.push([...transactions]);
+
+        localStorage.setItem(ARCHIVE_KEY, JSON.stringify(archives));
+        transactions = [];
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
+    }
+
     loadTransactions();
     renderData();
-    notify('Historique actualisé.');
+    renderArchive();
+
+    notify('Historique actualisé et opérations archivées.');
 });
+
 
 document.getElementById('closeBtn').addEventListener('click', () => {
     tablet.classList.add('hidden');
