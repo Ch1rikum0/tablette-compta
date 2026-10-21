@@ -13,10 +13,7 @@ const STORAGE_KEY = 'tablette-compta-operations-v1';
 let transactions = [];
 
 function money(value) {
-    return new Intl.NumberFormat('fr-FR', {
-        style: 'currency',
-        currency: 'EUR'
-    }).format(value);
+    return `${Math.round(value).toLocaleString('fr-FR')} $`;
 }
 
 function notify(message, kind = 'info') {
