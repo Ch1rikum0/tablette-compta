@@ -138,5 +138,32 @@ if (window.location.hostname === 'ch1rikum0.github.io') {
     tablet.classList.remove('hidden');
 }
 
+// Navigation entre les onglets
+document.querySelectorAll('.nav-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const page = button.dataset.page;
+
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.classList.toggle('active', btn === button);
+        });
+
+        document.querySelectorAll('.page').forEach(section => {
+            section.classList.toggle(
+                'active',
+                section.id === `page-${page}`
+            );
+        });
+
+        const titles = {
+            compta: 'Comptabilité',
+            rachat: "Rachat d'objet",
+            drogue: 'Drogue'
+        };
+
+        document.getElementById('pageTitle').textContent =
+            titles[page] || 'Tablette';
+    });
+});
+
 loadTransactions();
 renderData();
