@@ -122,3 +122,9 @@ window.addEventListener('message', event => {
 document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && !tablet.classList.contains('hidden')) closeTablet();
 });
+
+// Affichage de la tablette hors de FiveM (aperçu web)
+if (typeof GetParentResourceName !== 'function') {
+    tablet.classList.remove('hidden');
+    renderData({ balance: 0, transactions: [] });
+}
