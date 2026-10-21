@@ -156,17 +156,17 @@ const pageIcon = document.getElementById('pageIcon');
 const pageInfo = {
     compta: {
         title: 'Comptabilité',
-        subtitle: "Tableau de gestion de l'entreprise"
+        subtitle: "Tableau de gestion de l'entreprise",
         icon: '🏦'
     },
     rachat: {
         title: "Rachat d'objet",
-        subtitle: "Gestion des rachats d'objets"
+        subtitle: "Gestion des rachats d'objets",
         icon: '📦'
     },
     drogue: {
         title: 'Drogue',
-        subtitle: "Gestion de l'activite drogue"
+        subtitle: "Gestion de l'activite drogue",
         icon: '🌿'
     }
 };
