@@ -7,6 +7,8 @@ const typeEl = document.getElementById('type');
 const descriptionEl = document.getElementById('description');
 const toastEl = document.getElementById('toast');
 
+document.getElementById('closeBtn').style.display = 'none';
+
 const STORAGE_KEY = 'tablette-compta-operations-v1';
 let transactions = [];
 
