@@ -1,6 +1,6 @@
 console.log("Version JavaScript de la tablette chargée");
 
-const SUPABASE_URL = "https://reqrvqliaakvptcpazkm.supabase.co/rest/v1/";
+const SUPABASE_URL = "https://reqrvqliaakvptcpazkm.supabase.co";
 const SUPABASE_KEY = "sb_publishable_YoXG0Gn6rftPxYZfrxS7wg_oNJzAPYf";
 
 const supabaseClient = window.supabase.createClient(
