@@ -27,6 +27,31 @@ async function loadSharedBalance() {
     }
 }
 
+async function loadSharedOperations() {
+    const { data, error } = await supabaseClient
+        .from('operations')
+        .select('*')
+        .eq('archivee', false)
+        .order('date_operation', { ascending: false });
+
+    if (error) {
+        console.error('Erreur de lecture des opérations :', error);
+        notify('Impossible de charger les opérations partagées.', 'error');
+        return;
+    }
+
+    transactions = (data || []).map(op => ({
+        id: op.id,
+        type: op.type,
+        amount: Number(op.montant) || 0,
+        description: op.description || '',
+        date: op.date_operation || '',
+        player: op.joueur || 'Inconnu'
+    }));
+
+    renderData();
+}
+
 const tablet = document.getElementById('tablet');
 const balanceEl = document.getElementById('balance');
 const historyEl = document.getElementById('history');
@@ -308,3 +333,5 @@ navButtons.forEach(button => {
 
 loadTransactions();
 renderData();
+loadSharedBalance();
+loadSharedOperations();
