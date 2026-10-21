@@ -68,7 +68,42 @@ function renderData() {
             '<tr><td colspan="5" class="empty">Aucune opération enregistrée.</td></tr>';
         return;
     }
+    
+    
+function renderArchive() {
+    const archiveHistoryEl = document.getElementById('archiveHistory');
 
+    if (!archiveHistoryEl) return;
+
+    let archives = [];
+
+    try {
+        archives = JSON.parse(localStorage.getItem(ARCHIVE_KEY)) || [];
+    } catch (error) {
+        archives = [];
+    }
+
+    if (!Array.isArray(archives) || archives.length === 0) {
+        archiveHistoryEl.innerHTML =
+            '<tr><td colspan="5" class="empty">Aucune opération archivée.</td></tr>';
+        return;
+    }
+
+    archiveHistoryEl.innerHTML = archives.flat().map(tx => {
+        const incoming = tx.type === 'entree';
+
+        return `<tr>
+            <td>${escapeHtml(tx.date || '')}</td>
+            <td>${incoming ? 'Entrée' : 'Sortie'}</td>
+            <td>${escapeHtml(tx.description || '')}</td>
+            <td>Local</td>
+            <td class="right ${incoming ? 'amount-in' : 'amount-out'}">
+                ${incoming ? '+' : '−'} ${money(tx.amount)}
+            </td>
+        </tr>`;
+    }).join('');
+}
+    
     historyEl.innerHTML = transactions.map(tx => {
         const incoming = tx.type === 'entree';
 
