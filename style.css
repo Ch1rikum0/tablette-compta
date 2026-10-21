@@ -87,7 +87,10 @@ footer span { padding: 0 5px; }
 .toast.success { background: #173b34; border-color: #2e7865; }
 @media (max-width: 720px) { .tablet { padding: 17px; width: 96vw; height: 94vh; border-radius: 15px; } .actions { grid-template-columns: 1fr; }
 .balance-card { padding: 20px; }
-balance-symbol { width: 50px; height: 50px; }
+.balance-symbol {
+    width: 50px;
+    height: 50px;
+}
 .history-heading { align-items: flex-start; }
 th, td { white-space: nowrap; }}
 #closeBtn {
