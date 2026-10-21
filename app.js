@@ -139,43 +139,62 @@ if (window.location.hostname === 'ch1rikum0.github.io') {
 }
 
 
- // Navigation entre les pages
-document.querySelectorAll('.nav-btn').forEach(button => {
+ 
+const navButtons = document.querySelectorAll('.nav-btn');
+
+const pages = {
+    compta: document.getElementById('page-compta'),
+    rachat: document.getElementById('page-rachat'),
+    drogue: document.getElementById('page-drogue')
+};
+
+const pageTitle = document.getElementById('pageTitle');
+const pageSubtitle = document.getElementById('pageSubtitle');
+
+const pageInfo = {
+    compta: {
+        title: 'Comptabilité',
+        subtitle: "Tableau de gestion de l'entreprise"
+    },
+    rachat: {
+        title: "Rachat d'objet",
+        subtitle: "Gestion des rachats d'objets"
+    },
+    drogue: {
+        title: 'Drogue',
+        subtitle: "Gestion de l'activite drogue"
+    }
+};
+
+navButtons.forEach(button => {
     button.addEventListener('click', () => {
-        const page = button.dataset.page;
+        const selectedPage = button.dataset.page;
 
-        document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.classList.toggle('active', btn === button);
+        // Fermer toutes les pages
+        Object.values(pages).forEach(page => {
+            if (page) page.classList.remove('active');
         });
 
-        document.querySelectorAll('.page').forEach(section => {
-            section.classList.toggle(
-                'active',
-                section.id === `page-${page}`
-            );
+        // Ouvrir uniquement la page choisie
+        if (pages[selectedPage]) {
+            pages[selectedPage].classList.add('active');
+        }
+
+        // Mettre à jour le menu
+        navButtons.forEach(btn => {
+            btn.classList.remove('active');
         });
 
-        const titles = {
-            compta: {
-                title: 'Comptabilité',
-                subtitle: "Tableau de gestion de l'entreprise"
-            },
-            rachat: {
-                title: "Rachat d'objet",
-                subtitle: "Gestion des rachats d'objets"
-            },
-            drogue: {
-                title: 'Drogue',
-                subtitle: "Gestion de l'activite drogue"
-            }
-        };
+        button.classList.add('active');
 
-        const selected = titles[page] || titles.compta;
-
-        document.getElementById('pageTitle').textContent = selected.title;
-        document.getElementById('pageSubtitle').textContent = selected.subtitle;
+        // Mettre à jour le titre
+        if (pageInfo[selectedPage]) {
+            pageTitle.textContent = pageInfo[selectedPage].title;
+            pageSubtitle.textContent = pageInfo[selectedPage].subtitle;
+        }
     });
 });
+
 
 
 loadTransactions();
