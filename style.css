@@ -133,7 +133,7 @@ th, td { white-space: nowrap; }}
 }
 
 .nav-label {
-    margin: 0 0 8px 7px;
+    margin: 0 0 20px 35px;
     color: var(--muted);
     font-size: 10px;
     font-weight: 700;
