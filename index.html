@@ -139,12 +139,18 @@
             </article>
         </section>
 
-        <!-- PAGE DROGUE -->
-       
+        <!-- PAGE HISTORIQUE -->
        
         <section class="page" id="page-historique">
             <article class="panel">
-                <h3 style="margin-bottom: 20px;">Historique</h3>
+        
+                <div class="history-header">
+                    <h3>Historique</h3>
+                    <button type="button" id="clearArchiveBtn" class="clear-archive-btn">
+                        🗑 Vider l'historique
+                    </button>
+                </div>
+        
                 <p class="muted" style="margin-top: 0; padding-top: 10px;">
                     Anciennes opérations comptables archivées.
                 </p>
@@ -169,9 +175,9 @@
                         </tbody>
                     </table>
                 </div>
+        
             </article>
         </section>
-
 
         <div id="toast" class="toast hidden"></div>
         <footer>Tablette Comptabilite <span>•</span> FiveM</footer>
