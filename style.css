@@ -1886,20 +1886,51 @@ article.panel.link-panel.tokyo-panel {
     white-space: nowrap !important;
     margin-top: 17px !important;
     padding: 13px 15px !important;
-    border: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
     border-radius: 9px !important;
     color: white !important;
     font: inherit !important;
     font-weight: 700 !important;
     cursor: pointer !important;
     background: var(--blue) !important;
-    transition: filter 0.15s, transform 0.15s, box-shadow 0.15s !important;
+
+    position: relative !important;
+    overflow: hidden !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease,
+                filter 0.2s ease !important;
+}
+
+#closeTokyo::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.30),
+        rgba(255, 255, 255, 0.12),
+        rgba(255, 255, 255, 0)
+    ) !important;
+    opacity: 0 !important;
+    transition: opacity 0.2s ease !important;
+    pointer-events: none !important;
 }
 
 #closeTokyo:hover {
+    transform: translateY(-4px) !important;
+    box-shadow:
+        0 6px 14px rgba(0, 0, 0, 0.35),
+        0 0 10px rgba(255, 255, 255, 0.35),
+        0 0 20px rgba(255, 255, 255, 0.18) !important;
     filter: brightness(1.15) !important;
+    z-index: 10 !important;
+}
+
+#closeTokyo:hover::before {
+    opacity: 1 !important;
 }
 
 #closeTokyo:active {
+    transform: translateY(0) !important;
+    box-shadow: none !important;
     filter: brightness(0.9) !important;
 }
