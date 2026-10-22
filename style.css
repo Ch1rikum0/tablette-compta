@@ -1528,10 +1528,10 @@ article.panel.link-panel.tokyo-panel {
     z-index: 3 !important;
 }
 
-/* Description : décalée vers la gauche et descendue */
+/* Description : décalée vers la gauche */
 .tokyo-panel .tokyo-slide p {
     position: absolute !important;
-    top: 110px !important;
+    top: 70px !important;
     left: 7px !important;
     right: 12px !important;
     max-width: calc(100% - 19px) !important;
