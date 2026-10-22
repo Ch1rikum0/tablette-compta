@@ -1548,3 +1548,21 @@ article.panel.link-panel.tokyo-panel {
     line-height: 1.4 !important;
     margin-top: 12px !important;
 }
+
+
+/* Remettre le contenu à sa position d'origine */
+.tokyo-panel .tokyo-slide h3 {
+    margin-top: 0 !important;
+}
+
+.tokyo-panel .tokyo-slide p {
+    margin-top: 0 !important;
+    margin-bottom: 10px !important;
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+}
+
+.tokyo-panel .tokyo-slide img {
+    margin-top: 0 !important;
+}
