@@ -1554,3 +1554,50 @@ tbody tr:hover {
 .tokyo-slide p {
     margin: 0 0 12px;
 }
+
+
+/* Diaporama dans le cadre rouge */
+.tokyo-content {
+    height: 380px;
+    overflow: hidden;
+    border: 1px solid #79222e;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 12px 0;
+}
+
+.tokyo-slides {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.tokyo-slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.tokyo-slide.active {
+    display: block;
+}
+
+.tokyo-slide h3 {
+    margin: 0 0 8px;
+}
+
+.tokyo-slide p {
+    margin: 0 0 12px;
+}
+
+.tokyo-wallpaper {
+    width: 100%;
+}
+
+.tokyo-wallpaper img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
