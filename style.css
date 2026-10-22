@@ -1461,3 +1461,21 @@ article.panel.link-panel.tokyo-panel {
     outline: none;
     box-shadow: none;
 }
+
+
+/* Supprimer le cadre gris intérieur du diaporama */
+.tokyo-panel .tokyo-slides,
+.tokyo-panel .tokyo-slide,
+.tokyo-panel .tokyo-slide img {
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Conserver le cadre rouge unique */
+.tokyo-panel .tokyo-content {
+    border: 2px solid #79222e !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+}
