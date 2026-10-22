@@ -1630,3 +1630,9 @@ article.panel.link-panel.tokyo-panel {
     font-weight: 700 !important;
     overflow: hidden !important;
 }
+
+
+/* Descendre uniquement les images du diaporama */
+.tokyo-panel .tokyo-slide img {
+    transform: translateY(45px) !important;
+}
