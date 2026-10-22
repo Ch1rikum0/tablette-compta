@@ -1540,3 +1540,11 @@ article.panel.link-panel.tokyo-panel {
     line-height: 1.5 !important;
 }
 
+
+/* Agrandir le texte descriptif de Kaneki et Limule */
+.tokyo-panel .tokyo-slide p {
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    margin-top: 12px !important;
+}
