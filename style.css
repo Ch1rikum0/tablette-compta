@@ -347,5 +347,5 @@ body {
 
 /* Espace entre le titre de page et le bloc de contenu */
 .page.active > .panel {
-    margin-top: 28px;
+    margin-top: 26px;
 }
