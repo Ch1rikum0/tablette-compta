@@ -1638,5 +1638,10 @@ article.panel.link-panel.tokyo-panel {
 
 .tokyo-panel .tokyo-slide img {
     transform: translateY(200px) !important;
-    position: relative !important;
+    position: absolute !important;
+    animation: none !important;
+    transition: none !important;
+    user-select: none !important;
+    -webkit-user-drag: none !important;
+    pointer-events: none !important;
 }
