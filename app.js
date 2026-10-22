@@ -514,7 +514,6 @@ const openDetteCell = document.getElementById('openDetteCell');
 const backCompta = document.getElementById('backCompta');
 const pageDetteCell = document.getElementById('page-dette-cell');
 
-
 openDetteCell.addEventListener('click', () => {
     Object.values(pages).forEach(page => {
         if (page) page.classList.remove('active');
