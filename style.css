@@ -1383,63 +1383,10 @@ tbody tr:hover {
 }
 
 
-/* Correction définitive de la taille des images du diaporama */
-.tokyo-content {
-    height: 390px !important;
-    max-height: 390px !important;
-    overflow: hidden !important;
-    box-sizing: border-box !important;
-    border: 2px solid #79222e !important;
-    border-radius: 8px !important;
-    padding: 12px !important;
-}
 
-.tokyo-content .tokyo-slide {
-    display: none !important;
-    width: 100% !important;
-    height: 100% !important;
-    overflow: hidden !important;
-}
+/* ===== DIAPORAMA : VERSION PROPRE ===== */
 
-.tokyo-content .tokyo-slide.active {
-    display: flex !important;
-    flex-direction: column !important;
-}
-
-.tokyo-content .tokyo-slide img {
-    width: 100% !important;
-    height: 240px !important;
-    min-height: 0 !important;
-    max-height: 240px !important;
-    object-fit: contain !important;
-    flex: 0 1 240px !important;
-    margin: 0 auto !important;
-    border: none !important;
-    border-radius: 0 !important;
-    display: block !important;
-}
-
-
-/* Suppression du cadre gris et conservation du cadre rouge */
-.tokyo-content {
-    background: transparent !important;
-    border: 2px solid #79222e !important;
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-.tokyo-content .tokyo-slide,
-.tokyo-content .tokyo-slide img {
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-.tokyo-content .tokyo-slide img {
-    border: none !important;
-}
-
-
-/* Suppression du fond et du contour gris du panneau */
+/* Panneau extérieur sans cadre gris */
 article.panel.link-panel.tokyo-panel {
     background: transparent !important;
     border: none !important;
@@ -1447,15 +1394,62 @@ article.panel.link-panel.tokyo-panel {
     box-shadow: none !important;
 }
 
-/* Suppression des contours gris des conteneurs internes */
-.tokyo-panel .tokyo-content,
-.tokyo-panel .tokyo-slides,
-.tokyo-panel .tokyo-slide {
+/* En-tête du diaporama */
+.tokyo-panel .tokyo-heading {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Cadre rouge unique et fixe */
+.tokyo-panel .tokyo-content {
+    width: 100% !important;
+    height: 390px !important;
+    min-height: 390px !important;
+    max-height: 390px !important;
+    padding: 12px !important;
+    margin: 12px 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    background: transparent !important;
+    border: 2px solid #79222e !important;
+    border-radius: 8px !important;
     outline: none !important;
     box-shadow: none !important;
 }
 
-/* Le cadre rouge reste sur la zone du diaporama */
-.tokyo-panel .tokyo-content {
-    border: 2px solid #79222e !important;
+.tokyo-panel .tokyo-slide {
+    display: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
+
+.tokyo-panel .tokyo-slide.active {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.tokyo-panel .tokyo-slide h3,
+.tokyo-panel .tokyo-slide p {
+    flex-shrink: 0 !important;
+}
+
+.tokyo-panel .tokyo-slide img {
+    display: block !important;
+    width: 100% !important;
+    height: 240px !important;
+    min-height: 0 !important;
+    max-height: 240px !important;
+    flex: 0 1 240px !important;
+    object-fit: contain !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
