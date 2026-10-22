@@ -72,7 +72,7 @@ const ARCHIVE_KEY = 'tablette-compta-archives-v1';
 const BALANCE_KEY = 'tablette-compta-solde-v1';
 
 let transactions = [];
-let currentBalance = Number(localStorage.getItem(BALANCE_KEY)) || 0;
+let currentBalance = 0;
 
 function money(value) {
     return `${Math.round(value).toLocaleString('fr-FR')} $`;
@@ -306,7 +306,6 @@ document.getElementById('refreshBtn').addEventListener('click', () => {
     }
 
     // Conserver le solde enregistré
-    currentBalance = Number(localStorage.getItem(BALANCE_KEY)) || currentBalance;
     balanceEl.textContent = money(currentBalance);
 
     // Actualiser les deux historiques
