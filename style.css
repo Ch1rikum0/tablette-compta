@@ -252,11 +252,13 @@ body {
 }
 
 
+
 /* En-tête de l'historique */
 .history-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
     gap: 12px;
     margin-bottom: 20px;
 }
@@ -265,19 +267,21 @@ body {
     margin: 0;
 }
 
-/* Bouton pour vider l'historique */
+/* Bouton au style des onglets */
 .clear-archive-btn {
-    background: #d9364f;
-    color: #ffffff;
-    border: none;
-    border-radius: 8px;
+    background: var(--panel2);
+    color: var(--text);
+    border: 1px solid var(--line);
+    border-radius: 10px;
     padding: 10px 14px;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     white-space: nowrap;
+    margin-left: auto;
 }
 
 .clear-archive-btn:hover {
-    background: #b9273e;
+    background: var(--blue);
+    color: #ffffff;
 }
