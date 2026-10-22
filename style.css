@@ -1538,7 +1538,7 @@ article.panel.link-panel.tokyo-panel {
 .tokyo-panel .tokyo-slide img {
     position: absolute !important;
     left: 50% !important;
-    top: 500px !important;
+    top: 300px !important;
     bottom: auto !important;
     transform: translate(-50%, 100px) !important;
     width: 70% !important;
