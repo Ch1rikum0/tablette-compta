@@ -1564,3 +1564,17 @@ article.panel.link-panel.tokyo-panel {
     color: #ffffff !important;
     border: 1px solid #ff0000 !important;
 }
+
+
+/* Bouton Agrandir le fond d'écran */
+.tokyo-panel #openTokyo.tokyo-download {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    background-color: #ff0000 !important;
+    color: #ffffff !important;
+    border: 1px solid #ff0000 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
