@@ -1531,7 +1531,7 @@ article.panel.link-panel.tokyo-panel {
 /* Description : au-dessus de l'image */
 .tokyo-panel .tokyo-slide p {
     position: absolute !important;
-    top: 50px !important;
+    top: 45px !important;
     left: 7px !important;
     right: 12px !important;
     max-width: calc(100% - 19px) !important;
