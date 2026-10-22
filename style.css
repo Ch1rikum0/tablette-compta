@@ -1530,7 +1530,7 @@ article.panel.link-panel.tokyo-panel {
 
 .tokyo-panel .tokyo-slide p {
     position: absolute !important;
-    top: 0px !important;
+    top: 50px !important;
     left: 7px !important;
     right: 12px !important;
     max-width: calc(100% - 19px) !important;
