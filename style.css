@@ -1389,11 +1389,14 @@ tbody tr:hover {
 
 /* Conserver le panneau extérieur d'origine */
 article.panel.link-panel.tokyo-panel {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    outline: none;
-    box-shadow: none;
+    background: var(--panel) !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 12px !important;
+    padding: 20px !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
+
 
 /* En-tête */
 .tokyo-panel .tokyo-heading {
