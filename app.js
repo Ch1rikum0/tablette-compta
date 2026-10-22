@@ -293,35 +293,42 @@ document.getElementById('submitBtn').addEventListener('click', async () => {
     }
 });
 
-document.getElementById('refreshBtn').addEventListener('click', () => {
-    if (transactions.length > 0) {
-        let archives = [];
-
-        try {
-            archives = JSON.parse(localStorage.getItem(ARCHIVE_KEY)) || [];
-        } catch (error) {
-            archives = [];
-        }
-
-        if (!Array.isArray(archives)) archives = [];
-
-        // Ajouter les opérations à l'historique archivé
-        archives.push([...transactions]);
-        localStorage.setItem(ARCHIVE_KEY, JSON.stringify(archives));
-
-        // Vider uniquement les opérations de l'historique actuel
-        transactions = [];
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
+document.getElementById('refreshBtn').addEventListener('click', async () => {
+    if (transactions.length === 0) {
+        notify('Aucune opération à archiver.', 'error');
+        return;
     }
 
-    // Conserver le solde enregistré
-    balanceEl.textContent = money(currentBalance);
+    const operationIds = transactions
+        .map(tx => tx.id)
+        .filter(id => id !== undefined && id !== null);
 
-    // Actualiser les deux historiques
+    if (operationIds.length === 0) {
+        notify('Impossible de retrouver les opérations dans Supabase.', 'error');
+        return;
+    }
+
+    const { error } = await supabaseClient
+        .from('operations')
+        .update({ archivee: true })
+        .in('id', operationIds);
+
+    if (error) {
+        console.error('Erreur lors de l’archivage :', error);
+        notify('Impossible d’archiver les opérations.', 'error');
+        return;
+    }
+
+    transactions = [];
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
+
+    balanceEl.textContent = money(currentBalance);
     renderData();
     renderArchive();
 
-    notify('Historique archivé. Solde conservé.');
+    notify('Historique archivé. Solde conservé.', 'success');
+
+    await loadSharedOperations();
 });
 
 const clearArchiveBtn = document.getElementById('clearArchiveBtn');
