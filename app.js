@@ -704,3 +704,180 @@ initializeTablet();
         startTokyoSlideshow();
     }
 })();
+
+
+/* ================================
+   GESTION DES DETTES
+================================ */
+
+const debtForm = document.getElementById('debtForm');
+const debtPlayer = document.getElementById('debtPlayer');
+const debtDirection = document.getElementById('debtDirection');
+const debtAmount = document.getElementById('debtAmount');
+const debtReason = document.getElementById('debtReason');
+const debtSearch = document.getElementById('debtSearch');
+const debtFilter = document.getElementById('debtFilter');
+const debtList = document.getElementById('debtList');
+
+const debtToReceive = document.getElementById('debtToReceive');
+const debtToPay = document.getElementById('debtToPay');
+const debtCount = document.getElementById('debtCount');
+
+const DEBT_STORAGE_KEY = 'tabletteComptaDebts';
+
+let debts = [];
+
+try {
+    debts = JSON.parse(localStorage.getItem(DEBT_STORAGE_KEY)) || [];
+} catch (error) {
+    debts = [];
+}
+
+function saveDebts() {
+    localStorage.setItem(DEBT_STORAGE_KEY, JSON.stringify(debts));
+}
+
+function formatDebtAmount(amount) {
+    return `${Math.round(amount).toLocaleString('fr-FR')} $`;
+}
+
+function renderDebts() {
+    if (!debtList) return;
+
+    const search = debtSearch.value.trim().toLowerCase();
+    const filter = debtFilter.value;
+
+    const filteredDebts = debts.filter(debt => {
+        const matchesSearch =
+            debt.player.toLowerCase().includes(search) ||
+            debt.reason.toLowerCase().includes(search);
+
+        const matchesFilter =
+            filter === 'all' ||
+            (filter === 'receive' && debt.direction === 'receive') ||
+            (filter === 'pay' && debt.direction === 'pay') ||
+            (filter === 'open' && !debt.paid) ||
+            (filter === 'paid' && debt.paid);
+
+        return matchesSearch && matchesFilter;
+    });
+
+    debtList.innerHTML = '';
+
+    if (filteredDebts.length === 0) {
+        debtList.innerHTML = '<p class="muted">Aucune dette trouvée.</p>';
+    } else {
+        filteredDebts.forEach(debt => {
+            const card = document.createElement('article');
+            card.className = 'debt-item';
+
+            const title = document.createElement('h4');
+            title.textContent = debt.player;
+
+            const reason = document.createElement('p');
+            reason.textContent = debt.reason;
+
+            const direction = document.createElement('p');
+            direction.textContent = debt.direction === 'receive'
+                ? 'Le joueur doit à l’entreprise'
+                : 'L’entreprise doit au joueur';
+
+            const amount = document.createElement('strong');
+            amount.textContent = formatDebtAmount(debt.amount);
+
+            const status = document.createElement('p');
+            status.textContent = debt.paid ? 'Remboursée' : 'En cours';
+
+            card.append(title, reason, direction, amount, status);
+
+            if (!debt.paid) {
+                const paidButton = document.createElement('button');
+                paidButton.type = 'button';
+                paidButton.className = 'secondary-btn';
+                paidButton.textContent = 'Marquer comme remboursée';
+
+                paidButton.addEventListener('click', () => {
+                    const index = debts.findIndex(item => item.id === debt.id);
+
+                    if (index !== -1) {
+                        debts[index].paid = true;
+                        saveDebts();
+                        renderDebts();
+                    }
+                });
+
+                card.appendChild(paidButton);
+            }
+
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.className = 'secondary-btn';
+            deleteButton.textContent = 'Supprimer';
+
+            deleteButton.addEventListener('click', () => {
+                if (!confirm(`Supprimer la dette de ${debt.player} ?`)) return;
+
+                debts = debts.filter(item => item.id !== debt.id);
+                saveDebts();
+                renderDebts();
+            });
+
+            card.appendChild(deleteButton);
+            debtList.appendChild(card);
+        });
+    }
+
+    const openDebts = debts.filter(debt => !debt.paid);
+
+    const totalReceive = openDebts
+        .filter(debt => debt.direction === 'receive')
+        .reduce((total, debt) => total + debt.amount, 0);
+
+    const totalPay = openDebts
+        .filter(debt => debt.direction === 'pay')
+        .reduce((total, debt) => total + debt.amount, 0);
+
+    debtToReceive.textContent = formatDebtAmount(totalReceive);
+    debtToPay.textContent = formatDebtAmount(totalPay);
+    debtCount.textContent = openDebts.length;
+}
+
+if (debtForm) {
+    debtForm.addEventListener('submit', event => {
+        event.preventDefault();
+
+        const player = debtPlayer.value.trim();
+        const direction = debtDirection.value;
+        const amount = Number(debtAmount.value);
+        const reason = debtReason.value.trim();
+
+        if (!player || !reason || !Number.isFinite(amount) || amount <= 0) {
+            alert('Vérifie le nom, le motif et le montant de la dette.');
+            return;
+        }
+
+        debts.push({
+            id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+            player,
+            direction,
+            amount,
+            reason,
+            paid: false,
+            createdAt: new Date().toISOString()
+        });
+
+        saveDebts();
+        debtForm.reset();
+        renderDebts();
+    });
+}
+
+if (debtSearch) {
+    debtSearch.addEventListener('input', renderDebts);
+}
+
+if (debtFilter) {
+    debtFilter.addEventListener('change', renderDebts);
+}
+
+renderDebts();
