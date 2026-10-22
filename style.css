@@ -1189,3 +1189,146 @@ textarea:focus {
         transition: none !important;
     }
 }
+
+
+/* === SILENT GHOST : EFFETS AVANCÉS === */
+
+/* Icônes du menu */
+.nav-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px !important;
+    min-width: 25px;
+    height: 25px;
+    border-radius: 7px;
+    color: #bfc2ca;
+    background: #202126;
+    border: 1px solid #383a42;
+    font-size: 15px !important;
+    transition: all 0.25s ease;
+}
+
+.nav-btn.active .nav-icon {
+    color: #ff3546;
+    background: #35151b;
+    border-color: #79222e;
+    box-shadow: 0 0 12px #ff263825;
+}
+
+.nav-btn:hover .nav-icon {
+    color: #ff4655;
+    border-color: #92202d;
+}
+
+/* Lueur discrète autour de la tablette */
+.tablet {
+    border-color: #383b42;
+    box-shadow:
+        0 25px 80px #000c,
+        0 0 25px #ff26380b,
+        inset 0 0 30px #ffffff03;
+}
+
+/* Reflet sur les panneaux */
+.panel {
+    position: relative;
+    overflow: hidden;
+}
+
+.panel::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #ffffff16,
+        transparent
+    );
+    pointer-events: none;
+}
+
+/* Animation au survol des panneaux */
+.panel:hover {
+    border-color: #49414a;
+    box-shadow:
+        0 10px 30px #0005,
+        0 0 14px #ff26380b;
+}
+
+/* Boutons plus premium */
+.primary-btn,
+.secondary-btn,
+.refresh-btn,
+.clear-archive-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.primary-btn {
+    background: linear-gradient(110deg, #ff394b, #c90024);
+    box-shadow:
+        0 4px 16px #ff26382b,
+        inset 0 1px 0 #ffffff30;
+}
+
+.primary-btn:hover {
+    box-shadow:
+        0 0 22px #ff263850,
+        inset 0 1px 0 #ffffff35;
+}
+
+/* Titre et logo */
+.sidebar-brand .brand-icon {
+    box-shadow:
+        0 0 12px #ff263825,
+        inset 0 0 12px #ff26380b;
+}
+
+.sidebar-brand h2 {
+    letter-spacing: 0.4px;
+    text-shadow: 0 0 12px #ffffff0c;
+}
+
+/* Tableau plus élégant */
+table {
+    border-spacing: 0;
+}
+
+th {
+    background: #ffffff03;
+    letter-spacing: 0.3px;
+}
+
+tbody tr {
+    transition: background 0.2s ease;
+}
+
+tbody tr:hover {
+    background: #ff263808;
+}
+
+/* Barre de séparation */
+.sidebar {
+    box-shadow: 5px 0 25px #0003;
+}
+
+/* Animations sans mouvement excessif */
+@media (prefers-reduced-motion: no-preference) {
+    .nav-btn.active .nav-icon {
+        animation: ghost-icon-glow 3s ease-in-out infinite;
+    }
+
+    @keyframes ghost-icon-glow {
+        0%, 100% {
+            box-shadow: 0 0 5px #ff263815;
+        }
+        50% {
+            box-shadow: 0 0 13px #ff263845;
+        }
+    }
+}
