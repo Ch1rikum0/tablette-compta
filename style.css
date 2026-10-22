@@ -1603,3 +1603,15 @@ article.panel.link-panel.tokyo-panel {
     margin-top: 0 !important;
     margin-bottom: 10px !important;
 }
+
+
+/* Modifier uniquement le titre et la description */
+.tokyo-panel .tokyo-slide h3 {
+    font-size: 32px !important;
+    font-weight: 700 !important;
+}
+
+.tokyo-panel .tokyo-slide p {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+}
