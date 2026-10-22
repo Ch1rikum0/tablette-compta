@@ -1661,23 +1661,26 @@ article.panel.link-panel.tokyo-panel {
 }
 
 
+
 #openTokyo::before {
     content: "" !important;
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;
-    width: 180px !important;
+    width: 260px !important;
     height: 100% !important;
     background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0.55) 0%,
-        rgba(255, 255, 255, 0.35) 30%,
-        rgba(255, 255, 255, 0.15) 65%,
+        90deg,
+        rgba(255, 255, 255, 0.65) 0%,
+        rgba(255, 255, 255, 0.45) 20%,
+        rgba(255, 255, 255, 0.25) 50%,
+        rgba(255, 255, 255, 0.10) 75%,
         rgba(255, 255, 255, 0) 100%
     ) !important;
     pointer-events: none !important;
     z-index: 1 !important;
 }
+
 
 
 
