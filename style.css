@@ -1557,7 +1557,52 @@ tbody tr:hover {
     height: 100% !important;
     max-width: 100% !important;
     max-height: 100% !important;
-    object-fit: contain !important;
+   object-fit: contain !important;
     display: block !important;
     margin: 0 !important;
+}
+
+
+/* UN SEUL CADRE ROUGE FIXE POUR LES DEUX IMAGES */
+.tokyo-content {
+    height: 380px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    border: 1px solid #79222e !important;
+    border-radius: 8px !important;
+    padding: 10px !important;
+    margin: 12px 0 !important;
+}
+
+.tokyo-slides {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.tokyo-slides .tokyo-slide {
+    display: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+}
+
+.tokyo-slides .tokyo-slide.active {
+    display: block !important;
+}
+
+.tokyo-slides .tokyo-slide h3,
+.tokyo-slides .tokyo-slide p {
+    margin-top: 0;
+}
+
+.tokyo-slides .tokyo-slide img {
+    display: block !important;
+    width: 100% !important;
+    height: 260px !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    margin: 0 auto !important;
+    border: none !important;
+    border-radius: 0 !important;
 }
