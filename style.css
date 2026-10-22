@@ -1600,26 +1600,29 @@ article.panel.link-panel.tokyo-panel {
 }
 
 
-/* Même style que le bouton Enregistrer l'opération */
+
 #openTokyo {
-    font-family: inherit !important;
-    font-size: inherit !important;
-    font-weight: 700 !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 17px 0 0 !important;
     padding: 13px 15px !important;
     border: 0 !important;
     border-radius: 9px !important;
     color: white !important;
-    background: #ff2638 !important;
+    font: inherit !important;
+    font-weight: 700 !important;
     cursor: pointer !important;
-    transition: filter 0.15s !important;
+    background: #ff2638 !important;
+    transition: filter .15s;
 }
 
-/* Même effet au survol */
 #openTokyo:hover {
-    filter: brightness(1.15) !important;
+    filter: brightness(1.15);
 }
 
-/* Même réaction au clic */
 #openTokyo:active {
-    filter: brightness(0.9) !important;
+    filter: brightness(0.9);
 }
+
