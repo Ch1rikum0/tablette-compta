@@ -1510,10 +1510,14 @@ tbody tr:hover {
 }
 
 
-/* Cadres identiques pour Kaneki et Limule */
+
+/* Cadre rouge fixe pour toutes les diapositives */
 .tokyo-wallpaper {
     width: 100%;
     height: 260px;
+    min-height: 260px;
+    max-height: 260px;
+    flex: 0 0 260px;
     border: 1px solid #79222e;
     border-radius: 8px;
     overflow: hidden;
@@ -1523,9 +1527,12 @@ tbody tr:hover {
     box-sizing: border-box;
 }
 
+/* Image contenue dans le cadre fixe */
 .tokyo-wallpaper img {
     width: 100%;
     height: 100%;
     object-fit: contain;
     display: block;
+    flex-shrink: 0;
 }
+
