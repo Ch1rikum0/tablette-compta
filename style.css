@@ -1591,7 +1591,7 @@ article.panel.link-panel.tokyo-panel {
 /* Image indépendante */
 .tokyo-panel .tokyo-slide img {
     position: absolute !important;
-    top: 80px !important;
+    top: 200px !important;
     left: auto !important;
     right: 0 !important;
     width: 100% !important;
