@@ -64,7 +64,7 @@ button { font: inherit; }
     border-radius: 9px; color: white; font-weight: 700; cursor: pointer;
     background: var(--blue); transition: filter .15s;}
 .secondary-btn { background: #263957; border: 1px solid #3b5275; }
-.primary-btn:hover, .secondary-btn:hover, .refresh-btn:hover, .icon-btn:hover { filter: brightness(1.15); }
+.primary-btn:hover, .secondary-btn:hover, .refresh-btn:hover, .icon-btn:hover, #openTokyo:hover { filter: brightness(1.15); }
 .small { font-size: 10px; margin-top: 12px; }
 .link-panel { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
 .link-icon { display: grid; place-items: center; width: 46px; height: 46px; margin-bottom: 18px; border-radius: 13px; background: #26395b; color: #a9bcff; font-size: 26px;}
