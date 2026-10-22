@@ -1510,3 +1510,16 @@ tbody tr:hover {
     border: none;
     border-radius: 5px;
 }
+
+
+/* Supprimer le cadre gris extérieur */
+.tokyo-panel {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 12px !important;
+}
+
+/* Agrandir légèrement le contenu */
+.tokyo-content {
+    padding: 8px;
+}
