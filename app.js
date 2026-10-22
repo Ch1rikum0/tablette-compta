@@ -388,15 +388,35 @@ if (cancelClearArchive && confirmArchive) {
 }
 
 if (confirmClearArchive && confirmArchive) {
-    confirmClearArchive.addEventListener('click', () => {
+    confirmClearArchive.addEventListener('click', async () => {
+        confirmClearArchive.disabled = true;
+
         try {
+            // Supprimer les opérations archivées dans Supabase
+            const { error } = await supabaseClient
+                .from('operations')
+                .delete()
+                .eq('archivee', true);
+
+            if (error) {
+                console.error('Erreur de suppression Supabase :', error);
+                notify('Impossible de supprimer l’historique partagé.', 'error');
+                return;
+            }
+
+            // Supprimer aussi les archives locales
             localStorage.removeItem(ARCHIVE_KEY);
-            renderArchive();
+
+            // Actualiser l'affichage
+            await renderArchive();
+
             confirmArchive.classList.add('hidden');
-            notify('Historique archivé supprimé.', 'success');
+            notify('Historique supprimé définitivement.', 'success');
         } catch (error) {
             console.error('Erreur lors de la suppression :', error);
             notify('Impossible de supprimer l’historique.', 'error');
+        } finally {
+            confirmClearArchive.disabled = false;
         }
     });
 }
