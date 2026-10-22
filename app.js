@@ -366,6 +366,7 @@ document.getElementById('refreshBtn').addEventListener('click', async () => {
     notify('Historique archivé. Solde conservé.', 'success');
 
     await loadSharedOperations();
+    await renderArchive();
 });
 
 const clearArchiveBtn = document.getElementById('clearArchiveBtn');
