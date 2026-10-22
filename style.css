@@ -1516,7 +1516,7 @@ article.panel.link-panel.tokyo-panel {
 /* Titre : légèrement décalé vers la gauche */
 .tokyo-panel .tokyo-slide h3 {
     position: absolute !important;
-    top: 12px !important;
+    top: 9px !important;
     left: 7px !important;
     right: 12px !important;
     max-width: calc(100% - 19px) !important;
