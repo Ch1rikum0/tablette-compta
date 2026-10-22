@@ -1661,7 +1661,6 @@ article.panel.link-panel.tokyo-panel {
 }
 
 
-
 #openTokyo::before {
     content: "" !important;
     position: absolute !important;
@@ -1669,22 +1668,17 @@ article.panel.link-panel.tokyo-panel {
     left: 0 !important;
     width: 260px !important;
     height: 100% !important;
-   
-background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.25) 0%,
-    rgba(255, 255, 255, 0.16) 20%,
-    rgba(255, 255, 255, 0.08) 50%,
-    rgba(255, 255, 255, 0.03) 75%,
-    rgba(255, 255, 255, 0) 100%
-) !important;
-
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.08) 20%,
+        rgba(255, 255, 255, 0.04) 50%,
+        rgba(255, 255, 255, 0.01) 75%,
+        rgba(255, 255, 255, 0) 100%
+    ) !important;
     pointer-events: none !important;
     z-index: 1 !important;
 }
-
-
-
 
 
 /* Harmoniser les effets des deux boutons */
