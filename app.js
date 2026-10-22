@@ -539,12 +539,12 @@ initializeTablet();
         {
             src: '/tablette-compta/tokyo-ghoul.png',
             alt: 'Fond d’écran Tokyo Ghoul',
-            title: '👻 SILENT GHOST — TOKYO GHOUL'
+            title: '👻 SILENT GHOST — KANEKI KEN'
         },
         {
             src: '/tablette-compta/limule-tempest.png',
             alt: 'Fond d’écran Limule Tempest',
-            title: '🌌 SILENT GHOST — LIMULE TEMPEST'
+            title: '👻 SILENT GHOST — LIMULE TEMPEST'
         }
     ];
 
