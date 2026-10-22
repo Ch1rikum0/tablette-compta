@@ -1705,9 +1705,28 @@ article.panel.link-panel.tokyo-panel {
 
 
 
+
 #openTokyo {
     position: relative !important;
-    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    overflow: hidden !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease !important;
+}
+
+#openTokyo::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.08) 20%,
+        rgba(255, 255, 255, 0.04) 50%,
+        rgba(255, 255, 255, 0.01) 75%,
+        rgba(255, 255, 255, 0) 100%
+    ) !important;
+    opacity: 0 !important;
+    transition: opacity 0.2s ease !important;
+    pointer-events: none !important;
 }
 
 #openTokyo:hover {
@@ -1717,7 +1736,13 @@ article.panel.link-panel.tokyo-panel {
     z-index: 10 !important;
 }
 
+#openTokyo:hover::before {
+    opacity: 1 !important;
+}
+
 #openTokyo:active {
     transform: translateY(0) !important;
+    box-shadow: none !important;
 }
+
 
