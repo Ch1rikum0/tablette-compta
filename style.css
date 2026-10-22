@@ -1332,3 +1332,79 @@ tbody tr:hover {
         }
     }
 }
+
+
+/* Fond d'écran Tokyo Ghoul */
+.tokyo-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+.tokyo-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.tokyo-tag {
+    color: #ff3546;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.tokyo-status {
+    color: #ff5967;
+    font-size: 10px;
+}
+
+.tokyo-panel h3,
+.tokyo-panel p {
+    margin: 0;
+}
+
+.tokyo-wallpaper {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    border: 1px solid #7b202c;
+    border-radius: 10px;
+    background: #08090c;
+    box-shadow: 0 0 18px #ff26381a;
+}
+
+.tokyo-wallpaper img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.4s ease;
+}
+
+.tokyo-wallpaper:hover img {
+    transform: scale(1.04);
+}
+
+.tokyo-download {
+    display: block;
+    padding: 11px;
+    border: 1px solid #64202a;
+    border-radius: 8px;
+    background: #211116;
+    color: #ff5967;
+    text-align: center;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    transition: 0.2s ease;
+}
+
+.tokyo-download:hover {
+    background: #35151b;
+    border-color: #ff3546;
+    box-shadow: 0 0 15px #ff263825;
+}
