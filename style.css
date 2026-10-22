@@ -1533,3 +1533,18 @@ article.panel.link-panel.tokyo-panel {
     overflow-wrap: anywhere !important;
     z-index: 3 !important;
 }
+
+/* Image : centrée et placée vers le bas */
+.tokyo-panel .tokyo-slide img {
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 10px !important;
+    top: auto !important;
+    transform: translateX(-50%) !important;
+    width: 100% !important;
+    height: 240px !important;
+    object-fit: contain !important;
+    object-position: center bottom !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+}
