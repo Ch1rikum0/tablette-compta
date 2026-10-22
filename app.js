@@ -371,7 +371,6 @@ document.getElementById('refreshBtn').addEventListener('click', async () => {
 
 const clearArchiveBtn = document.getElementById('clearArchiveBtn');
 console.log("Bouton historique :", clearArchiveBtn);
-alert("Le nouveau code historique est chargé !");
 const confirmArchive = document.getElementById('confirmArchive');
 const cancelClearArchive = document.getElementById('cancelClearArchive');
 const confirmClearArchive = document.getElementById('confirmClearArchive');
