@@ -1408,3 +1408,74 @@ tbody tr:hover {
     border-color: #ff3546;
     box-shadow: 0 0 15px #ff263825;
 }
+
+
+/* Vue agrandie Tokyo Ghoul */
+.tokyo-download {
+    width: 100%;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.tokyo-fullscreen {
+    position: absolute;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    background: #08090c;
+    border-radius: inherit;
+    overflow: hidden;
+}
+
+.tokyo-fullscreen.hidden {
+    display: none !important;
+}
+
+.tokyo-fullscreen-header {
+    min-height: 58px;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    background: #111317;
+    border-bottom: 1px solid #79222e;
+    color: #ff3546;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.tokyo-fullscreen-header button {
+    padding: 10px 14px;
+    border: 1px solid #79222e;
+    border-radius: 7px;
+    background: #281117;
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+}
+
+.tokyo-fullscreen-header button:hover {
+    background: #48151f;
+    border-color: #ff3546;
+}
+
+.tokyo-fullscreen-image {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 12px;
+}
+
+.tokyo-fullscreen-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
