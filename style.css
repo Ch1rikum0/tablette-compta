@@ -1479,3 +1479,34 @@ tbody tr:hover {
     object-fit: contain;
     object-position: center;
 }
+
+
+/* Cadre unique Tokyo Ghoul */
+.tokyo-content {
+    border: 1px solid #79222e;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 12px 0;
+}
+
+.tokyo-content h3 {
+    margin: 0 0 8px;
+}
+
+.tokyo-content p {
+    margin: 0 0 12px;
+}
+
+.tokyo-wallpaper {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.tokyo-wallpaper img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: none;
+    border-radius: 5px;
+}
