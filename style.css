@@ -1632,7 +1632,6 @@ article.panel.link-panel.tokyo-panel {
 }
 
 
-/* Descendre uniquement les images du diaporama */
 .tokyo-panel .tokyo-slide img {
-    transform: translateY(-45px) !important;
+    transform: translateY(45px) !important;
 }
