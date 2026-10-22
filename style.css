@@ -1334,275 +1334,50 @@ tbody tr:hover {
 }
 
 
+/* ===== DIAPORAMA RECONSTRUIT ===== */
 
-/* Carte Tokyo Ghoul */
-.tokyo-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    min-width: 0;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 12px !important;
-}
-
-.tokyo-heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-}
-
-.tokyo-tag {
-    color: #ff3546;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 2px;
-}
-
-.tokyo-status {
-    color: #ff5967;
-    font-size: 10px;
-}
-
-/* Cadre rouge fixe */
 .tokyo-content {
-    height: 380px;
-    overflow: hidden;
-    border: 1px solid #79222e;
-    border-radius: 8px;
-    padding: 10px;
-    margin: 12px 0;
-    box-sizing: border-box;
-}
-
-/* Conteneur du diaporama */
-.tokyo-slides {
-    position: relative;
     width: 100%;
-    height: 100%;
+    height: 390px;
+    box-sizing: border-box;
+    padding: 12px;
+    margin: 12px 0;
+    border: 2px solid #79222e;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
 }
 
-/* Une seule diapositive visible */
-.tokyo-slides .tokyo-slide {
+.tokyo-slide {
     display: none;
     width: 100%;
     height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
     box-sizing: border-box;
 }
 
-.tokyo-slides .tokyo-slide.active {
-    display: block;
+.tokyo-slide.active {
+    display: flex;
+    flex-direction: column;
 }
 
 .tokyo-slide h3 {
     margin: 0 0 8px;
-    color: #f3f6fc;
-}
-
-.tokyo-slide p {
-    margin: 0 0 12px;
-}
-
-/* Image */
-.tokyo-wallpaper {
-    width: 100%;
-    overflow: hidden;
-    border-radius: 5px;
-    background: #08090c;
-}
-
-.tokyo-wallpaper img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border: none;
-    border-radius: 5px;
-}
-
-/* Bouton d'agrandissement */
-.tokyo-download {
-    display: block;
-    width: 100%;
-    padding: 11px;
-    border: 1px solid #64202a;
-    border-radius: 8px;
-    background: #211116;
-    color: #ff5967;
-    text-align: center;
-    font-family: inherit;
-    font-size: 12px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
-
-.tokyo-download:hover {
-    background: #35151b;
-    border-color: #ff3546;
-    box-shadow: 0 0 15px #ff263825;
-}
-
-/* Affichage agrandi */
-.tokyo-fullscreen {
-    position: absolute;
-    inset: 0;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    background: #08090c;
-    border-radius: inherit;
-    overflow: hidden;
-}
-
-.tokyo-fullscreen.hidden {
-    display: none !important;
-}
-
-.tokyo-fullscreen-header {
-    min-height: 58px;
-    padding: 12px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    flex-wrap: wrap;
-    background: #111317;
-    border-bottom: 1px solid #79222e;
-    color: #ff3546;
-    font-size: 12px;
-    font-weight: 800;
-}
-
-.tokyo-fullscreen-header button {
-    padding: 10px 14px;
-    border: 1px solid #79222e;
-    border-radius: 7px;
-    background: #281117;
-    color: #fff;
-    cursor: pointer;
-    font: inherit;
-}
-
-.tokyo-fullscreen-header button:hover {
-    background: #48151f;
-    border-color: #ff3546;
-}
-
-.tokyo-fullscreen-image {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    padding: 12px;
-}
-
-.tokyo-fullscreen-image img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-}
-
-
-
-/* Cadre rouge fixe pour toutes les diapositives */
-.tokyo-wallpaper {
-    width: 100%;
-    height: 260px;
-    min-height: 260px;
-    max-height: 260px;
-    flex: 0 0 260px;
-    border: 1px solid #79222e;
-    border-radius: 8px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-}
-
-/* Image contenue dans le cadre fixe */
-.tokyo-wallpaper img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
     flex-shrink: 0;
 }
 
-
-/* FORCE les deux cadres à avoir exactement les mêmes dimensions */
-.tokyo-slides .tokyo-slide .tokyo-wallpaper {
-    width: 100% !important;
-    height: 260px !important;
-    min-height: 260px !important;
-    max-height: 260px !important;
-    flex: none !important;
-    padding: 0 !important;
-    margin: 12px 0 !important;
-    border: 1px solid #79222e !important;
-    border-radius: 8px !important;
-    box-sizing: border-box !important;
-    overflow: hidden !important;
+.tokyo-slide p {
+    margin: 0 0 10px;
+    flex-shrink: 0;
 }
 
-.tokyo-slides .tokyo-slide .tokyo-wallpaper img {
-    width: 100% !important;
-    height: 100% !important;
-    max-width: 100% !important;
-    max-height: 100% !important;
-   object-fit: contain !important;
-    display: block !important;
-    margin: 0 !important;
-}
-
-
-/* UN SEUL CADRE ROUGE FIXE POUR LES DEUX IMAGES */
-.tokyo-content {
-    height: 380px !important;
-    box-sizing: border-box !important;
-    overflow: hidden !important;
-    border: 1px solid #79222e !important;
-    border-radius: 8px !important;
-    padding: 10px !important;
-    margin: 12px 0 !important;
-}
-
-.tokyo-slides {
-    position: relative !important;
-    width: 100% !important;
-    height: 100% !important;
-}
-
-.tokyo-slides .tokyo-slide {
-    display: none !important;
-    width: 100% !important;
-    height: 100% !important;
-    overflow: hidden !important;
-}
-
-.tokyo-slides .tokyo-slide.active {
-    display: block !important;
-}
-
-.tokyo-slides .tokyo-slide h3,
-.tokyo-slides .tokyo-slide p {
-    margin-top: 0;
-}
-
-.tokyo-slides .tokyo-slide img {
-    display: block !important;
-    width: 100% !important;
-    height: 260px !important;
-    max-width: 100% !important;
-    object-fit: contain !important;
-    margin: 0 auto !important;
-    border: none !important;
-    border-radius: 0 !important;
+.tokyo-slide img {
+    width: 100%;
+    height: 280px;
+    min-height: 0;
+    object-fit: contain;
+    display: block;
+    flex: 1;
+    border: none;
+    border-radius: 0;
+    margin: 0 auto;
 }
