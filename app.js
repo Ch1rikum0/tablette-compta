@@ -521,25 +521,27 @@ async function initializeTablet() {
 
 initializeTablet();
 
-
 /* Ouverture et fermeture du fond d'écran Tokyo Ghoul */
 (() => {
     const openButton = document.getElementById('openTokyo');
     const closeButton = document.getElementById('closeTokyo');
     const fullscreen = document.getElementById('tokyoFullscreen');
-    const tablet = document.getElementById('tablet');
 
-    if (!openButton || !closeButton || !fullscreen || !tablet) return;
+    if (!openButton || !closeButton || !fullscreen) return;
 
     openButton.addEventListener('click', () => {
         fullscreen.classList.remove('hidden');
+        fullscreen.style.position = 'fixed';
+        fullscreen.style.inset = '0';
+        fullscreen.style.width = '100%';
+        fullscreen.style.height = '100%';
+        fullscreen.style.zIndex = '99999';
     });
 
     closeButton.addEventListener('click', () => {
         fullscreen.classList.add('hidden');
     });
 })();
-
 
 /* ===== DIAPORAMA AUTOMATIQUE ===== */
 (() => {
