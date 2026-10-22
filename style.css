@@ -1381,3 +1381,40 @@ tbody tr:hover {
     border-radius: 0;
     margin: 0 auto;
 }
+
+
+/* Correction définitive de la taille des images du diaporama */
+.tokyo-content {
+    height: 390px !important;
+    max-height: 390px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    border: 2px solid #79222e !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+}
+
+.tokyo-content .tokyo-slide {
+    display: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+}
+
+.tokyo-content .tokyo-slide.active {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.tokyo-content .tokyo-slide img {
+    width: 100% !important;
+    height: 240px !important;
+    min-height: 0 !important;
+    max-height: 240px !important;
+    object-fit: contain !important;
+    flex: 0 1 240px !important;
+    margin: 0 auto !important;
+    border: none !important;
+    border-radius: 0 !important;
+    display: block !important;
+}
