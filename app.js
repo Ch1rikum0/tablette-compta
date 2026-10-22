@@ -149,40 +149,77 @@ function renderData() {
     }).join('');
 }
 
-function renderArchive() {
+async function renderArchive() {
     const archiveHistoryEl = document.getElementById('archiveHistory');
-
     if (!archiveHistoryEl) return;
+
+    archiveHistoryEl.innerHTML =
+        '<tr><td colspan="5" class="empty">Chargement de l’historique...</td></tr>';
+
+    const { data, error } = await supabaseClient
+        .from('operations')
+        .select('*')
+        .eq('archivee', true)
+        .order('date_operation', { ascending: false });
+
+    if (error) {
+        console.error('Erreur de chargement des archives :', error);
+        archiveHistoryEl.innerHTML =
+            '<tr><td colspan="5" class="empty">Impossible de charger l’historique.</td></tr>';
+        return;
+    }
 
     let archives = [];
 
     try {
         archives = JSON.parse(localStorage.getItem(ARCHIVE_KEY)) || [];
-    } catch (error) {
+    } catch (e) {
         archives = [];
     }
 
-    if (!Array.isArray(archives) || archives.length === 0) {
+    const sharedArchives = (data || []).map(op => ({
+        id: op.id,
+        type: op.type,
+        amount: Number(op.montant) || 0,
+        description: op.description || '',
+        date: op.date_operation
+            ? new Date(op.date_operation).toLocaleString('fr-FR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            }).replace(',', '').replace(':', 'h')
+            : '',
+        player: op.joueur || 'Inconnu'
+    }));
+
+    const allArchives = [
+        ...sharedArchives,
+        ...archives.flat()
+    ];
+
+    if (allArchives.length === 0) {
         archiveHistoryEl.innerHTML =
             '<tr><td colspan="5" class="empty">Aucune opération archivée.</td></tr>';
         return;
     }
 
-    archiveHistoryEl.innerHTML = archives.flat().map(tx => {
+    archiveHistoryEl.innerHTML = allArchives.map(tx => {
         const incoming = tx.type === 'entree';
 
         return `<tr>
             <td>${escapeHtml(tx.date || '')}</td>
-            <td>${incoming ? 'Entrée' : 'Sortie'}</td>
+            <td><span class="type-pill ${incoming ? 'in' : 'out'}">${incoming ? 'Entrée' : 'Sortie'}</span></td>
             <td>${escapeHtml(tx.description || '')}</td>
-            <td>Local</td>
+            <td>${escapeHtml(tx.player || 'Inconnu')}</td>
             <td class="right ${incoming ? 'amount-in' : 'amount-out'}">
                 ${incoming ? '+' : '−'} ${money(tx.amount)}
             </td>
         </tr>`;
     }).join('');
 }
-
 
 document.getElementById('submitBtn').addEventListener('click', async () => {
     const amount = Number(amountEl.value);
