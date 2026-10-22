@@ -521,15 +521,55 @@ async function initializeTablet() {
 
 initializeTablet();
 
-/* Ouverture et fermeture du fond d'écran Tokyo Ghoul */
+
+/* Navigation entre les fonds d'écran en plein écran */
 (() => {
     const openButton = document.getElementById('openTokyo');
     const closeButton = document.getElementById('closeTokyo');
     const fullscreen = document.getElementById('tokyoFullscreen');
+    const image = document.getElementById('fullscreenImage');
+    const title = document.getElementById('fullscreenTitle');
+    const prevButton = document.getElementById('prevTokyo');
+    const nextButton = document.getElementById('nextTokyo');
 
-    if (!openButton || !closeButton || !fullscreen) return;
+    if (!openButton || !closeButton || !fullscreen || !image ||
+        !title || !prevButton || !nextButton) return;
+
+    const wallpapers = [
+        {
+            src: '/tablette-compta/tokyo-ghoul.png',
+            alt: 'Fond d’écran Tokyo Ghoul',
+            title: '👻 SILENT GHOST — TOKYO GHOUL'
+        },
+        {
+            src: '/tablette-compta/limule-tempest.png',
+            alt: 'Fond d’écran Limule Tempest',
+            title: '🌌 SILENT GHOST — LIMULE TEMPEST'
+        }
+    ];
+
+    let currentIndex = 0;
+
+    function showWallpaper(index) {
+        currentIndex = (index + wallpapers.length) % wallpapers.length;
+        const wallpaper = wallpapers[currentIndex];
+
+        image.src = wallpaper.src;
+        image.alt = wallpaper.alt;
+        title.textContent = wallpaper.title;
+    }
 
     openButton.addEventListener('click', () => {
+        const slides = document.querySelectorAll('.tokyo-slide');
+        let selectedIndex = 0;
+
+        slides.forEach((slide, index) => {
+            if (slide.classList.contains('active')) {
+                selectedIndex = index;
+            }
+        });
+
+        showWallpaper(selectedIndex);
         fullscreen.classList.remove('hidden');
         fullscreen.style.position = 'fixed';
         fullscreen.style.inset = '0';
@@ -538,10 +578,31 @@ initializeTablet();
         fullscreen.style.zIndex = '99999';
     });
 
+    prevButton.addEventListener('click', () => {
+        showWallpaper(currentIndex - 1);
+    });
+
+    nextButton.addEventListener('click', () => {
+        showWallpaper(currentIndex + 1);
+    });
+
     closeButton.addEventListener('click', () => {
         fullscreen.classList.add('hidden');
     });
+
+    document.addEventListener('keydown', (event) => {
+        if (fullscreen.classList.contains('hidden')) return;
+
+        if (event.key === 'ArrowLeft') {
+            showWallpaper(currentIndex - 1);
+        } else if (event.key === 'ArrowRight') {
+            showWallpaper(currentIndex + 1);
+        } else if (event.key === 'Escape') {
+            fullscreen.classList.add('hidden');
+        }
+    });
 })();
+
 
 /* ===== DIAPORAMA AUTOMATIQUE ===== */
 (() => {
