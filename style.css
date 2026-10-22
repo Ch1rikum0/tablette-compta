@@ -1531,3 +1531,12 @@ article.panel.link-panel.tokyo-panel {
 .tokyo-panel .tokyo-slide img {
     margin-top: 25px !important;
 }
+
+
+/* Agrandir les descriptions de Kaneki et Limule */
+.tokyo-panel .tokyo-slide p {
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    line-height: 1.5 !important;
+}
+
