@@ -324,22 +324,36 @@ document.getElementById('refreshBtn').addEventListener('click', () => {
     notify('Historique archivé. Solde conservé.');
 });
 
-document.getElementById('clearArchiveBtn').addEventListener('click', () => {
-    const confirmation = window.confirm(
-        'Supprimer définitivement tout l’historique archivé ?'
-    );
+const clearArchiveBtn = document.getElementById('clearArchiveBtn');
+const confirmArchive = document.getElementById('confirmArchive');
+const cancelClearArchive = document.getElementById('cancelClearArchive');
+const confirmClearArchive = document.getElementById('confirmClearArchive');
 
-    if (!confirmation) return;
+if (clearArchiveBtn && confirmArchive) {
+    clearArchiveBtn.addEventListener('click', () => {
+        confirmArchive.classList.remove('hidden');
+    });
+}
 
-    try {
-        localStorage.removeItem(ARCHIVE_KEY);
-        renderArchive();
-        notify('Historique archivé supprimé.', 'success');
-    } catch (error) {
-        console.error('Erreur lors de la suppression :', error);
-        notify('Impossible de supprimer l’historique.', 'error');
-    }
-});
+if (cancelClearArchive && confirmArchive) {
+    cancelClearArchive.addEventListener('click', () => {
+        confirmArchive.classList.add('hidden');
+    });
+}
+
+if (confirmClearArchive && confirmArchive) {
+    confirmClearArchive.addEventListener('click', () => {
+        try {
+            localStorage.removeItem(ARCHIVE_KEY);
+            renderArchive();
+            confirmArchive.classList.add('hidden');
+            notify('Historique archivé supprimé.', 'success');
+        } catch (error) {
+            console.error('Erreur lors de la suppression :', error);
+            notify('Impossible de supprimer l’historique.', 'error');
+        }
+    });
+}
 
 console.log('Clic sur Vider l’historique détecté');
 document.getElementById('closeBtn').addEventListener('click', () => {
