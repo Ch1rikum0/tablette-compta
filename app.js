@@ -510,6 +510,48 @@ navButtons.forEach(button => {
     });
 });
 
+
+const openDetteCell = document.getElementById('openDetteCell');
+const backCompta = document.getElementById('backCompta');
+const pageDetteCell = document.getElementById('page-dette-cell');
+
+openDetteCell.addEventListener('click', () => {
+    Object.values(pages).forEach(page => {
+        if (page) page.classList.remove('active');
+    });
+
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
+
+    pageDetteCell.classList.add('active');
+
+    pageTitle.textContent = 'Dette cell';
+    pageSubtitle.textContent = 'Gestion des dettes';
+    pageIcon.textContent = '💰';
+
+    navButtons.forEach(btn => {
+        btn.classList.remove('active');
+    });
+});
+
+backCompta.addEventListener('click', () => {
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
+
+    pages.compta.classList.add('active');
+
+    pageTitle.textContent = pageInfo.compta.title;
+    pageSubtitle.textContent = pageInfo.compta.subtitle;
+    pageIcon.textContent = pageInfo.compta.icon;
+
+    navButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.page === 'compta');
+    });
+});
+
+
 loadTransactions();
 renderData();
 
