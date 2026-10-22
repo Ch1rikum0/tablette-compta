@@ -548,8 +548,8 @@ initializeTablet();
         if (!container) return;
 
         const slides = Array.from(
-            container.querySelectorAll('.tokyo-slide')
-        );
+    document.querySelectorAll('.tokyo-content .tokyo-slide')
+);
 
         if (slides.length < 2) {
             console.warn('Diaporama : il faut au moins 2 diapositives.');
