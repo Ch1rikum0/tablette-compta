@@ -1530,7 +1530,7 @@ article.panel.link-panel.tokyo-panel {
 
 .tokyo-panel .tokyo-slide p {
     position: absolute !important;
-    top: 60px !important;
+    top: 50px !important;
     left: 7px !important;
     right: 12px !important;
     max-width: calc(100% - 19px) !important;
@@ -1540,7 +1540,6 @@ article.panel.link-panel.tokyo-panel {
     overflow-wrap: anywhere !important;
     z-index: 3 !important;
 }
-
 /* Image : centrée, visible et vers le bas */
 .tokyo-panel .tokyo-slide img {
     position: absolute !important;
