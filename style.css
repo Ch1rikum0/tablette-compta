@@ -1672,3 +1672,29 @@ article.panel.link-panel.tokyo-panel {
     pointer-events: none !important;
 }
 
+
+/* Harmoniser les effets des deux boutons */
+#openTokyo {
+    transition: filter 0.15s ease !important;
+}
+
+#openTokyo:hover {
+    filter: brightness(1.15) !important;
+}
+
+#openTokyo:active {
+    filter: brightness(0.9) !important;
+}
+
+/* Conserver la bande blanche à gauche */
+#openTokyo::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 16px !important;
+    height: 100% !important;
+    background: #fff !important;
+    border-radius: 9px 0 0 9px !important;
+    pointer-events: none !important;
+}
