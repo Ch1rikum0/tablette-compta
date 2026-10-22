@@ -891,3 +891,123 @@ button:focus-visible {
 .page.active > .panel {
     margin-top: 28px;
 }
+
+
+/* === FINITIONS SILENT GHOST === */
+
+/* Fond noir profond */
+.tablet {
+    background: #08090c;
+    border: 1px solid #3b3d43;
+    border-radius: 20px;
+}
+
+/* Menu latéral plus proche de la référence */
+.sidebar {
+    background: linear-gradient(180deg, #101114 0%, #08090c 100%);
+    border-right: 1px solid #34363d;
+}
+
+.nav-btn.active {
+    background: linear-gradient(100deg, #35151a, #242126);
+    border: 1px solid #92202d;
+    box-shadow:
+        inset 4px 0 #ff2638,
+        0 0 15px #ff263822;
+}
+
+/* En-tête et icônes */
+.brand-icon,
+.sidebar-brand .brand-icon,
+.link-icon {
+    background: linear-gradient(145deg, #292b31, #111216);
+    border: 1px solid #7e2731;
+    box-shadow: 0 0 12px #ff263825;
+}
+
+/* Solde : dégradé et liseré rouge */
+.balance-card {
+    background:
+        linear-gradient(125deg, #191a1e 0%, #101114 68%, #222126 100%);
+    border: 1px solid #41434a;
+    box-shadow: inset 4px 0 #ff2638;
+}
+
+.balance-card h2 {
+    color: #ffffff;
+    text-shadow: 0 0 18px #ffffff12;
+}
+
+.balance-symbol {
+    background: linear-gradient(145deg, #211519, #111216);
+    border: 1px solid #514047;
+    color: #ff394b;
+}
+
+/* Panneaux plus profonds */
+.panel {
+    background: linear-gradient(145deg, #17191d, #0d0f12);
+    border: 1px solid #373a42;
+    border-radius: 15px;
+}
+
+/* Champs avec contours discrets */
+input,
+select,
+textarea {
+    background: #090a0d;
+    border: 1px solid #3a3d45;
+    border-radius: 10px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #ff3546;
+    box-shadow: 0 0 0 2px #ff263820;
+}
+
+/* Bouton principal rouge lumineux */
+.primary-btn {
+    background: linear-gradient(100deg, #ff3546, #d00024);
+    border: 1px solid #ff4050;
+    border-radius: 10px;
+    box-shadow: 0 3px 14px #ff263825;
+}
+
+.primary-btn:hover {
+    filter: brightness(1.12);
+    box-shadow: 0 0 18px #ff263845;
+}
+
+/* Boutons secondaires */
+.secondary-btn,
+.refresh-btn,
+.icon-btn,
+.clear-archive-btn {
+    background: linear-gradient(145deg, #25272d, #151619);
+    border: 1px solid #41444c;
+    border-radius: 9px;
+}
+
+.secondary-btn:hover,
+.refresh-btn:hover,
+.icon-btn:hover,
+.clear-archive-btn:hover {
+    border-color: #ff3546;
+    box-shadow: 0 0 10px #ff263825;
+}
+
+/* Tableau */
+th {
+    border-bottom-color: #383a41;
+}
+
+td {
+    border-bottom-color: #292b31;
+}
+
+/* Transitions douces */
+button {
+    transition: all 0.2s ease;
+}
