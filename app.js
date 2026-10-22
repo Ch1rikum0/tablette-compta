@@ -510,10 +510,13 @@ navButtons.forEach(button => {
     });
 });
 
-
-
 loadTransactions();
 renderData();
-loadSharedBalance();
-loadSharedOperations();
-alert("Test de chargement du nouveau code !");
+
+async function initializeTablet() {
+    await loadSharedBalance();
+    await loadSharedOperations();
+    await renderArchive();
+}
+
+initializeTablet();
