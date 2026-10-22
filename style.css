@@ -1418,3 +1418,22 @@ tbody tr:hover {
     border-radius: 0 !important;
     display: block !important;
 }
+
+
+/* Suppression du cadre gris et conservation du cadre rouge */
+.tokyo-content {
+    background: transparent !important;
+    border: 2px solid #79222e !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.tokyo-content .tokyo-slide,
+.tokyo-content .tokyo-slide img {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.tokyo-content .tokyo-slide img {
+    border: none !important;
+}
