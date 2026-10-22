@@ -1514,6 +1514,7 @@ article.panel.link-panel.tokyo-panel {
     max-width: calc(100% - 24px) !important;
     box-sizing: border-box !important;
     margin: 0 !important;
+    font-size: 14px !important;
     overflow: hidden !important;
     overflow-wrap: anywhere !important;
     z-index: 3 !important;
