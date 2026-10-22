@@ -1652,3 +1652,23 @@ article.panel.link-panel.tokyo-panel {
     margin: 0 !important;
     z-index: 3 !important;
 }
+
+/* Titre indépendant */
+.tokyo-panel .tokyo-slide h3 {
+    position: absolute !important;
+    top: 12px !important;
+    left: -10px !important;
+    right: 12px !important;
+    margin: 0 !important;
+    z-index: 3 !important;
+}
+
+/* Description indépendante */
+.tokyo-panel .tokyo-slide p {
+    position: absolute !important;
+    top: 55px !important;
+    left: -10px !important;
+    right: 12px !important;
+    margin: 0 !important;
+    z-index: 3 !important;
+}
