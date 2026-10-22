@@ -1513,13 +1513,13 @@ article.panel.link-panel.tokyo-panel {
 }
 
 
-/* Titre : reste dans le cadre rouge */
+/* Titre : légèrement décalé vers la gauche */
 .tokyo-panel .tokyo-slide h3 {
     position: absolute !important;
     top: 12px !important;
-    left: 12px !important;
+    left: 7px !important;
     right: 12px !important;
-    max-width: calc(100% - 24px) !important;
+    max-width: calc(100% - 19px) !important;
     box-sizing: border-box !important;
     margin: 0 !important;
     font-size: 22px !important;
@@ -1528,13 +1528,13 @@ article.panel.link-panel.tokyo-panel {
     z-index: 3 !important;
 }
 
-/* Description : reste dans le cadre rouge */
+/* Description : légèrement décalée vers la gauche */
 .tokyo-panel .tokyo-slide p {
     position: absolute !important;
     top: 55px !important;
-    left: 12px !important;
+    left: 7px !important;
     right: 12px !important;
-    max-width: calc(100% - 24px) !important;
+    max-width: calc(100% - 19px) !important;
     box-sizing: border-box !important;
     margin: 0 !important;
     overflow: hidden !important;
