@@ -539,3 +539,21 @@ initializeTablet();
         fullscreen.classList.add('hidden');
     });
 })();
+
+
+/* Diaporama Tokyo Ghoul et Limule : changement toutes les 5 secondes */
+(() => {
+    const slides = document.querySelectorAll('.tokyo-slides .tokyo-slide');
+
+    if (slides.length < 2) return;
+
+    let currentSlide = 0;
+
+    setInterval(() => {
+        slides[currentSlide].classList.remove('active');
+
+        currentSlide = (currentSlide + 1) % slides.length;
+
+        slides[currentSlide].classList.add('active');
+    }, 5000);
+})();
