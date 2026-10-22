@@ -1863,3 +1863,12 @@ article.panel.link-panel.tokyo-panel {
         right: 8px;
     }
 }
+
+
+#nextTokyo {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+}
