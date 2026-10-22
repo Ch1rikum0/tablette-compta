@@ -541,28 +541,48 @@ initializeTablet();
 })();
 
 
-/* Diaporama automatique */
-document.addEventListener('DOMContentLoaded', () => {
-    const slides = document.querySelectorAll(
-        '.tokyo-slides .tokyo-slide'
-    );
+/* ===== DIAPORAMA RECONSTRUIT ===== */
+(() => {
+    const initSlideshow = () => {
+        const container = document.querySelector('.tokyo-content');
 
-    if (slides.length < 2) {
-        console.warn('Diaporama : moins de 2 diapositives trouvées.');
-        return;
+        if (!container) {
+            console.warn('Diaporama : cadre introuvable.');
+            return;
+        }
+
+        const slides = Array.from(
+            container.querySelectorAll('.tokyo-slide')
+        );
+
+        if (slides.length === 0) {
+            console.warn('Diaporama : aucune diapositive.');
+            return;
+        }
+
+        let index = 0;
+
+        const showSlide = (newIndex) => {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === newIndex);
+            });
+        };
+
+        showSlide(index);
+
+        if (slides.length > 1) {
+            setInterval(() => {
+                index = (index + 1) % slides.length;
+                showSlide(index);
+            }, 5000);
+        }
+
+        console.log('Diaporama initialisé :', slides.length, 'diapositives');
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initSlideshow);
+    } else {
+        initSlideshow();
     }
-
-    let index = 0;
-
-    slides.forEach((slide, i) => {
-        slide.classList.toggle('active', i === 0);
-    });
-
-    setInterval(() => {
-        slides[index].classList.remove('active');
-
-        index = (index + 1) % slides.length;
-
-        slides[index].classList.add('active');
-    }, 5000);
-});
+})();
