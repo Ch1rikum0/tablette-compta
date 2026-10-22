@@ -1572,7 +1572,7 @@ article.panel.link-panel.tokyo-panel {
 .tokyo-panel .tokyo-slide h3 {
     position: absolute !important;
     top: 12px !important;
-    left: 12px !important;
+    left: -8px !important;
     right: 12px !important;
     margin: 0 !important;
     z-index: 3 !important;
@@ -1582,7 +1582,7 @@ article.panel.link-panel.tokyo-panel {
 .tokyo-panel .tokyo-slide p {
     position: absolute !important;
     top: 55px !important;
-    left: 12px !important;
+    left: -8px !important;
     right: 12px !important;
     margin: 0 !important;
     z-index: 3 !important;
@@ -1591,7 +1591,7 @@ article.panel.link-panel.tokyo-panel {
 /* Image indépendante */
 .tokyo-panel .tokyo-slide img {
     position: absolute !important;
-    top: 500px !important;
+    top: 80px !important;
     left: auto !important;
     right: 0 !important;
     width: 100% !important;
