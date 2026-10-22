@@ -285,3 +285,61 @@ body {
     background: var(--blue);
     color: #ffffff;
 }
+
+
+.confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+.confirm-overlay.hidden {
+    display: none !important;
+}
+
+.confirm-box {
+    width: 90%;
+    max-width: 380px;
+    padding: 24px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    color: var(--text);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.confirm-box h3 {
+    margin: 0 0 12px;
+}
+
+.confirm-box p {
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 22px;
+}
+
+.confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.confirm-actions button {
+    padding: 10px 15px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--panel2);
+}
+
+#confirmClearArchive {
+    background: var(--red);
+    color: #fff;
+    border-color: var(--red);
+}
