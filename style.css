@@ -1653,24 +1653,28 @@ article.panel.link-panel.tokyo-panel {
     filter: brightness(1.15) !important;
 }
 
+
 #openTokyo {
     position: relative !important;
     overflow: hidden !important;
-    background: var(--blue) !important;
-    transition: filter .15s !important;
+    background: #ff2638 !important;
 }
 
 #openTokyo::before {
     content: "" !important;
     position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 16px !important;
-    height: 100% !important;
-    background: #fff !important;
-    border-radius: 9px 0 0 9px !important;
+    inset: 0 auto 0 0 !important;
+    width: 70px !important;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.55) 0%,
+        rgba(255, 255, 255, 0.25) 35%,
+        rgba(255, 255, 255, 0) 100%
+    ) !important;
     pointer-events: none !important;
+    z-index: 1 !important;
 }
+
 
 
 /* Harmoniser les effets des deux boutons */
