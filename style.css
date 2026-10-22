@@ -1334,12 +1334,16 @@ tbody tr:hover {
 }
 
 
-/* Fond d'écran Tokyo Ghoul */
+
+/* Carte Tokyo Ghoul */
 .tokyo-panel {
     display: flex;
     flex-direction: column;
     gap: 12px;
     min-width: 0;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 12px !important;
 }
 
 .tokyo-heading {
@@ -1361,45 +1365,77 @@ tbody tr:hover {
     font-size: 10px;
 }
 
-.tokyo-panel h3,
-.tokyo-panel p {
-    margin: 0;
+/* Cadre rouge fixe */
+.tokyo-content {
+    height: 380px;
+    overflow: hidden;
+    border: 1px solid #79222e;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 12px 0;
+    box-sizing: border-box;
 }
 
+/* Conteneur du diaporama */
+.tokyo-slides {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Une seule diapositive visible */
+.tokyo-slides .tokyo-slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.tokyo-slides .tokyo-slide.active {
+    display: block;
+}
+
+.tokyo-slide h3 {
+    margin: 0 0 8px;
+    color: #f3f6fc;
+}
+
+.tokyo-slide p {
+    margin: 0 0 12px;
+}
+
+/* Image */
 .tokyo-wallpaper {
     width: 100%;
-    height: 220px;
     overflow: hidden;
-    border: 1px solid #7b202c;
-    border-radius: 10px;
+    border-radius: 5px;
     background: #08090c;
-    box-shadow: 0 0 18px #ff26381a;
 }
 
 .tokyo-wallpaper img {
-    width: 100%;
-    height: 100%;
     display: block;
-    object-fit: cover;
-    object-position: center;
-    transition: transform 0.4s ease;
+    width: 100%;
+    height: auto;
+    border: none;
+    border-radius: 5px;
 }
 
-.tokyo-wallpaper:hover img {
-    transform: scale(1.04);
-}
-
+/* Bouton d'agrandissement */
 .tokyo-download {
     display: block;
+    width: 100%;
     padding: 11px;
     border: 1px solid #64202a;
     border-radius: 8px;
     background: #211116;
     color: #ff5967;
     text-align: center;
-    text-decoration: none;
+    font-family: inherit;
     font-size: 12px;
     font-weight: 700;
+    cursor: pointer;
     transition: 0.2s ease;
 }
 
@@ -1409,14 +1445,7 @@ tbody tr:hover {
     box-shadow: 0 0 15px #ff263825;
 }
 
-
-/* Vue agrandie Tokyo Ghoul */
-.tokyo-download {
-    width: 100%;
-    cursor: pointer;
-    font-family: inherit;
-}
-
+/* Affichage agrandi */
 .tokyo-fullscreen {
     position: absolute;
     inset: 0;
@@ -1478,126 +1507,4 @@ tbody tr:hover {
     height: 100%;
     object-fit: contain;
     object-position: center;
-}
-
-
-/* Cadre rouge avec défilement horizontal */
-.tokyo-content {
-    height: 380px;
-    overflow: hidden;
-    border: 1px solid #79222e;
-    border-radius: 8px;
-    padding: 10px;
-    margin: 12px 0;
-}
-
-.tokyo-content h3 {
-    margin: 0 0 8px;
-}
-
-.tokyo-content p {
-    margin: 0 0 12px;
-}
-
-/* Image adaptée à la largeur disponible */
-.tokyo-wallpaper {
-    width: 100%;
-}
-
-.tokyo-wallpaper img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
-}
-
-
-/* Supprimer le cadre gris extérieur */
-.tokyo-panel {
-    border: none !important;
-    box-shadow: none !important;
-    padding: 12px !important;
-}
-
-/* Agrandir légèrement le contenu */
-.tokyo-content {
-    padding: 8px;
-}
-
-/* Défilement de gauche à droite */
-.tokyo-scroll {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    height: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: thin;
-    scrollbar-color: #79222e #111317;
-}
-
-/* Chaque image et son texte forment une diapositive */
-.tokyo-slide {
-    flex: 0 0 100%;
-    min-width: 0;
-    height: 100%;
-    overflow-y: auto;
-    scroll-snap-align: start;
-    scrollbar-width: thin;
-}
-
-.tokyo-slide h3 {
-    margin: 0 0 8px;
-}
-
-.tokyo-slide p {
-    margin: 0 0 12px;
-}
-
-
-/* Diaporama dans le cadre rouge */
-.tokyo-content {
-    height: 380px;
-    overflow: hidden;
-    border: 1px solid #79222e;
-    border-radius: 8px;
-    padding: 10px;
-    margin: 12px 0;
-}
-
-.tokyo-slides {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-.tokyo-slide {
-    display: none;
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-}
-
-.tokyo-slide.active {
-    display: block;
-}
-
-.tokyo-slide h3 {
-    margin: 0 0 8px;
-}
-
-.tokyo-slide p {
-    margin: 0 0 12px;
-}
-
-.tokyo-wallpaper {
-    width: 100%;
-}
-
-.tokyo-wallpaper img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
 }
