@@ -324,6 +324,25 @@ document.getElementById('refreshBtn').addEventListener('click', () => {
     notify('Historique archivé. Solde conservé.');
 });
 
+document.getElementById('clearArchiveBtn').addEventListener('click', () => {
+    const confirmation = confirm(
+        'Veux-tu vraiment supprimer définitivement tout l’historique archivé ?'
+    );
+
+    if (!confirmation) return;
+
+    try {
+        localStorage.removeItem(ARCHIVE_KEY);
+
+        renderArchive();
+
+        notify('Historique archivé supprimé.', 'success');
+    } catch (error) {
+        console.error('Erreur lors de la suppression :', error);
+        notify('Impossible de supprimer l’historique.', 'error');
+    }
+});
+
 document.getElementById('closeBtn').addEventListener('click', () => {
     tablet.classList.add('hidden');
 });
