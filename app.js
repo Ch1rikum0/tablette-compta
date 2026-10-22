@@ -325,17 +325,15 @@ document.getElementById('refreshBtn').addEventListener('click', () => {
 });
 
 document.getElementById('clearArchiveBtn').addEventListener('click', () => {
-    const confirmation = confirm(
-        'Veux-tu vraiment supprimer définitivement tout l’historique archivé ?'
+    const confirmation = window.confirm(
+        'Supprimer définitivement tout l’historique archivé ?'
     );
 
     if (!confirmation) return;
 
     try {
         localStorage.removeItem(ARCHIVE_KEY);
-
         renderArchive();
-
         notify('Historique archivé supprimé.', 'success');
     } catch (error) {
         console.error('Erreur lors de la suppression :', error);
