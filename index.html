@@ -201,17 +201,23 @@
         </section>
         
 
-        <!-- AFFICHAGE GRAND FORMAT TOKYO GHOUL -->
-            <section id="tokyoFullscreen" class="tokyo-fullscreen hidden">
-                <div class="tokyo-fullscreen-header">
-                    <span>👻 SILENT GHOST — TOKYO GHOUL</span>
-                    <button type="button" id="closeTokyo">← Retour à la tablette</button>
-                </div>
-            
-                <div class="tokyo-fullscreen-image">
-                    <img src="/tablette-compta/tokyo-ghoul.png" alt="Fond d'écran Tokyo Ghoul">
-                </div>
-            </section>
+      
+<!-- AFFICHAGE GRAND FORMAT DES FONDS D'ECRAN -->
+<section id="tokyoFullscreen" class="tokyo-fullscreen hidden">
+    <div class="tokyo-fullscreen-header">
+        <span id="fullscreenTitle">👻 SILENT GHOST — TOKYO GHOUL</span>
+        <button type="button" id="closeTokyo">← Retour à la tablette</button>
+    </div>
+
+    <button type="button" id="prevTokyo" class="fullscreen-arrow left" aria-label="Image précédente">❮</button>
+
+    <div class="tokyo-fullscreen-image">
+        <img id="fullscreenImage" src="/tablette-compta/tokyo-ghoul.png" alt="Fond d'écran Tokyo Ghoul">
+    </div>
+
+    <button type="button" id="nextTokyo" class="fullscreen-arrow right" aria-label="Image suivante">❯</button>
+</section>
+
         
 
         <div id="toast" class="toast hidden"></div>
