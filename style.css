@@ -1479,3 +1479,27 @@ article.panel.link-panel.tokyo-panel {
     border-radius: 8px !important;
     overflow: hidden !important;
 }
+
+
+/* Retirer le fond et le contour gris à l'intérieur du diaporama */
+.tokyo-panel .tokyo-content .tokyo-slides,
+.tokyo-panel .tokyo-content .tokyo-slide {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Supprimer tout contour autour de l'image */
+.tokyo-panel .tokyo-content .tokyo-slide img {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Garder uniquement le cadre rouge */
+.tokyo-panel .tokyo-content {
+    border: 2px solid #79222e !important;
+    border-radius: 8px !important;
+}
