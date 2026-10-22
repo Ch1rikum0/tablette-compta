@@ -501,6 +501,16 @@ navButtons.forEach(button => {
 
         button.classList.add('active');
 
+        // Masquer toutes les pages, y compris Dette
+document.querySelectorAll('.page').forEach(page => {
+    page.classList.remove('active');
+});
+
+// Afficher uniquement la page sélectionnée
+if (pages[selectedPage]) {
+    pages[selectedPage].classList.add('active');
+}
+        
         // Mettre à jour le titre
        if (pageInfo[selectedPage]) {
     pageTitle.textContent = pageInfo[selectedPage].title;
