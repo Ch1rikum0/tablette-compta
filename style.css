@@ -1534,14 +1534,14 @@ article.panel.link-panel.tokyo-panel {
     z-index: 3 !important;
 }
 
-/* Image : centrée et descendue dans le cadre rouge */
+/* Image : centrée, descendue et un peu moins large */
 .tokyo-panel .tokyo-slide img {
     position: absolute !important;
     left: 50% !important;
-    top: 400px !important;
+    top: 500px !important;
     bottom: auto !important;
-   transform: translate(-50%, 100px) !important;
-    width: 100% !important;
+    transform: translate(-50%, 100px) !important;
+    width: 85% !important;
     height: 240px !important;
     object-fit: contain !important;
     object-position: center bottom !important;
