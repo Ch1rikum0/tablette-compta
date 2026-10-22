@@ -1503,3 +1503,17 @@ article.panel.link-panel.tokyo-panel {
     border: 2px solid #79222e !important;
     border-radius: 8px !important;
 }
+
+
+/* Abaisser le titre, le texte et l'image de Kaneki et Limule */
+.tokyo-panel .tokyo-slide h3 {
+    margin-top: 15px !important;
+}
+
+.tokyo-panel .tokyo-slide p {
+    margin-top: 12px !important;
+}
+
+.tokyo-panel .tokyo-slide img {
+    margin-top: 12px !important;
+}
