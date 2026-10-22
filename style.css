@@ -1437,3 +1437,25 @@ tbody tr:hover {
 .tokyo-content .tokyo-slide img {
     border: none !important;
 }
+
+
+/* Suppression du fond et du contour gris du panneau */
+article.panel.link-panel.tokyo-panel {
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Suppression des contours gris des conteneurs internes */
+.tokyo-panel .tokyo-content,
+.tokyo-panel .tokyo-slides,
+.tokyo-panel .tokyo-slide {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Le cadre rouge reste sur la zone du diaporama */
+.tokyo-panel .tokyo-content {
+    border: 2px solid #79222e !important;
+}
