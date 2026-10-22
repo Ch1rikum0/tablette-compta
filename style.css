@@ -1934,3 +1934,11 @@ article.panel.link-panel.tokyo-panel {
     box-shadow: none !important;
     filter: brightness(0.9) !important;
 }
+
+
+#openDetteCell {
+    display: block;
+    width: fit-content;
+    margin: 0 0 15px auto;
+    padding: 10px 18px;
+}
