@@ -693,17 +693,3 @@ initializeTablet();
         startTokyoSlideshow();
     }
 })();
-
-const backCompta = document.getElementById('backCompta');
-const pageDetteCell = document.getElementById('page-dette-cell');
-const pageCompta = document.getElementById('page-compta');
-
-openDetteCell.addEventListener('click', () => {
-    pageCompta.classList.remove('active');
-    pageDetteCell.classList.add('active');
-});
-
-backCompta.addEventListener('click', () => {
-    pageDetteCell.classList.remove('active');
-    pageCompta.classList.add('active');
-});
