@@ -1657,8 +1657,8 @@ article.panel.link-panel.tokyo-panel {
 .tokyo-panel .tokyo-slide h3 {
     position: absolute !important;
     top: 12px !important;
-    left: -6px !important;
-    right: 8px !important;
+    left: -20px !important;
+    right: 22px !important;
     margin: 0 !important;
     z-index: 3 !important;
 }
@@ -1667,8 +1667,8 @@ article.panel.link-panel.tokyo-panel {
 .tokyo-panel .tokyo-slide p {
     position: absolute !important;
     top: 55px !important;
-    left: -6px !important;
-    right: 8px !important;
+    left: -20px !important;
+    right: 22px !important;
     margin: 0 !important;
     z-index: 3 !important;
 }
