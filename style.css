@@ -1560,3 +1560,50 @@ article.panel.link-panel.tokyo-panel {
     -webkit-user-drag: none !important;
     pointer-events: none !important;
 }
+
+/* ===== POSITION INDEPENDANTE DES ELEMENTS ===== */
+
+.tokyo-panel .tokyo-content {
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* Titre indépendant */
+.tokyo-panel .tokyo-slide h3 {
+    position: absolute !important;
+    top: 12px !important;
+    left: 12px !important;
+    right: 12px !important;
+    margin: 0 !important;
+    z-index: 3 !important;
+}
+
+/* Description indépendante */
+.tokyo-panel .tokyo-slide p {
+    position: absolute !important;
+    top: 55px !important;
+    left: 12px !important;
+    right: 12px !important;
+    margin: 0 !important;
+    z-index: 3 !important;
+}
+
+/* Image indépendante */
+.tokyo-panel .tokyo-slide img {
+    position: absolute !important;
+    top: 80px !important;
+    left: auto !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 240px !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+    margin: 0 !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    -webkit-user-drag: none !important;
+    z-index: 1 !important;
+}
