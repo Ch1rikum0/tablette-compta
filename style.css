@@ -602,3 +602,292 @@ td {
     background: #17352b;
     border-color: #45d6a0;
 }
+
+
+/* ==========================================
+   SILENT GHOST — THÈME ROUGE NOIR PREMIUM
+   ========================================== */
+
+:root {
+    --bg: #08090c;
+    --panel: #111317;
+    --panel2: #1b1d22;
+    --line: #30343c;
+    --text: #f5f5f7;
+    --muted: #a0a6b2;
+    --blue: #ff2638;
+    --green: #45d6a0;
+    --red: #ff2638;
+}
+
+/* Fond général */
+body {
+    background: #08090c;
+    color: #f5f5f7;
+}
+
+.tablet {
+    background: #08090c;
+    border: 1px solid #343840;
+    box-shadow: 0 25px 100px #000b;
+}
+
+/* Barre latérale */
+.sidebar {
+    background: linear-gradient(180deg, #0d0e11, #08090c);
+    border-right: 1px solid #353840;
+}
+
+.sidebar-brand .brand-icon,
+.brand-icon {
+    background: linear-gradient(145deg, #282b31, #111216);
+    border: 1px solid #ff2638;
+    box-shadow: 0 0 14px #ff26382b;
+    color: #ffffff;
+}
+
+.sidebar-brand h2 {
+    color: #ffffff;
+}
+
+.sidebar-brand h2::first-line {
+    color: #ffffff;
+}
+
+.nav-btn {
+    color: #d4d6dc;
+    background: transparent;
+    border: 1px solid transparent;
+    transition: 0.2s ease;
+}
+
+.nav-btn:hover {
+    background: #1b1d22;
+    border-color: #41444c;
+}
+
+.nav-btn.active {
+    color: #ffffff;
+    background: linear-gradient(100deg, #351419, #202126);
+    border-color: #92202c;
+    box-shadow:
+        inset 4px 0 #ff2638,
+        0 0 14px #ff263826;
+}
+
+.nav-btn.active span {
+    color: #ff4655;
+}
+
+/* En-tête */
+.main-content {
+    background:
+        linear-gradient(135deg, transparent 75%, #ff263806 75.2%, transparent 76%),
+        #08090c;
+}
+
+.main-content h1,
+.main-content h2,
+.main-content h3 {
+    color: #ffffff;
+}
+
+/* Carte du solde */
+.balance-card {
+    position: relative;
+    overflow: hidden;
+    background:
+        linear-gradient(135deg, #191a1e 0%, #101114 65%, #202126 100%);
+    border: 1px solid #383b43;
+    box-shadow: inset 5px 0 #ff2638;
+}
+
+.balance-card::after {
+    content: "";
+    position: absolute;
+    top: -100%;
+    right: 12%;
+    width: 70px;
+    height: 300%;
+    transform: rotate(42deg);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #ff263809,
+        #ff26381c,
+        transparent
+    );
+    pointer-events: none;
+}
+
+.eyebrow {
+    color: #ff5260;
+}
+
+.balance-symbol {
+    color: #ff394b;
+    background: linear-gradient(145deg, #211519, #111216);
+    border: 1px solid #45414a;
+    box-shadow: 0 0 12px #ff263812;
+}
+
+/* Blocs */
+.panel {
+    background: linear-gradient(145deg, #17191d, #0e1013);
+    border: 1px solid #343840;
+    box-shadow: inset 0 1px #ffffff04;
+}
+
+/* Formulaires */
+.transaction-panel label {
+    color: #e2e3e7;
+}
+
+input,
+select,
+textarea {
+    color: #ffffff;
+    background: #090a0d;
+    border: 1px solid #383c44;
+    border-radius: 10px;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #818895;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #ff2638;
+    box-shadow: 0 0 0 2px #ff263825;
+}
+
+/* Bouton Enregistrer */
+.primary-btn {
+    color: #ffffff;
+    background: linear-gradient(100deg, #ff3546, #c90020);
+    border: 1px solid #ff4655;
+    box-shadow: 0 3px 12px #ff26381c;
+}
+
+.primary-btn:hover {
+    filter: brightness(1.12);
+    box-shadow: 0 0 18px #ff263845;
+}
+
+/* Boutons secondaires */
+.secondary-btn,
+.refresh-btn,
+.icon-btn,
+.clear-archive-btn {
+    color: #f5f5f7;
+    background: linear-gradient(145deg, #22242a, #141519);
+    border: 1px solid #3b3e46;
+}
+
+.secondary-btn:hover,
+.refresh-btn:hover,
+.icon-btn:hover,
+.clear-archive-btn:hover {
+    color: #ffffff;
+    background: #32151a;
+    border-color: #ff2638;
+    box-shadow: 0 0 12px #ff263825;
+}
+
+/* Icône de l'outil externe */
+.link-icon {
+    color: #ff4655;
+    background: linear-gradient(145deg, #35171c, #171317);
+    border: 1px solid #78212b;
+}
+
+/* Historique */
+.history-panel {
+    background: linear-gradient(145deg, #15171b, #0d0f12);
+    border-color: #343840;
+}
+
+th {
+    color: #c8cbd2;
+    border-bottom-color: #34373e;
+}
+
+td {
+    color: #e6e7eb;
+    border-bottom-color: #25282e;
+}
+
+/* Entrées et sorties */
+.amount-in,
+.type-pill.in {
+    color: #45d6a0;
+}
+
+.type-pill.in {
+    background: #45d6a018;
+}
+
+.amount-out,
+.type-pill.out {
+    color: #ff4655;
+}
+
+.type-pill.out {
+    background: #ff263818;
+}
+
+/* Confirmation de suppression */
+.confirm-box {
+    background: #15171b;
+    border-color: #42454d;
+}
+
+.confirm-actions button {
+    color: #ffffff;
+    background: #24262c;
+    border-color: #41444c;
+}
+
+#confirmClearArchive {
+    color: #ffffff;
+    background: linear-gradient(100deg, #ff3546, #c90020);
+    border-color: #ff2638;
+}
+
+/* Notifications */
+.toast {
+    color: #ffffff;
+    background: #202329;
+    border-color: #444851;
+}
+
+.toast.error {
+    background: #35151a;
+    border-color: #ff2638;
+}
+
+.toast.success {
+    background: #17352b;
+    border-color: #45d6a0;
+}
+
+/* Éléments décoratifs et interactions */
+button {
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+
+button:focus-visible {
+    outline: 2px solid #ff4655;
+    outline-offset: 2px;
+}
+
+.page.active > .panel {
+    margin-top: 28px;
+}
