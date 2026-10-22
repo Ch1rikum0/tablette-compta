@@ -694,7 +694,6 @@ initializeTablet();
     }
 })();
 
-const openDetteCell = document.getElementById('openDetteCell');
 const backCompta = document.getElementById('backCompta');
 const pageDetteCell = document.getElementById('page-dette-cell');
 const pageCompta = document.getElementById('page-compta');
