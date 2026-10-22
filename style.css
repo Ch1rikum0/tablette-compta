@@ -1686,15 +1686,22 @@ article.panel.link-panel.tokyo-panel {
     filter: brightness(0.9) !important;
 }
 
-/* Conserver la bande blanche à gauche */
+
 #openTokyo::before {
     content: "" !important;
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;
-    width: 16px !important;
+    width: 45px !important;
     height: 100% !important;
-    background: #fff !important;
-    border-radius: 9px 0 0 9px !important;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.65) 0%,
+        rgba(255, 255, 255, 0.3) 35%,
+        rgba(255, 255, 255, 0.08) 70%,
+        rgba(255, 255, 255, 0) 100%
+    ) !important;
     pointer-events: none !important;
+    z-index: 2 !important;
 }
+
