@@ -1632,21 +1632,16 @@ article.panel.link-panel.tokyo-panel {
 }
 
 
-.tokyo-panel .tokyo-content {
+.tokyo-panel .tokyo-slide img {
+    transform: translateY(200px) !important;
     position: relative !important;
-    overflow: hidden !important;
 }
 
 .tokyo-panel .tokyo-slide img {
+    transform: translateY(200px) !important;
     position: absolute !important;
-    top: 200px !important;
-    left: -50px !important;
-
-    transform: none !important;
     animation: none !important;
     transition: none !important;
-
-    margin: 0 !important;
     user-select: none !important;
     -webkit-user-drag: none !important;
     pointer-events: none !important;
