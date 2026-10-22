@@ -1508,3 +1508,24 @@ tbody tr:hover {
     object-fit: contain;
     object-position: center;
 }
+
+
+/* Cadres identiques pour Kaneki et Limule */
+.tokyo-wallpaper {
+    width: 100%;
+    height: 260px;
+    border: 1px solid #79222e;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.tokyo-wallpaper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
