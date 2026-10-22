@@ -1481,11 +1481,13 @@ tbody tr:hover {
 }
 
 
-/* Cadre unique Tokyo Ghoul */
+/* Cadre rouge avec défilement horizontal */
 .tokyo-content {
+    height: 380px;
+    overflow: hidden;
     border: 1px solid #79222e;
     border-radius: 8px;
-    padding: 12px;
+    padding: 10px;
     margin: 12px 0;
 }
 
@@ -1497,17 +1499,15 @@ tbody tr:hover {
     margin: 0 0 12px;
 }
 
+/* Image adaptée à la largeur disponible */
 .tokyo-wallpaper {
     width: 100%;
-    overflow: hidden;
-    border-radius: 5px;
 }
 
 .tokyo-wallpaper img {
     display: block;
     width: 100%;
     height: auto;
-    border: none;
     border-radius: 5px;
 }
 
@@ -1522,4 +1522,35 @@ tbody tr:hover {
 /* Agrandir légèrement le contenu */
 .tokyo-content {
     padding: 8px;
+}
+
+/* Défilement de gauche à droite */
+.tokyo-scroll {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: #79222e #111317;
+}
+
+/* Chaque image et son texte forment une diapositive */
+.tokyo-slide {
+    flex: 0 0 100%;
+    min-width: 0;
+    height: 100%;
+    overflow-y: auto;
+    scroll-snap-align: start;
+    scrollbar-width: thin;
+}
+
+.tokyo-slide h3 {
+    margin: 0 0 8px;
+}
+
+.tokyo-slide p {
+    margin: 0 0 12px;
 }
