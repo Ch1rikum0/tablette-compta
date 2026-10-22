@@ -541,19 +541,28 @@ initializeTablet();
 })();
 
 
-/* Diaporama Tokyo Ghoul et Limule : changement toutes les 5 secondes */
-(() => {
-    const slides = document.querySelectorAll('.tokyo-slides .tokyo-slide');
+/* Diaporama automatique */
+document.addEventListener('DOMContentLoaded', () => {
+    const slides = document.querySelectorAll(
+        '.tokyo-slides .tokyo-slide'
+    );
 
-    if (slides.length < 2) return;
+    if (slides.length < 2) {
+        console.warn('Diaporama : moins de 2 diapositives trouvées.');
+        return;
+    }
 
-    let currentSlide = 0;
+    let index = 0;
+
+    slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === 0);
+    });
 
     setInterval(() => {
-        slides[currentSlide].classList.remove('active');
+        slides[index].classList.remove('active');
 
-        currentSlide = (currentSlide + 1) % slides.length;
+        index = (index + 1) % slides.length;
 
-        slides[currentSlide].classList.add('active');
+        slides[index].classList.add('active');
     }, 5000);
-})();
+});
