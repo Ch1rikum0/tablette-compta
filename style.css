@@ -343,3 +343,9 @@ body {
     color: #fff;
     border-color: var(--red);
 }
+
+
+/* Espace entre le titre de page et le bloc de contenu */
+.page.active > .panel {
+    margin-top: 18px;
+}
