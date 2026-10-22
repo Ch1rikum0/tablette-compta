@@ -1878,3 +1878,26 @@ article.panel.link-panel.tokyo-panel {
 #nextTokyo::first-line {
     text-align: center !important;
 }
+
+
+#closeTokyo {
+    width: 100% !important;
+    margin-top: 17px !important;
+    padding: 13px 15px !important;
+    border: 0 !important;
+    border-radius: 9px !important;
+    color: white !important;
+    font: inherit !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    background: var(--blue) !important;
+    transition: filter 0.15s, transform 0.15s, box-shadow 0.15s !important;
+}
+
+#closeTokyo:hover {
+    filter: brightness(1.15) !important;
+}
+
+#closeTokyo:active {
+    filter: brightness(0.9) !important;
+}
