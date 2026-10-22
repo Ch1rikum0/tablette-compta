@@ -1505,119 +1505,22 @@ article.panel.link-panel.tokyo-panel {
 }
 
 
-/* Abaisser le titre, le texte et l'image de Kaneki et Limule */
-.tokyo-panel .tokyo-slide h3 {
-    margin-top: 15px !important;
+/* ===== DIAPORAMA KANEKI ET LIMULE ===== */
+
+/* Zone du diaporama */
+.tokyo-panel .tokyo-content {
+    position: relative !important;
+    overflow: hidden !important;
 }
 
-.tokyo-panel .tokyo-slide p {
-    margin-top: 12px !important;
+/* Diapositives */
+.tokyo-panel .tokyo-slide {
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
-.tokyo-panel .tokyo-slide img {
-    margin-top: 12px !important;
-}
-
-
-/* Descendre fortement le contenu des diapositives */
-.tokyo-panel .tokyo-slide h3 {
-    margin-top: 55px !important;
-}
-
-.tokyo-panel .tokyo-slide p {
-    margin-top: 20px !important;
-}
-
-.tokyo-panel .tokyo-slide img {
-    margin-top: 25px !important;
-}
-
-
-/* Agrandir les descriptions de Kaneki et Limule */
-.tokyo-panel .tokyo-slide p {
-    font-size: 18px !important;
-    font-weight: 500 !important;
-    line-height: 1.5 !important;
-}
-
-
-/* Agrandir le texte descriptif de Kaneki et Limule */
-.tokyo-panel .tokyo-slide p {
-    font-size: 24px !important;
-    font-weight: 600 !important;
-    line-height: 1.4 !important;
-    margin-top: 12px !important;
-}
-
-
-/* Remettre le contenu à sa position d'origine */
-.tokyo-panel .tokyo-slide h3 {
-    margin-top: 0 !important;
-}
-
-.tokyo-panel .tokyo-slide p {
-    margin-top: 0 !important;
-    margin-bottom: 10px !important;
-    font-size: 24px !important;
-    font-weight: 600 !important;
-    line-height: 1.4 !important;
-}
-
-.tokyo-panel .tokyo-slide img {
-    margin-top: 0 !important;
-}
-
-
-/* Remonter les titres, descriptions et images */
-.tokyo-panel .tokyo-slide h3 {
-    margin-top: 0 !important;
-    margin-bottom: 8px !important;
-}
-
-.tokyo-panel .tokyo-slide p {
-    margin-top: 0 !important;
-    margin-bottom: 10px !important;
-    font-size: 24px !important;
-    font-weight: 600 !important;
-    line-height: 1.4 !important;
-}
-
-.tokyo-panel .tokyo-slide img {
-    margin-top: 0 !important;
-    transform: translateY(-35px);
-}
-
-
-/* Titres plus grands et descriptions plus petites */
-.tokyo-panel .tokyo-slide h3 {
-    font-size: 30px !important;
-    font-weight: 700 !important;
-    margin-top: 0 !important;
-    margin-bottom: 8px !important;
-}
-
-.tokyo-panel .tokyo-slide p {
-    font-size: 16px !important;
-    font-weight: 400 !important;
-    line-height: 1.4 !important;
-    margin-top: 0 !important;
-    margin-bottom: 10px !important;
-}
-
-
-/* Modifier uniquement le titre et la description */
-.tokyo-panel .tokyo-slide h3 {
-    font-size: 32px !important;
-    font-weight: 700 !important;
-}
-
-.tokyo-panel .tokyo-slide p {
-    font-size: 14px !important;
-    font-weight: 400 !important;
-}
-
-
-/* Fixer les titres de Kaneki et Limule */
+/* Titres fixes en haut */
 .tokyo-panel .tokyo-slide h3 {
     position: absolute !important;
     top: 12px !important;
@@ -1631,44 +1534,28 @@ article.panel.link-panel.tokyo-panel {
     overflow: hidden !important;
 }
 
-
-.tokyo-panel .tokyo-slide img {
-    transform: translateY(200px) !important;
-    position: relative !important;
+/* Descriptions */
+.tokyo-panel .tokyo-slide p {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    line-height: 1.4 !important;
+    margin: 55px 0 10px !important;
 }
 
-.tokyo-panel .tokyo-slide img {
-    transform: translateY(200px) !important;
-    position: absolute !important;
-    animation: none !important;
-    transition: none !important;
-    user-select: none !important;
-    -webkit-user-drag: none !important;
-    pointer-events: none !important;
-}
-
-.tokyo-panel .tokyo-content {
-    position: relative !important;
-    overflow: hidden !important;
-}
-
+/* Images fixes en haut à droite */
 .tokyo-panel .tokyo-slide img {
     position: absolute !important;
-
     top: 0 !important;
     right: 0 !important;
     left: auto !important;
-
     width: 100% !important;
     height: 240px !important;
     object-fit: contain !important;
     object-position: center bottom !important;
-
     transform: none !important;
     animation: none !important;
     transition: none !important;
     margin: 0 !important;
-
     user-select: none !important;
     -webkit-user-drag: none !important;
     pointer-events: none !important;
