@@ -1607,3 +1607,28 @@ article.panel.link-panel.tokyo-panel {
     -webkit-user-drag: none !important;
     z-index: 1 !important;
 }
+
+/* ===== CORRECTION VISIBILITE DES IMAGES ===== */
+
+.tokyo-panel .tokyo-slide {
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.tokyo-panel .tokyo-slide img {
+    display: block !important;
+    position: absolute !important;
+    top: 80px !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 240px !important;
+    max-height: 240px !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+}
