@@ -1356,6 +1356,14 @@ tbody tr:hover {
 }
 
 .tokyo-slide.active {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+}
+
+.tokyo-slide.active {
     display: flex;
     flex-direction: column;
 }
