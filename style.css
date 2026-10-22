@@ -1751,3 +1751,44 @@ article.panel.link-panel.tokyo-panel {
 }
 
 
+/* AFFICHAGE GRAND FORMAT TOKYO GHOUL */
+.tokyo-fullscreen {
+    position: absolute;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    background: #08090c;
+    overflow: hidden;
+}
+
+.tokyo-fullscreen.hidden {
+    display: none !important;
+}
+
+.tokyo-fullscreen-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 15px 20px;
+    flex-shrink: 0;
+}
+
+.tokyo-fullscreen-image {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.tokyo-fullscreen-image img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
