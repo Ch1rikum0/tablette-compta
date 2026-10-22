@@ -387,3 +387,218 @@ textarea:focus {
 .page.active > .panel {
     margin-top: 28px;
 }
+
+
+/* ======================================
+   SILENT GHOST — NOIR / GRIS / BLANC / ROUGE
+   ====================================== */
+
+:root {
+    --bg: #08090c;
+    --panel: #111317;
+    --panel2: #1b1e23;
+    --line: #30343c;
+    --text: #f5f5f7;
+    --muted: #a0a6b2;
+    --blue: #ff2638;
+    --green: #45d6a0;
+    --red: #ff2638;
+}
+
+/* Fond général et tablette */
+.tablet {
+    background: #08090c;
+    border-color: #34373e;
+    box-shadow: 0 25px 100px #000b;
+}
+
+/* Menu latéral */
+.sidebar {
+    background: linear-gradient(180deg, #111317, #090a0d);
+    border-right-color: #30343c;
+}
+
+.sidebar-brand .brand-icon {
+    background: linear-gradient(145deg, #30343b, #111317);
+    border: 1px solid #ff2638;
+    box-shadow: 0 0 12px #ff263825;
+}
+
+.sidebar-brand h2 {
+    color: #ffffff;
+}
+
+.nav-btn {
+    color: #d0d2d8;
+    background: transparent;
+    border-color: transparent;
+}
+
+.nav-btn:hover {
+    background: #202126;
+    border-color: #42454d;
+}
+
+.nav-btn.active {
+    color: #ffffff;
+    background: linear-gradient(100deg, #42151c, #202126);
+    border-color: #ff2638;
+    box-shadow: inset 3px 0 #ff2638, 0 0 12px #ff263820;
+}
+
+/* Icônes et titres */
+.brand-icon,
+.link-icon {
+    background: linear-gradient(145deg, #30343b, #17191e);
+    color: #ff4655;
+    border: 1px solid #454951;
+}
+
+h1, h2, h3 {
+    color: #ffffff;
+}
+
+/* Carte du solde */
+.balance-card {
+    background: linear-gradient(115deg, #17191e, #25282e);
+    border: 1px solid #464a52;
+    box-shadow: inset 3px 0 #ff2638;
+}
+
+.eyebrow {
+    color: #ff5260;
+}
+
+.balance-symbol {
+    background: #17191e;
+    color: #ff394b;
+    border-color: #555962;
+}
+
+/* Blocs principaux */
+.panel {
+    background: linear-gradient(145deg, #17191e, #101114);
+    border-color: #343840;
+}
+
+/* Champs de saisie */
+input,
+select,
+textarea {
+    background: #0b0c0f;
+    color: #ffffff;
+    border-color: #41444c;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #858b96;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #ff2638;
+    box-shadow: 0 0 0 2px #ff263825;
+}
+
+/* Bouton principal */
+.primary-btn {
+    background: linear-gradient(100deg, #ff3546, #c90020);
+    color: #ffffff;
+    border: 1px solid #ff4655;
+    box-shadow: 0 0 12px #ff263820;
+}
+
+.primary-btn:hover {
+    background: linear-gradient(100deg, #ff5260, #e00025);
+    box-shadow: 0 0 16px #ff263845;
+}
+
+/* Boutons secondaires et actualisation */
+.secondary-btn,
+.refresh-btn,
+.icon-btn,
+.clear-archive-btn {
+    background: linear-gradient(145deg, #25282e, #17191e);
+    color: #f5f5f7;
+    border: 1px solid #444851;
+}
+
+.secondary-btn:hover,
+.refresh-btn:hover,
+.icon-btn:hover,
+.clear-archive-btn:hover {
+    background: #35171c;
+    border-color: #ff2638;
+    color: #ffffff;
+    box-shadow: 0 0 10px #ff263825;
+}
+
+/* Historique et tableau */
+th {
+    color: #c5c8cf;
+    border-bottom-color: #3b3e45;
+}
+
+td {
+    border-bottom-color: #292c32;
+}
+
+.table-wrap table {
+    background: transparent;
+}
+
+/* Couleurs des entrées et sorties conservées */
+.amount-in,
+.type-pill.in {
+    color: #45d6a0;
+}
+
+.type-pill.in {
+    background: #45d6a018;
+}
+
+.amount-out,
+.type-pill.out {
+    color: #ff4655;
+}
+
+.type-pill.out {
+    background: #ff263818;
+}
+
+/* Fenêtre de confirmation */
+.confirm-box {
+    background: #15171b;
+    border-color: #41444c;
+}
+
+.confirm-actions button {
+    background: #25282e;
+    border-color: #444851;
+    color: #ffffff;
+}
+
+#confirmClearArchive {
+    background: #d71930;
+    border-color: #ff2638;
+    color: #ffffff;
+}
+
+/* Alertes */
+.toast {
+    background: #202329;
+    border-color: #444851;
+    color: #ffffff;
+}
+
+.toast.error {
+    background: #35151a;
+    border-color: #ff2638;
+}
+
+.toast.success {
+    background: #17352b;
+    border-color: #45d6a0;
+}
