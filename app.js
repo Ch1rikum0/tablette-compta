@@ -541,48 +541,51 @@ initializeTablet();
 })();
 
 
-/* ===== DIAPORAMA RECONSTRUIT ===== */
+/* ===== DIAPORAMA AUTOMATIQUE ===== */
 (() => {
-    const initSlideshow = () => {
+    function startTokyoSlideshow() {
         const container = document.querySelector('.tokyo-content');
-
-        if (!container) {
-            console.warn('Diaporama : cadre introuvable.');
-            return;
-        }
+        if (!container) return;
 
         const slides = Array.from(
             container.querySelectorAll('.tokyo-slide')
         );
 
-        if (slides.length === 0) {
-            console.warn('Diaporama : aucune diapositive.');
+        if (slides.length < 2) {
+            console.warn('Diaporama : il faut au moins 2 diapositives.');
             return;
         }
 
-        let index = 0;
+        let index = slides.findIndex(slide =>
+            slide.classList.contains('active')
+        );
 
-        const showSlide = (newIndex) => {
+        if (index < 0) index = 0;
+
+        function showSlide(n) {
             slides.forEach((slide, i) => {
-                slide.classList.toggle('active', i === newIndex);
+                slide.classList.toggle('active', i === n);
             });
-        };
+        }
 
         showSlide(index);
 
-        if (slides.length > 1) {
-            setInterval(() => {
+        window.tokyoSlideshowTimer =
+            window.setInterval(() => {
                 index = (index + 1) % slides.length;
                 showSlide(index);
             }, 5000);
-        }
 
-        console.log('Diaporama initialisé :', slides.length, 'diapositives');
-    };
+        console.log('Diaporama lancé : changement toutes les 5 secondes.');
+    }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initSlideshow);
+        document.addEventListener(
+            'DOMContentLoaded',
+            startTokyoSlideshow,
+            { once: true }
+        );
     } else {
-        initSlideshow();
+        startTokyoSlideshow();
     }
 })();
