@@ -343,6 +343,7 @@ document.getElementById('clearArchiveBtn').addEventListener('click', () => {
     }
 });
 
+console.log('Clic sur Vider l’historique détecté');
 document.getElementById('closeBtn').addEventListener('click', () => {
     tablet.classList.add('hidden');
 });
