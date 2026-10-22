@@ -536,7 +536,7 @@ openDetteCell.addEventListener('click', () => {
 
     pageDetteCell.classList.add('active');
 
-    pageTitle.textContent = 'Dette cell';
+    pageTitle.textContent = 'Dette';
     pageSubtitle.textContent = 'Gestion des dettes';
     pageIcon.textContent = '💰';
 
