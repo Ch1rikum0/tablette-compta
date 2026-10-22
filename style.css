@@ -250,3 +250,34 @@ th, td { white-space: nowrap; }}
 body {
     overflow-x: hidden;
 }
+
+
+/* En-tête de l'historique */
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.history-header h3 {
+    margin: 0;
+}
+
+/* Bouton pour vider l'historique */
+.clear-archive-btn {
+    background: #d9364f;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.clear-archive-btn:hover {
+    background: #b9273e;
+}
