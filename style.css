@@ -1586,3 +1586,20 @@ article.panel.link-panel.tokyo-panel {
     margin-top: 0 !important;
     transform: translateY(-35px);
 }
+
+
+/* Titres plus grands et descriptions plus petites */
+.tokyo-panel .tokyo-slide h3 {
+    font-size: 30px !important;
+    font-weight: 700 !important;
+    margin-top: 0 !important;
+    margin-bottom: 8px !important;
+}
+
+.tokyo-panel .tokyo-slide p {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 1.4 !important;
+    margin-top: 0 !important;
+    margin-bottom: 10px !important;
+}
