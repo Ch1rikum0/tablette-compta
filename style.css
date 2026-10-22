@@ -1626,3 +1626,16 @@ article.panel.link-panel.tokyo-panel {
     filter: brightness(0.9);
 }
 
+
+#openTokyo {
+    background: var(--blue) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 9px !important;
+    box-shadow: inset 3px 0 0 rgba(255, 255, 255, 0.22) !important;
+    transition: filter 0.15s !important;
+}
+
+#openTokyo:hover {
+    filter: brightness(1.15) !important;
+}
