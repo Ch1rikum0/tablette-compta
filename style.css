@@ -1660,7 +1660,6 @@ article.panel.link-panel.tokyo-panel {
     background: #ff2638 !important;
 }
 
-
 #openTokyo::before {
     content: "" !important;
     position: absolute !important;
@@ -1676,10 +1675,15 @@ article.panel.link-panel.tokyo-panel {
         rgba(255, 255, 255, 0.01) 75%,
         rgba(255, 255, 255, 0) 100%
     ) !important;
+    opacity: 0 !important;
+    transition: opacity 0.2s ease !important;
     pointer-events: none !important;
     z-index: 1 !important;
 }
 
+#openTokyo:hover::before {
+    opacity: 1 !important;
+}
 
 /* Harmoniser les effets des deux boutons */
 #openTokyo {
