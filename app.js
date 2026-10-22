@@ -452,3 +452,4 @@ loadTransactions();
 renderData();
 loadSharedBalance();
 loadSharedOperations();
+alert("Test de chargement du nouveau code !");
