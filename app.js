@@ -50,7 +50,16 @@ async function loadSharedOperations() {
         type: op.type,
         amount: Number(op.montant) || 0,
         description: op.description || '',
-        date: op.date_operation || '',
+        date: op.date_operation
+    ? new Date(op.date_operation).toLocaleString('fr-FR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    }).replace(',', '').replace(':', 'h')
+    : '',
         player: op.joueur || 'Inconnu'
     }));
 
