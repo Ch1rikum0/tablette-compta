@@ -1654,10 +1654,10 @@ article.panel.link-panel.tokyo-panel {
 }
 
 
+
 #openTokyo {
     position: relative !important;
     overflow: hidden !important;
-    background: #ff2638 !important;
 }
 
 #openTokyo::before {
@@ -1681,9 +1681,14 @@ article.panel.link-panel.tokyo-panel {
     z-index: 1 !important;
 }
 
+#openTokyo:hover {
+    filter: brightness(1.15);
+}
+
 #openTokyo:hover::before {
     opacity: 1 !important;
 }
+
 
 /* Harmoniser les effets des deux boutons */
 #openTokyo {
@@ -1697,4 +1702,3 @@ article.panel.link-panel.tokyo-panel {
 #openTokyo:active {
     filter: brightness(0.9) !important;
 }
-
