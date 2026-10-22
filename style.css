@@ -1534,17 +1534,17 @@ article.panel.link-panel.tokyo-panel {
     z-index: 3 !important;
 }
 
-/* Image : centrée et visible dans le cadre rouge */
+/* Image : centrée, visible et vers le bas */
 .tokyo-panel .tokyo-slide img {
     position: absolute !important;
     left: 50% !important;
-    top: auto !important;
-    bottom: -150px !important;
-    transform: translateX(-50%) !important;
-    width: 70% !important;
+    top: 0 !important;
+    bottom: auto !important;
+    transform: translate(-50%, 100px) !important;
+    width: 65% !important;
     height: 240px !important;
     object-fit: contain !important;
-    object-position: center bottom !important;
+    object-position: center center !important;
     pointer-events: none !important;
     z-index: 1 !important;
 }
