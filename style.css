@@ -1939,6 +1939,6 @@ article.panel.link-panel.tokyo-panel {
 #openDetteCell {
     display: block;
     width: fit-content;
-    margin: 0 0 15px auto;
+    margin: -10px 0 15px auto;
     padding: 10px 18px;
 }
