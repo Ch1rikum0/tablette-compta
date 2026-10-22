@@ -1955,3 +1955,137 @@ article.panel.link-panel.tokyo-panel {
     padding: 10px 18px;
     z-index: 9999;
 }
+
+
+/* ================================
+   DESIGN DE LA PAGE DETTE
+================================ */
+
+.debt-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.debt-card {
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.debt-card span {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.debt-card strong {
+    color: var(--text);
+    font-size: 22px;
+}
+
+.debt-section {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.debt-section h3 {
+    margin-top: 0;
+    margin-bottom: 18px;
+}
+
+#debtForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+#debtForm label {
+    align-self: end;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+#debtForm input,
+#debtForm select,
+#debtSearch,
+#debtFilter {
+    width: 100%;
+    min-width: 0;
+    padding: 11px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel2);
+    color: var(--text);
+    outline: none;
+}
+
+#debtForm input:focus,
+#debtForm select:focus,
+#debtSearch:focus,
+#debtFilter:focus {
+    border-color: var(--blue);
+}
+
+#debtForm button {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+}
+
+#debtSearch,
+#debtFilter {
+    margin-bottom: 12px;
+}
+
+.debt-item {
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.debt-item h4 {
+    margin: 0;
+    color: var(--text);
+    font-size: 17px;
+}
+
+.debt-item p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.debt-item strong {
+    color: var(--green);
+    font-size: 20px;
+}
+
+.debt-item button {
+    margin-top: 5px;
+}
+
+@media (max-width: 700px) {
+    .debt-summary {
+        grid-template-columns: 1fr;
+    }
+
+    #debtForm {
+        grid-template-columns: 1fr;
+    }
+
+    #debtForm button {
+        grid-column: auto;
+    }
+}
