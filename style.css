@@ -1881,7 +1881,9 @@ article.panel.link-panel.tokyo-panel {
 
 
 #closeTokyo {
-    width: 180px !important;
+    width: 240px !important;
+    min-width: 240px !important;
+    white-space: nowrap !important;
     margin-top: 17px !important;
     padding: 13px 15px !important;
     border: 0 !important;
