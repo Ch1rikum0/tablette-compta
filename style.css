@@ -1590,3 +1590,11 @@ article.panel.link-panel.tokyo-panel {
     filter: brightness(1.15) !important;
 }
 
+
+#openTokyo {
+    transition: filter 0.15s ease !important;
+}
+
+#openTokyo:hover {
+    filter: brightness(1.15) !important;
+}
