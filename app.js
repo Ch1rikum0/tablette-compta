@@ -450,7 +450,8 @@ const pages = {
     compta: document.getElementById('page-compta'),
     rachat: document.getElementById('page-rachat'),
     drogue: document.getElementById('page-drogue'),
-    historique: document.getElementById('page-historique')
+    historique: document.getElementById('page-historique'),
+    detteCell: document.getElementById('page-dette-cell')
 };
 
 const pageTitle = document.getElementById('pageTitle');
