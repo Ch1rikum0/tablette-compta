@@ -1517,3 +1517,17 @@ article.panel.link-panel.tokyo-panel {
 .tokyo-panel .tokyo-slide img {
     margin-top: 12px !important;
 }
+
+
+/* Descendre fortement le contenu des diapositives */
+.tokyo-panel .tokyo-slide h3 {
+    margin-top: 55px !important;
+}
+
+.tokyo-panel .tokyo-slide p {
+    margin-top: 20px !important;
+}
+
+.tokyo-panel .tokyo-slide img {
+    margin-top: 25px !important;
+}
