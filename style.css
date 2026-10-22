@@ -1384,72 +1384,77 @@ tbody tr:hover {
 
 
 
-/* ===== DIAPORAMA : VERSION PROPRE ===== */
 
-/* Panneau extérieur sans cadre gris */
+/* ===== DIAPORAMA ===== */
+
+/* Conserver le panneau extérieur d'origine */
 article.panel.link-panel.tokyo-panel {
-    background: transparent !important;
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    outline: none;
+    box-shadow: none;
 }
 
-/* En-tête du diaporama */
+/* En-tête */
 .tokyo-panel .tokyo-heading {
-    border: none !important;
-    box-shadow: none !important;
+    border: none;
+    box-shadow: none;
 }
 
-/* Cadre rouge unique et fixe */
+/* Cadre rouge fixe */
 .tokyo-panel .tokyo-content {
-    width: 100% !important;
-    height: 390px !important;
-    min-height: 390px !important;
-    max-height: 390px !important;
-    padding: 12px !important;
-    margin: 12px 0 !important;
-    box-sizing: border-box !important;
-    overflow: hidden !important;
-    background: transparent !important;
-    border: 2px solid #79222e !important;
-    border-radius: 8px !important;
-    outline: none !important;
-    box-shadow: none !important;
+    width: 100%;
+    height: 390px;
+    min-height: 390px;
+    max-height: 390px;
+    padding: 12px;
+    margin: 12px 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: transparent;
+    border: 2px solid #79222e;
+    border-radius: 8px;
+    outline: none;
+    box-shadow: none;
 }
 
+/* Diapositives sans cadre supplémentaire */
 .tokyo-panel .tokyo-slide {
-    display: none !important;
-    width: 100% !important;
-    height: 100% !important;
-    overflow: hidden !important;
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
 }
 
 .tokyo-panel .tokyo-slide.active {
-    display: flex !important;
-    flex-direction: column !important;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Titres et textes */
 .tokyo-panel .tokyo-slide h3,
 .tokyo-panel .tokyo-slide p {
-    flex-shrink: 0 !important;
+    flex-shrink: 0;
 }
 
+/* Images sans bordure supplémentaire */
 .tokyo-panel .tokyo-slide img {
-    display: block !important;
-    width: 100% !important;
-    height: 240px !important;
-    min-height: 0 !important;
-    max-height: 240px !important;
-    flex: 0 1 240px !important;
-    object-fit: contain !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    border: none !important;
-    border-radius: 0 !important;
-    outline: none !important;
-    box-shadow: none !important;
+    display: block;
+    width: 100%;
+    height: 240px;
+    min-height: 0;
+    max-height: 240px;
+    flex: 0 1 240px;
+    object-fit: contain;
+    margin: 0 auto;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    box-shadow: none;
 }
-
