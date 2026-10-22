@@ -1641,6 +1641,7 @@ article.panel.link-panel.tokyo-panel {
 }
 
 
+
 #openTokyo {
     position: relative !important;
     overflow: hidden !important;
@@ -1652,8 +1653,11 @@ article.panel.link-panel.tokyo-panel {
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;
-   width: 12px !important;
+    width: 16px !important;
     height: 100% !important;
     background: #ffffff !important;
     border-radius: 9px 0 0 9px !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
 }
+
