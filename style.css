@@ -1540,7 +1540,7 @@ article.panel.link-panel.tokyo-panel {
     left: 50% !important;
     top: 400px !important;
     bottom: auto !important;
-    transform: translateX(-50%) !important;
+   transform: translate(-50%, 100px) !important;
     width: 100% !important;
     height: 240px !important;
     object-fit: contain !important;
