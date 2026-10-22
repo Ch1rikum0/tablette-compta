@@ -1947,11 +1947,11 @@ article.panel.link-panel.tokyo-panel {
 }
 
 #backCompta {
-    position: absolute;
+    position: fixed;
     top: 25px;
     right: 30px;
     width: fit-content;
     margin: 0;
     padding: 10px 18px;
-    z-index: 10;
+    z-index: 9999;
 }
