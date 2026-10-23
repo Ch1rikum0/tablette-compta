@@ -1,4 +1,5 @@
-console.log("Version JavaScript de la tablette chargée");
+console.log("VERSION TEST SUPPRESSION 123");
+alert("NOUVELLE VERSION APP.JS CHARGÉE");
 
 const SUPABASE_URL = "https://reqrvqliaakvptcpazkm.supabase.co";
 const SUPABASE_KEY = "sb_publishable_YoXG0Gn6rftPxYZfrxS7wg_oNJzAPYf";
