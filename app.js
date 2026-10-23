@@ -916,8 +916,6 @@ if (filteredDebts.length === 0) {
         debtList.appendChild(card);
     });
         
-debtList.innerHTML = '';
-
     // Mise à jour des totaux : seules les sommes restantes sont comptées
     const openDebts = debts.filter(debt => {
         if (typeof debt.remaining !== 'number') {
