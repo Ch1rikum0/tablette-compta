@@ -2172,3 +2172,13 @@ article.panel.link-panel.tokyo-panel {
     margin-top: 10px;
 }
 
+/* Ajustement des titres du tableau des dettes */
+.debt-table-header > span:nth-child(3) {
+    position: relative !important;
+    left: -15px !important;
+}
+
+.debt-table-row > :nth-child(3) {
+    position: relative !important;
+    left: -15px !important;
+}
