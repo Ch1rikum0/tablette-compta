@@ -825,8 +825,19 @@ if (filteredDebts.length === 0) {
             debt.remaining = debt.paid ? 0 : debt.amount;
         }
 
-        const card = document.createElement('article');
-       card.className = 'debt-item';
+       const card = document.createElement('article');
+        card.className = 'debt-item';
+        
+        const debtToggle = document.createElement('button');
+        debtToggle.type = 'button';
+        debtToggle.className = 'debt-card-toggle';
+        debtToggle.innerHTML = `
+            <span>Dette de ${debt.player}</span>
+            <span class="debt-card-arrow">▼</span>
+        `;
+        
+        const debtContent = document.createElement('div');
+        debtContent.className = 'debt-card-content';
 
        
         const title = document.createElement('span');
