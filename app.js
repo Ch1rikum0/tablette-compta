@@ -923,49 +923,124 @@ if (filteredDebts.length === 0) {
 
 
 
+
 deleteButton.addEventListener('click', async () => {
-    console.log("CLIC SUR SUPPRIMER DÉTECTÉ");
-    notify("Clic sur Supprimer détecté", "success");
-    deleteButton.disabled = true;
-    deleteButton.textContent = 'Suppression...';
+    // Créer la fenêtre de confirmation
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed;
+        inset: 0;
+        z-index: 999999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+    `;
 
-    try {
-        const { data, error } = await supabaseClient
-            .from('dettes')
-            .delete()
-            .eq('id', String(debt.id))
-            .select('id');
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        background: #151e30;
+        color: #f3f6fc;
+        padding: 25px;
+        border-radius: 14px;
+        width: 100%;
+        max-width: 380px;
+        text-align: center;
+        border: 1px solid #29364c;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    `;
 
-        if (error) throw error;
+    const message = document.createElement('p');
+    message.textContent = `Voulez-vous vraiment supprimer la dette de ${debt.player} ?`;
+    message.style.cssText = `
+        margin: 0 0 22px;
+        font-size: 16px;
+        line-height: 1.5;
+    `;
 
-        if (!data || data.length === 0) {
-            console.error('Aucune dette supprimée. ID :', debt.id);
-            notify('La dette n’a pas été supprimée par Supabase.', 'error');
-            deleteButton.disabled = false;
-            deleteButton.textContent = 'Supprimer';
-            return;
+    const actions = document.createElement('div');
+    actions.style.cssText = `
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+    `;
+
+    const cancelButton = document.createElement('button');
+    cancelButton.type = 'button';
+    cancelButton.textContent = 'Annuler';
+
+    const confirmButton = document.createElement('button');
+    confirmButton.type = 'button';
+    confirmButton.textContent = 'Supprimer';
+
+    cancelButton.style.cssText = `
+        padding: 10px 16px;
+        border: 0;
+        border-radius: 8px;
+        background: #29364c;
+        color: white;
+        cursor: pointer;
+    `;
+
+    confirmButton.style.cssText = `
+        padding: 10px 16px;
+        border: 0;
+        border-radius: 8px;
+        background: #e5484d;
+        color: white;
+        cursor: pointer;
+    `;
+
+    actions.append(cancelButton, confirmButton);
+    modal.append(message, actions);
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    cancelButton.addEventListener('click', () => {
+        overlay.remove();
+    });
+
+    confirmButton.addEventListener('click', async () => {
+        confirmButton.disabled = true;
+        confirmButton.textContent = 'Suppression...';
+
+        try {
+            const { data, error } = await supabaseClient
+                .from('dettes')
+                .delete()
+                .eq('id', String(debt.id))
+                .select('id');
+
+            if (error) throw error;
+
+            if (!data || data.length === 0) {
+                notify('La dette n’a pas été supprimée.', 'error');
+                overlay.remove();
+                return;
+            }
+
+            debts = debts.filter(
+                item => String(item.id) !== String(debt.id)
+            );
+
+            localStorage.setItem(
+                DEBT_STORAGE_KEY,
+                JSON.stringify(debts)
+            );
+
+            overlay.remove();
+            renderDebts();
+            notify('Dette supprimée.', 'success');
+
+        } catch (error) {
+            console.error('Erreur de suppression :', error);
+            overlay.remove();
+            notify('Erreur lors de la suppression.', 'error');
         }
-
-        debts = debts.filter(
-            item => String(item.id) !== String(debt.id)
-        );
-
-        localStorage.setItem(
-            DEBT_STORAGE_KEY,
-            JSON.stringify(debts)
-        );
-
-        renderDebts();
-        notify('Dette supprimée.', 'success');
-
-    } catch (error) {
-        console.error('Erreur de suppression de la dette :', error);
-        notify('Erreur lors de la suppression de la dette.', 'error');
-
-        deleteButton.disabled = false;
-        deleteButton.textContent = 'Supprimer';
-    }
+    });
 });
+
 
 
 
