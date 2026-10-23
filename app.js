@@ -769,18 +769,6 @@ function renderDebts() {
         debtList.innerHTML = '<p class="muted">Aucune dette trouvée.</p>';
     }
 
-    const header = document.createElement('div');
-header.className = 'debt-table-header';
-header.innerHTML = `
-    <span>Nom</span>
-    <span>Motif</span>
-    <span>L'entreprise doit</span>
-    <span>Montant</span>
-    <span>Reste à payer</span>
-    <span>Statut</span>
-`;
-debtList.appendChild(header);
-
     filteredDebts.forEach(debt => {
         // Compatibilité avec les dettes déjà enregistrées
         if (typeof debt.remaining !== 'number') {
