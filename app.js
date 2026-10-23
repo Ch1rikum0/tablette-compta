@@ -836,9 +836,9 @@ if (filteredDebts.length === 0) {
             <span class="debt-card-arrow">▼</span>
         `;
         
-        const debtContent = document.createElement('div');
-        debtContent.className = 'debt-card-content';
-        debtContent.style.display = 'none';
+       const debtContent = document.createElement('div');
+       debtContent.className = 'debt-card-content';
+       debtContent.style.setProperty('display', 'none', 'important');
        
         const title = document.createElement('span');
         title.className = 'debt-cell debt-name';
@@ -1074,7 +1074,11 @@ deleteButton.addEventListener('click', async () => {
 debtToggle.addEventListener('click', () => {
     const isOpen = debtContent.style.display !== 'none';
 
-    debtContent.style.display = isOpen ? 'none' : 'block';
+   debtContent.style.setProperty(
+    'display',
+    isOpen ? 'none' : 'block',
+    'important'
+);
     
     const arrow = debtToggle.querySelector('.debt-card-arrow');
     arrow.textContent = isOpen ? '▶' : '▼';
