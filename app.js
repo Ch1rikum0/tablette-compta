@@ -908,21 +908,6 @@ function renderDebts() {
     saveDebts();
 }
 
-    const openDebts = debts.filter(debt => !debt.paid);
-
-    const totalReceive = openDebts
-        .filter(debt => debt.direction === 'receive')
-        .reduce((total, debt) => total + debt.amount, 0);
-
-    const totalPay = openDebts
-        .filter(debt => debt.direction === 'pay')
-        .reduce((total, debt) => total + debt.amount, 0);
-
-    debtToReceive.textContent = formatDebtAmount(totalReceive);
-    debtToPay.textContent = formatDebtAmount(totalPay);
-    debtCount.textContent = openDebts.length;
-}
-
 if (debtForm) {
     debtForm.addEventListener('submit', event => {
         event.preventDefault();
