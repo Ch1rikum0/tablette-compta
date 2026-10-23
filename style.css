@@ -2089,3 +2089,53 @@ article.panel.link-panel.tokyo-panel {
         grid-column: auto;
     }
 }
+
+
+/* Tableau des dettes */
+.debt-table-row {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1.3fr 0.8fr 0.9fr 1.2fr;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+}
+
+.debt-cell {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.debt-name {
+    font-weight: 700;
+}
+
+.debt-status {
+    font-weight: 600;
+}
+
+.debt-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.debt-actions input {
+    max-width: 220px;
+}
+
+.debt-table-header {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1.3fr 0.8fr 0.9fr 1.2fr;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    padding: 14px;
+    margin-top: 12px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
