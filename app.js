@@ -562,8 +562,9 @@ backCompta.addEventListener('click', () => {
     navButtons.forEach(btn => {
         btn.classList.toggle('active', btn.dataset.page === 'compta');
     });
-});
 
+    updateDetteButtonVisibility();
+});
 
 loadTransactions();
 renderData();
