@@ -2176,7 +2176,7 @@ article.panel.link-panel.tokyo-panel {
 .debt-table-header > span:nth-child(3),
 .debt-table-row > :nth-child(3) {
     position: relative !important;
-    left: -25px !important;
+    left: -35px !important;
 }
 
 .debt-table-header > span:nth-child(4),
