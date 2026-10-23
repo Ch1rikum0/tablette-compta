@@ -741,6 +741,7 @@ function formatDebtAmount(amount) {
     return `${Math.round(amount).toLocaleString('fr-FR')} $`;
 }
 
+
 function renderDebts() {
     if (!debtList) return;
 
@@ -756,8 +757,8 @@ function renderDebts() {
             filter === 'all' ||
             (filter === 'receive' && debt.direction === 'receive') ||
             (filter === 'pay' && debt.direction === 'pay') ||
-            (filter === 'open' && !debt.paid) ||
-            (filter === 'paid' && debt.paid);
+            (filter === 'open' && debt.remaining > 0) ||
+            (filter === 'paid' && debt.remaining <= 0);
 
         return matchesSearch && matchesFilter;
     });
@@ -766,66 +767,146 @@ function renderDebts() {
 
     if (filteredDebts.length === 0) {
         debtList.innerHTML = '<p class="muted">Aucune dette trouvée.</p>';
-    } else {
-        filteredDebts.forEach(debt => {
-            const card = document.createElement('article');
-            card.className = 'debt-item';
+    }
 
-            const title = document.createElement('h4');
-            title.textContent = debt.player;
+    filteredDebts.forEach(debt => {
+        // Compatibilité avec les dettes déjà enregistrées
+        if (typeof debt.remaining !== 'number') {
+            debt.remaining = debt.paid ? 0 : debt.amount;
+        }
 
-            const reason = document.createElement('p');
-            reason.textContent = debt.reason;
+        const card = document.createElement('article');
+        card.className = 'debt-item';
 
-            const direction = document.createElement('p');
-            direction.textContent = debt.direction === 'receive'
-                ? 'Le joueur doit à l’entreprise'
-                : 'L’entreprise doit au joueur';
+        const title = document.createElement('h4');
+        title.textContent = debt.player;
 
-            const amount = document.createElement('strong');
-            amount.textContent = formatDebtAmount(debt.amount);
+        const reason = document.createElement('p');
+        reason.textContent = `Motif : ${debt.reason}`;
 
-            const status = document.createElement('p');
-            status.textContent = debt.paid ? 'Remboursée' : 'En cours';
+        const direction = document.createElement('p');
+        direction.textContent = debt.direction === 'receive'
+            ? 'Le joueur doit à l’entreprise'
+            : 'L’entreprise doit au joueur';
 
-            card.append(title, reason, direction, amount, status);
+        const originalAmount = document.createElement('p');
+        originalAmount.textContent =
+            `Montant initial : ${formatDebtAmount(debt.amount)}`;
 
-            if (!debt.paid) {
-                const paidButton = document.createElement('button');
-                paidButton.type = 'button';
-                paidButton.className = 'secondary-btn';
-                paidButton.textContent = 'Marquer comme remboursée';
+        const remainingAmount = document.createElement('strong');
+        remainingAmount.textContent =
+            `Reste à payer : ${formatDebtAmount(debt.remaining)}`;
 
-                paidButton.addEventListener('click', () => {
-                    const index = debts.findIndex(item => item.id === debt.id);
+        const status = document.createElement('p');
+        status.textContent = debt.remaining <= 0
+            ? 'Dette soldée'
+            : debt.remaining < debt.amount
+                ? 'Remboursement partiel'
+                : 'En cours';
 
-                    if (index !== -1) {
-                        debts[index].paid = true;
-                        saveDebts();
-                        renderDebts();
-                    }
+        card.append(
+            title,
+            reason,
+            direction,
+            originalAmount,
+            remainingAmount,
+            status
+        );
+
+        if (debt.remaining > 0) {
+            const repaymentInput = document.createElement('input');
+            repaymentInput.type = 'number';
+            repaymentInput.min = '1';
+            repaymentInput.max = String(debt.remaining);
+            repaymentInput.step = '1';
+            repaymentInput.placeholder = 'Montant du remboursement';
+            repaymentInput.setAttribute('aria-label', 'Montant du remboursement');
+
+            const repaymentButton = document.createElement('button');
+            repaymentButton.type = 'button';
+            repaymentButton.className = 'secondary-btn';
+            repaymentButton.textContent = 'Enregistrer le remboursement';
+
+            repaymentButton.addEventListener('click', () => {
+                const repayment = Number(repaymentInput.value);
+
+                if (
+                    !Number.isFinite(repayment) ||
+                    repayment <= 0 ||
+                    repayment > debt.remaining
+                ) {
+                    alert(
+                        `Entre un montant entre 1 et ${debt.remaining} $.`
+                    );
+                    return;
+                }
+
+                debt.remaining -= repayment;
+
+                if (debt.remaining < 0.001) {
+                    debt.remaining = 0;
+                }
+
+                debt.paid = debt.remaining === 0;
+
+                if (!Array.isArray(debt.repayments)) {
+                    debt.repayments = [];
+                }
+
+                debt.repayments.push({
+                    amount: repayment,
+                    date: new Date().toISOString()
                 });
 
-                card.appendChild(paidButton);
-            }
-
-            const deleteButton = document.createElement('button');
-            deleteButton.type = 'button';
-            deleteButton.className = 'secondary-btn';
-            deleteButton.textContent = 'Supprimer';
-
-            deleteButton.addEventListener('click', () => {
-                if (!confirm(`Supprimer la dette de ${debt.player} ?`)) return;
-
-                debts = debts.filter(item => item.id !== debt.id);
                 saveDebts();
                 renderDebts();
             });
 
-            card.appendChild(deleteButton);
-            debtList.appendChild(card);
+            card.append(repaymentInput, repaymentButton);
+        }
+
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.className = 'secondary-btn';
+        deleteButton.textContent = 'Supprimer';
+
+        deleteButton.addEventListener('click', () => {
+            if (!confirm(`Supprimer la dette de ${debt.player} ?`)) {
+                return;
+            }
+
+            debts = debts.filter(item => item.id !== debt.id);
+            saveDebts();
+            renderDebts();
         });
-    }
+
+        card.appendChild(deleteButton);
+        debtList.appendChild(card);
+    });
+
+    // Mise à jour des totaux : seules les sommes restantes sont comptées
+    const openDebts = debts.filter(debt => {
+        if (typeof debt.remaining !== 'number') {
+            debt.remaining = debt.paid ? 0 : debt.amount;
+        }
+
+        return debt.remaining > 0;
+    });
+
+    const totalReceive = openDebts
+        .filter(debt => debt.direction === 'receive')
+        .reduce((total, debt) => total + debt.remaining, 0);
+
+    const totalPay = openDebts
+        .filter(debt => debt.direction === 'pay')
+        .reduce((total, debt) => total + debt.remaining, 0);
+
+    debtToReceive.textContent = formatDebtAmount(totalReceive);
+    debtToPay.textContent = formatDebtAmount(totalPay);
+    debtCount.textContent = openDebts.length;
+
+    saveDebts();
+}
 
     const openDebts = debts.filter(debt => !debt.paid);
 
@@ -856,15 +937,19 @@ if (debtForm) {
             return;
         }
 
-        debts.push({
-            id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
-            player,
-            direction,
-            amount,
-            reason,
-            paid: false,
-            createdAt: new Date().toISOString()
-        });
+       
+debts.push({
+    id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    player,
+    direction,
+    amount,
+    remaining: amount,
+    repayments: [],
+    reason,
+    paid: false,
+    createdAt: new Date().toISOString()
+});
+
 
         saveDebts();
         debtForm.reset();
