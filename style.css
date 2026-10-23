@@ -2270,12 +2270,9 @@ article.panel.link-panel.tokyo-panel {
 }
 
 #openDetteCell {
-    position: absolute !important;
-    top: 25px !important;
-    right: 25px !important;
-    z-index: 100 !important;
-}
-
-#page-compta {
-    position: relative !important;
+    position: fixed !important;
+    top: 33px !important;
+    right: 53px !important;
+    z-index: 99999 !important;
+    margin: 0 !important;
 }
