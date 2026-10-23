@@ -778,40 +778,39 @@ function renderDebts() {
         const card = document.createElement('article');
         card.className = 'debt-item debt-table-row';
 
-        const title = document.createElement('h4');
+       
+        const title = document.createElement('span');
+        title.className = 'debt-cell debt-name';
         title.textContent = debt.player;
 
-        const reason = document.createElement('p');
-        reason.textContent = `Motif : ${debt.reason}`;
+        const reason = document.createElement('span');
+        reason.className = 'debt-cell';
+        reason.textContent = debt.reason;
 
-        const direction = document.createElement('p');
+        const direction = document.createElement('span');
+        direction.className = 'debt-cell';
         direction.textContent = debt.direction === 'receive'
-            ? 'Le joueur doit à l’entreprise'
-            : 'L’entreprise doit au joueur';
+            ? 'Le joueur doit'
+            : 'L’entreprise doit';
 
-        const originalAmount = document.createElement('p');
-        originalAmount.textContent =
-            `Montant initial : ${formatDebtAmount(debt.amount)}`;
+        const originalAmount = document.createElement('span');
+        originalAmount.className = 'debt-cell';
+        originalAmount.textContent = `${formatDebtAmount(debt.amount)}`;
 
-        const remainingAmount = document.createElement('strong');
-        remainingAmount.textContent =
-            `Reste à payer : ${formatDebtAmount(debt.remaining)}`;
+        const remainingAmount = document.createElement('span');
+        remainingAmount.className = 'debt-cell';
+        remainingAmount.textContent = `${formatDebtAmount(debt.remaining)}`;
 
-        const status = document.createElement('p');
+        const status = document.createElement('span');
+        status.className = 'debt-cell debt-status';
         status.textContent = debt.remaining <= 0
-            ? 'Dette soldée'
+            ? 'Soldée'
             : debt.remaining < debt.amount
                 ? 'Remboursement partiel'
                 : 'En cours';
 
-        card.append(
-            title,
-            reason,
-            direction,
-            originalAmount,
-            remainingAmount,
-            status
-        );
+        const details = document.createElement('div');
+        details.className = 'debt-actions';
 
         if (debt.remaining > 0) {
             const repaymentInput = document.createElement('input');
@@ -820,7 +819,10 @@ function renderDebts() {
             repaymentInput.max = String(debt.remaining);
             repaymentInput.step = '1';
             repaymentInput.placeholder = 'Montant du remboursement';
-            repaymentInput.setAttribute('aria-label', 'Montant du remboursement');
+            repaymentInput.setAttribute(
+                'aria-label',
+                'Montant du remboursement'
+            );
 
             const repaymentButton = document.createElement('button');
             repaymentButton.type = 'button';
@@ -862,7 +864,7 @@ function renderDebts() {
                 renderDebts();
             });
 
-            card.append(repaymentInput, repaymentButton);
+            details.append(repaymentInput, repaymentButton);
         }
 
         const deleteButton = document.createElement('button');
@@ -880,9 +882,21 @@ function renderDebts() {
             renderDebts();
         });
 
-        card.appendChild(deleteButton);
+        details.appendChild(deleteButton);
+
+        const columns = document.createElement('div');
+        columns.className = 'debt-table-row';
+        columns.append(
+            title,
+            reason,
+            direction,
+            originalAmount,
+            remainingAmount,
+            status
+        );
+
+        card.append(columns, details);
         debtList.appendChild(card);
-    });
 
     // Mise à jour des totaux : seules les sommes restantes sont comptées
     const openDebts = debts.filter(debt => {
