@@ -897,7 +897,7 @@ function renderDebts() {
 
         card.append(columns, details);
         debtList.appendChild(card);
-
+    });
         
     const header = document.createElement('div');
     header.className = 'debt-table-header';
