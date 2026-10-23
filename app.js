@@ -1069,8 +1069,19 @@ deleteButton.addEventListener('click', async () => {
             status
         );
 
-        card.append(columns, details);
-        debtList.appendChild(card);
+       debtContent.append(columns, details);
+
+debtToggle.addEventListener('click', () => {
+    const isOpen = debtContent.style.display !== 'none';
+
+    debtContent.style.display = isOpen ? 'none' : 'block';
+
+    const arrow = debtToggle.querySelector('.debt-card-arrow');
+    arrow.textContent = isOpen ? '▶' : '▼';
+});
+
+card.append(debtToggle, debtContent);
+debtList.appendChild(card);
     });
         
     // Mise à jour des totaux : seules les sommes restantes sont comptées
