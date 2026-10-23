@@ -723,23 +723,49 @@ const debtToReceive = document.getElementById('debtToReceive');
 const debtToPay = document.getElementById('debtToPay');
 const debtCount = document.getElementById('debtCount');
 
+
 const DEBT_STORAGE_KEY = 'tabletteComptaDebts';
 
 let debts = [];
+let debtsLoadedFromServer = false;
 
 try {
     debts = JSON.parse(localStorage.getItem(DEBT_STORAGE_KEY)) || [];
+    if (!Array.isArray(debts)) debts = [];
 } catch (error) {
     debts = [];
 }
 
 function saveDebts() {
     localStorage.setItem(DEBT_STORAGE_KEY, JSON.stringify(debts));
+
+    // Ne rien envoyer au serveur avant le chargement initial.
+    if (!debtsLoadedFromServer) return;
+
+    const sharedDebts = debts.map(debt => ({
+        id: String(debt.id),
+        joueur: debt.player,
+        direction: debt.direction,
+        montant: debt.amount,
+        reste: debt.remaining,
+        motif: debt.reason,
+        remboursements: debt.repayments || [],
+        soldee: debt.remaining <= 0,
+        cree_le: debt.createdAt || new Date().toISOString()
+    }));
+
+    if (sharedDebts.length === 0) return;
+
+    supabaseClient
+        .from('dettes')
+        .upsert(sharedDebts, { onConflict: 'id' })
+        .then(({ error }) => {
+            if (error) {
+                console.error('Erreur de sauvegarde des dettes :', error);
+            }
+        });
 }
 
-function formatDebtAmount(amount) {
-    return `${Math.round(amount).toLocaleString('fr-FR')} $`;
-}
 
 
 function renderDebts() {
