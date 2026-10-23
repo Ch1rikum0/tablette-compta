@@ -2249,3 +2249,18 @@ article.panel.link-panel.tokyo-panel {
     display: block;
     padding-top: 10px;
 }
+
+.debt-item .debt-card-toggle {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    min-height: 45px !important;
+    position: relative !important;
+    z-index: 2 !important;
+    background: var(--panel2) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+}
