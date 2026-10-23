@@ -921,31 +921,49 @@ if (filteredDebts.length === 0) {
         deleteButton.textContent = 'Supprimer';
 
 
+
 deleteButton.addEventListener('click', async () => {
-    if (!confirm(`Supprimer la dette de ${debt.player} ?`)) {
-        return;
-    }
+    deleteButton.disabled = true;
+    deleteButton.textContent = 'Suppression...';
 
-    const { error } = await supabaseClient
-        .from('dettes')
-        .delete()
-        .eq('id', String(debt.id));
+    try {
+        const { data, error } = await supabaseClient
+            .from('dettes')
+            .delete()
+            .eq('id', String(debt.id))
+            .select('id');
 
-    if (error) {
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+            console.error('Aucune dette supprimée. ID :', debt.id);
+            notify('La dette n’a pas été supprimée par Supabase.', 'error');
+            deleteButton.disabled = false;
+            deleteButton.textContent = 'Supprimer';
+            return;
+        }
+
+        debts = debts.filter(
+            item => String(item.id) !== String(debt.id)
+        );
+
+        localStorage.setItem(
+            DEBT_STORAGE_KEY,
+            JSON.stringify(debts)
+        );
+
+        renderDebts();
+        notify('Dette supprimée.', 'success');
+
+    } catch (error) {
         console.error('Erreur de suppression de la dette :', error);
-        alert('Impossible de supprimer la dette partagée.');
-        return;
+        notify('Erreur lors de la suppression de la dette.', 'error');
+
+        deleteButton.disabled = false;
+        deleteButton.textContent = 'Supprimer';
     }
-
-    debts = debts.filter(item => String(item.id) !== String(debt.id));
-
-    localStorage.setItem(
-        DEBT_STORAGE_KEY,
-        JSON.stringify(debts)
-    );
-
-    renderDebts();
 });
+
 
 
         details.appendChild(deleteButton);
@@ -1088,3 +1106,31 @@ async function loadSharedDebts() {
 }
 
 loadSharedDebts();
+
+
+let debtRealtimeChannel = null;
+
+function subscribeToDebtChanges() {
+    if (debtRealtimeChannel) {
+        supabaseClient.removeChannel(debtRealtimeChannel);
+    }
+
+    debtRealtimeChannel = supabaseClient
+        .channel('shared-debts-realtime')
+        .on(
+            'postgres_changes',
+            {
+                event: '*',
+                schema: 'public',
+                table: 'dettes'
+            },
+            async () => {
+                await loadSharedDebts();
+            }
+        )
+        .subscribe((status) => {
+            console.log('Synchronisation des dettes :', status);
+        });
+}
+
+subscribeToDebtChanges();
