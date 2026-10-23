@@ -898,6 +898,20 @@ function renderDebts() {
         card.append(columns, details);
         debtList.appendChild(card);
 
+        
+    const header = document.createElement('div');
+    header.className = 'debt-table-header';
+    header.innerHTML = `
+        <span>Nom</span>
+        <span>Motif</span>
+        <span>L'entreprise doit</span>
+        <span>Montant</span>
+        <span>Reste à payer</span>
+        <span>Statut</span>
+    `;
+    debtList.appendChild(header);
+
+
     // Mise à jour des totaux : seules les sommes restantes sont comptées
     const openDebts = debts.filter(debt => {
         if (typeof debt.remaining !== 'number') {
