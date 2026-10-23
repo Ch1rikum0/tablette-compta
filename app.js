@@ -1253,3 +1253,14 @@ function toggleDebtSection(sectionId, title) {
         arrow.textContent = isOpen ? '▶' : '▼';
     }
 }
+
+function updateDetteButtonVisibility() {
+    const detteButton = document.getElementById('openDetteCell');
+    const comptaPage = document.getElementById('page-compta');
+
+    if (!detteButton || !comptaPage) return;
+
+    detteButton.style.display = comptaPage.classList.contains('active')
+        ? ''
+        : 'none';
+}
