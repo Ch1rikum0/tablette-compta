@@ -2172,19 +2172,15 @@ article.panel.link-panel.tokyo-panel {
     margin-top: 10px;
 }
 
-/* Décaler les titres vers la gauche */
-.debt-table-header > span:nth-child(3) {
-    left: -35px !important;
-}
-
-.debt-table-header > span:nth-child(4) {
-    left: -15px !important;
-}
-
+/* Ajustement des titres et des valeurs */
+.debt-table-header > span:nth-child(3),
 .debt-table-row > :nth-child(3) {
-    left: -35px !important;
+    position: relative !important;
+    left: -25px !important;
 }
 
+.debt-table-header > span:nth-child(4),
 .debt-table-row > :nth-child(4) {
+    position: relative !important;
     left: -15px !important;
 }
