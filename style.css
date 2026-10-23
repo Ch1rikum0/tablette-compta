@@ -2268,3 +2268,14 @@ article.panel.link-panel.tokyo-panel {
     border-radius: 8px !important;
     cursor: pointer !important;
 }
+
+#openDetteCell {
+    position: absolute !important;
+    top: 25px !important;
+    right: 25px !important;
+    z-index: 100 !important;
+}
+
+#page-compta {
+    position: relative !important;
+}
