@@ -2174,17 +2174,17 @@ article.panel.link-panel.tokyo-panel {
 
 /* Décaler les titres vers la gauche */
 .debt-table-header > span:nth-child(3) {
-    left: -45px !important;
+    left: -35px !important;
 }
 
 .debt-table-header > span:nth-child(4) {
-    left: -30px !important;
+    left: -15px !important;
 }
 
 .debt-table-row > :nth-child(3) {
-    left: -45px !important;
+    left: -35px !important;
 }
 
 .debt-table-row > :nth-child(4) {
-    left: -30px !important;
+    left: -15px !important;
 }
