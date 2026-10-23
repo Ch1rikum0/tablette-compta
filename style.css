@@ -2184,3 +2184,8 @@ article.panel.link-panel.tokyo-panel {
     position: relative !important;
     left: -15px !important;
 }
+
+.debt-table-row > :nth-child(3) {
+    white-space: nowrap !important;
+    overflow-wrap: normal !important;
+}
