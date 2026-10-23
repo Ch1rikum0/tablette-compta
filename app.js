@@ -513,11 +513,13 @@ if (pages[selectedPage]) {
 }
         
         // Mettre à jour le titre
-       if (pageInfo[selectedPage]) {
+      if (pageInfo[selectedPage]) {
     pageTitle.textContent = pageInfo[selectedPage].title;
     pageSubtitle.textContent = pageInfo[selectedPage].subtitle;
     pageIcon.textContent = pageInfo[selectedPage].icon;
 }
+
+updateDetteButtonVisibility();
     });
 });
 
@@ -543,6 +545,7 @@ openDetteCell.addEventListener('click', () => {
     navButtons.forEach(btn => {
         btn.classList.remove('active');
     });
+    updateDetteButtonVisibility();
 });
 
 backCompta.addEventListener('click', () => {
