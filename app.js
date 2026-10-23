@@ -908,6 +908,7 @@ function renderDebts() {
     saveDebts();
 }
 
+
 if (debtForm) {
     debtForm.addEventListener('submit', event => {
         event.preventDefault();
@@ -922,19 +923,17 @@ if (debtForm) {
             return;
         }
 
-       
-debts.push({
-    id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
-    player,
-    direction,
-    amount,
-    remaining: amount,
-    repayments: [],
-    reason,
-    paid: false,
-    createdAt: new Date().toISOString()
-});
-
+        debts.push({
+            id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+            player,
+            direction,
+            amount,
+            remaining: amount,
+            repayments: [],
+            reason,
+            paid: false,
+            createdAt: new Date().toISOString()
+        });
 
         saveDebts();
         debtForm.reset();
