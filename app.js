@@ -736,6 +736,11 @@ try {
     debts = [];
 }
 
+
+function formatDebtAmount(value) {
+    return `${Math.round(Number(value) || 0).toLocaleString('fr-FR')} $`;
+}
+
 function saveDebts() {
     localStorage.setItem(DEBT_STORAGE_KEY, JSON.stringify(debts));
 
