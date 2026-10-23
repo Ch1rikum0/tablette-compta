@@ -2202,3 +2202,20 @@ article.panel.link-panel.tokyo-panel {
     position: relative !important;
     left: -45px !important;
 }
+
+.debt-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.debt-toggle:hover {
+    opacity: 0.8;
+}
+
+.debt-arrow {
+    font-size: 12px;
+    margin-left: 10px;
+}
