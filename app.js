@@ -923,6 +923,8 @@ if (filteredDebts.length === 0) {
 
 
 deleteButton.addEventListener('click', async () => {
+    console.log("CLIC SUR SUPPRIMER DÉTECTÉ");
+    notify("Clic sur Supprimer détecté", "success");
     deleteButton.disabled = true;
     deleteButton.textContent = 'Suppression...';
 
