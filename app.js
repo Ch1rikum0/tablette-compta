@@ -1213,3 +1213,17 @@ function subscribeToDebtChanges() {
 }
 
 subscribeToDebtChanges();
+
+function toggleDebtSection(sectionId, title) {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+
+    const isOpen = section.style.display !== 'none';
+
+    section.style.display = isOpen ? 'none' : 'block';
+
+    const arrow = title.querySelector('.debt-arrow');
+    if (arrow) {
+        arrow.textContent = isOpen ? '▶' : '▼';
+    }
+}
