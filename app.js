@@ -763,11 +763,28 @@ function renderDebts() {
         return matchesSearch && matchesFilter;
     });
 
-    debtList.innerHTML = '';
+   
+debtList.innerHTML = '';
 
-    if (filteredDebts.length === 0) {
-        debtList.innerHTML = '<p class="muted">Aucune dette trouvée.</p>';
-    }
+const header = document.createElement('div');
+header.className = 'debt-table-header';
+header.innerHTML = `
+    <span>Nom</span>
+    <span>Motif</span>
+    <span>L'entreprise doit</span>
+    <span>Montant</span>
+    <span>Reste à payer</span>
+    <span>Statut</span>
+`;
+debtList.appendChild(header);
+
+if (filteredDebts.length === 0) {
+    const emptyMessage = document.createElement('p');
+    emptyMessage.className = 'muted';
+    emptyMessage.textContent = 'Aucune dette trouvée.';
+    debtList.appendChild(emptyMessage);
+}
+
 
     filteredDebts.forEach(debt => {
         // Compatibilité avec les dettes déjà enregistrées
@@ -900,19 +917,6 @@ function renderDebts() {
     });
         
 debtList.innerHTML = '';
-
-const header = document.createElement('div');
-header.className = 'debt-table-header';
-header.innerHTML = `
-    <span>Nom</span>
-    <span>Motif</span>
-    <span>L'entreprise doit</span>
-    <span>Montant</span>
-    <span>Reste à payer</span>
-    <span>Statut</span>
-`;
-debtList.appendChild(header);
-
 
     // Mise à jour des totaux : seules les sommes restantes sont comptées
     const openDebts = debts.filter(debt => {
