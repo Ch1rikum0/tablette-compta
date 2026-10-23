@@ -2219,3 +2219,33 @@ article.panel.link-panel.tokyo-panel {
     font-size: 12px;
     margin-left: 10px;
 }
+
+.debt-card-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 14px;
+    background: var(--panel2);
+    color: var(--text);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.debt-card-toggle:hover {
+    filter: brightness(1.15);
+}
+
+.debt-card-arrow {
+    margin-left: 12px;
+    font-size: 12px;
+}
+
+.debt-card-content {
+    display: block;
+    padding-top: 10px;
+}
