@@ -1007,4 +1007,61 @@ if (debtFilter) {
     debtFilter.addEventListener('change', renderDebts);
 }
 
-renderDebts();
+async function loadSharedDebts() {
+    const localDebts = Array.isArray(debts) ? [...debts] : [];
+
+    const { data, error } = await supabaseClient
+        .from('dettes')
+        .select('*')
+        .order('cree_le', { ascending: true });
+
+    if (error) {
+        console.error('Erreur de chargement des dettes :', error);
+        renderDebts();
+        return;
+    }
+
+    const remoteDebts = (data || []).map(row => ({
+        id: String(row.id),
+        player: row.joueur,
+        direction: row.direction,
+        amount: Number(row.montant),
+        remaining: Number(row.reste),
+        reason: row.motif,
+        repayments: row.remboursements || [],
+        paid: row.soldee,
+        createdAt: row.cree_le
+    }));
+
+    const migrationKey = 'tabletteComptaDebtsMigrated';
+    const alreadyMigrated = localStorage.getItem(migrationKey) === 'true';
+
+    if (!alreadyMigrated) {
+        const remoteIds = new Set(
+            remoteDebts.map(debt => String(debt.id))
+        );
+
+        const oldLocalDebts = localDebts.filter(
+            debt => !remoteIds.has(String(debt.id))
+        );
+
+        debts = [...remoteDebts, ...oldLocalDebts];
+
+        localStorage.setItem(migrationKey, 'true');
+        debtsLoadedFromServer = true;
+
+        saveDebts();
+    } else {
+        debts = remoteDebts;
+        debtsLoadedFromServer = true;
+
+        localStorage.setItem(
+            DEBT_STORAGE_KEY,
+            JSON.stringify(debts)
+        );
+    }
+
+    renderDebts();
+}
+
+loadSharedDebts();
