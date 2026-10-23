@@ -776,7 +776,7 @@ function renderDebts() {
         }
 
         const card = document.createElement('article');
-        card.className = 'debt-item debt-table-row';
+       card.className = 'debt-item';
 
        
         const title = document.createElement('span');
