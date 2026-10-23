@@ -171,72 +171,81 @@
             </article>
         </div>
 
-        <!-- Ajouter une dette -->
-        <div class="debt-section">
-            <h3>Ajouter une dette</h3>
+      
+<!-- Ajouter une dette -->
+<div class="debt-section">
+    <h3 class="debt-toggle" onclick="toggleDebtSection('debtAddContent', this)">
+        Ajouter une dette <span class="debt-arrow">▼</span>
+    </h3>
 
-            <form id="debtForm">
-                <label for="debtPlayer">Nom du joueur</label>
-                <input
-                    type="text"
-                    id="debtPlayer"
-                    placeholder="Nom du joueur"
-                    required
-                >
-
-                <label for="debtDirection">Sens de la dette</label>
-                <select id="debtDirection" required>
-                   <option value="receive">Le joueur doit aux Silent Ghost</option>
-                   <option value="pay">Les Silent Ghost doivent au joueur</option>
-                </select>
-
-                <label for="debtAmount">Montant ($)</label>
-                <input
-                    type="number"
-                    id="debtAmount"
-                    min="1"
-                    step="1"
-                    placeholder="Ex. : 500"
-                    required
-                >
-
-                <label for="debtReason">Motif</label>
-                <input
-                    type="text"
-                    id="debtReason"
-                    placeholder="Ex. : achat de matériel"
-                    required
-                >
-
-                <button type="submit" class="secondary-btn">
-                    + Ajouter la dette
-                </button>
-            </form>
-        </div>
-
-        <!-- Liste des dettes -->
-        <div class="debt-section">
-            <h3>Liste des dettes</h3>
-
+    <div id="debtAddContent">
+        <form id="debtForm">
+            <label for="debtPlayer">Nom du joueur</label>
             <input
-                type="search"
-                id="debtSearch"
-                placeholder="Rechercher un joueur..."
+                type="text"
+                id="debtPlayer"
+                placeholder="Nom du joueur"
+                required
             >
 
-            <select id="debtFilter">
-                <option value="all">Toutes les dettes</option>
-                <option value="receive">À récupérer</option>
-                <option value="pay">À rembourser</option>
-                <option value="open">En cours</option>
-                <option value="paid">Remboursées</option>
+            <label for="debtDirection">Sens de la dette</label>
+            <select id="debtDirection" required>
+                <option value="receive">Le joueur doit aux Silent Ghost</option>
+                <option value="pay">Les Silent Ghost doivent au joueur</option>
             </select>
 
-            <div id="debtList">
-                <p class="muted">Aucune dette enregistrée.</p>
-            </div>
+            <label for="debtAmount">Montant ($)</label>
+            <input
+                type="number"
+                id="debtAmount"
+                min="1"
+                step="1"
+                placeholder="Ex. : 500"
+                required
+            >
+
+            <label for="debtReason">Motif</label>
+            <input
+                type="text"
+                id="debtReason"
+                placeholder="Ex. : achat de matériel"
+                required
+            >
+
+            <button type="submit" class="secondary-btn">
+                + Ajouter la dette
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Liste des dettes -->
+<div class="debt-section">
+    <h3 class="debt-toggle" onclick="toggleDebtSection('debtListContent', this)">
+        Liste des dettes <span class="debt-arrow">▼</span>
+    </h3>
+
+    <div id="debtListContent">
+        <input
+            type="search"
+            id="debtSearch"
+            placeholder="Rechercher un joueur..."
+        >
+
+        <select id="debtFilter">
+            <option value="all">Toutes les dettes</option>
+            <option value="receive">À récupérer</option>
+            <option value="pay">À rembourser</option>
+            <option value="open">En cours</option>
+            <option value="paid">Remboursées</option>
+        </select>
+
+        <div id="debtList">
+            <p class="muted">Aucune dette enregistrée.</p>
         </div>
-    </section>
+    </div>
+</div>
+</section>
 </div>
 
 
