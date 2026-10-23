@@ -840,8 +840,8 @@ if (filteredDebts.length === 0) {
         const direction = document.createElement('span');
         direction.className = 'debt-cell';
         direction.textContent = debt.direction === 'receive'
-            ? 'Le joueur doit'
-            : 'L’entreprise doit';
+            ? 'Dette'
+            : 'Remboursement';
 
         const originalAmount = document.createElement('span');
         originalAmount.className = 'debt-cell';
