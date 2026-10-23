@@ -838,7 +838,7 @@ if (filteredDebts.length === 0) {
         
         const debtContent = document.createElement('div');
         debtContent.className = 'debt-card-content';
-
+        debtContent.style.display = 'none';
        
         const title = document.createElement('span');
         title.className = 'debt-cell debt-name';
@@ -1075,7 +1075,7 @@ debtToggle.addEventListener('click', () => {
     const isOpen = debtContent.style.display !== 'none';
 
     debtContent.style.display = isOpen ? 'none' : 'block';
-
+    
     const arrow = debtToggle.querySelector('.debt-card-arrow');
     arrow.textContent = isOpen ? '▶' : '▼';
 });
