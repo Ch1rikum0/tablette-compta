@@ -2139,3 +2139,36 @@ article.panel.link-panel.tokyo-panel {
     font-weight: 700;
     text-transform: uppercase;
 }
+
+
+/* Affichage horizontal du tableau des dettes */
+.debt-table-header,
+.debt-table-row {
+    display: grid !important;
+    grid-template-columns: 1.2fr 1.2fr 1.2fr 0.8fr 0.8fr 1.2fr;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.debt-table-header > span,
+.debt-cell {
+    min-width: 0;
+    writing-mode: horizontal-tb !important;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.debt-item {
+    display: block !important;
+    width: 100%;
+}
+
+.debt-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
