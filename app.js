@@ -915,15 +915,33 @@ if (filteredDebts.length === 0) {
         deleteButton.className = 'secondary-btn';
         deleteButton.textContent = 'Supprimer';
 
-        deleteButton.addEventListener('click', () => {
-            if (!confirm(`Supprimer la dette de ${debt.player} ?`)) {
-                return;
-            }
 
-            debts = debts.filter(item => item.id !== debt.id);
-            saveDebts();
-            renderDebts();
-        });
+deleteButton.addEventListener('click', async () => {
+    if (!confirm(`Supprimer la dette de ${debt.player} ?`)) {
+        return;
+    }
+
+    const { error } = await supabaseClient
+        .from('dettes')
+        .delete()
+        .eq('id', String(debt.id));
+
+    if (error) {
+        console.error('Erreur de suppression de la dette :', error);
+        alert('Impossible de supprimer la dette partagée.');
+        return;
+    }
+
+    debts = debts.filter(item => String(item.id) !== String(debt.id));
+
+    localStorage.setItem(
+        DEBT_STORAGE_KEY,
+        JSON.stringify(debts)
+    );
+
+    renderDebts();
+});
+
 
         details.appendChild(deleteButton);
 
