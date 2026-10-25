@@ -2266,18 +2266,16 @@ article.panel.link-panel.tokyo-panel {
     z-index: 99999 !important;
 }
 
-
-
-
-
-body > #backCompta {
-    position: fixed !important;
+#backCompta {
+    position: absolute !important;
     top: 25px !important;
     right: 30px !important;
     left: auto !important;
     bottom: auto !important;
+
+    width: auto !important;
     margin: 0 !important;
     transform: none !important;
-    width: auto !important;
+
     z-index: 2147483647 !important;
 }
