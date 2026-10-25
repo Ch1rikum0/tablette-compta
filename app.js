@@ -527,6 +527,7 @@ const openDetteCell = document.getElementById('openDetteCell');
 const backCompta = document.getElementById('backCompta');
 const pageDetteCell = document.getElementById('page-dette-cell');
 
+
 openDetteCell.addEventListener('click', () => {
     Object.values(pages).forEach(page => {
         if (page) page.classList.remove('active');
@@ -545,8 +546,16 @@ openDetteCell.addEventListener('click', () => {
     navButtons.forEach(btn => {
         btn.classList.remove('active');
     });
+
+    const backButton = document.getElementById('backCompta');
+
+    if (backButton) {
+        backButton.style.display = 'block';
+    }
+
     updateDetteButtonVisibility();
 });
+
 
 backCompta.addEventListener('click', () => {
     document.querySelectorAll('.page').forEach(page => {
