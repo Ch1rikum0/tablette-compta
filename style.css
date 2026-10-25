@@ -2295,3 +2295,23 @@ article.panel.link-panel.tokyo-panel {
 #page-dette-cell.active ~ .topbar {
     flex-direction: row-reverse !important;
 }
+
+
+/* Inversion du haut de page uniquement dans Dette */
+.main-content.dette-ouverte .topbar {
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+.main-content.dette-ouverte #backCompta {
+    margin-left: auto !important;
+    margin-right: 0 !important;
+    float: none !important;
+}
+
+.main-content.dette-ouverte .brand {
+    margin-right: auto !important;
+    margin-left: 0 !important;
+}
