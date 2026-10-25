@@ -264,16 +264,81 @@
             </article>
         </section>
         
-        <!-- PAGE DROGUE -->
-       
-        <section class="page" id="page-drogue">
-            <article class="panel">
-               <h3 style="margin-bottom: 1px; text-align: left;">Drogue</h3>
-               <p class="muted" style="margin-top: 0; padding-top: 0; text-align: left;">
-                    Gestion de l'activité drogue.
-               </p>
-            </article>
-        </section>
+      
+<!-- PAGE DROGUE -->
+
+<section class="page" id="page-drogue">
+    <article class="panel">
+        <h3 style="margin-bottom: 1px; text-align: left;">Gestion du stock</h3>
+        <p class="muted" style="margin-top: 0; padding-top: 0; text-align: left;">
+            Gestion des produits, des quantités et de la valeur totale.
+        </p>
+
+        <div class="stock-summary">
+            <div class="stock-card">
+                <span>Nombre de produits</span>
+                <strong id="stockProductCount">0</strong>
+            </div>
+            <div class="stock-card">
+                <span>Quantité totale</span>
+                <strong id="stockQuantityTotal">0</strong>
+            </div>
+            <div class="stock-card">
+                <span>Valeur totale du stock</span>
+                <strong id="stockValueTotal">0 $</strong>
+            </div>
+        </div>
+
+        <form id="stockForm" class="stock-form">
+            <div class="stock-fields">
+                <div>
+                    <label for="stockName">Nom du produit</label>
+                    <input type="text" id="stockName" placeholder="Nom du produit" required>
+                </div>
+
+                <div>
+                    <label for="stockCategory">Catégorie</label>
+                    <input type="text" id="stockCategory" placeholder="Catégorie" required>
+                </div>
+
+                <div>
+                    <label for="stockQuantity">Quantité en stock</label>
+                    <input type="number" id="stockQuantity" min="0" step="1" placeholder="0" required>
+                </div>
+
+                <div>
+                    <label for="stockUnitPrice">Valeur unitaire ($)</label>
+                    <input type="number" id="stockUnitPrice" min="0" step="1" placeholder="0" required>
+                </div>
+            </div>
+
+            <button type="submit" class="primary-btn">
+                Ajouter au stock
+            </button>
+        </form>
+
+        <div class="stock-table-container">
+            <table class="stock-table">
+                <thead>
+                    <tr>
+                        <th>Produit</th>
+                        <th>Catégorie</th>
+                        <th>Quantité</th>
+                        <th>Valeur unitaire</th>
+                        <th>Valeur totale</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="stockTableBody">
+                    <tr>
+                        <td colspan="6">Aucun produit dans le stock.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </article>
+</section>
+
 
         <!-- PAGE HISTORIQUE -->
        
