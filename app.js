@@ -1258,13 +1258,20 @@ function toggleDebtSection(sectionId, title) {
     }
 }
 
+
 function updateDetteButtonVisibility() {
     const detteButton = document.getElementById('openDetteCell');
+    const backButton = document.getElementById('backCompta');
     const comptaPage = document.getElementById('page-compta');
+    const dettePage = document.getElementById('page-dette-cell');
 
-    if (!detteButton || !comptaPage) return;
+    if (detteButton && comptaPage) {
+        detteButton.style.display =
+            comptaPage.classList.contains('active') ? '' : 'none';
+    }
 
-    detteButton.style.display = comptaPage.classList.contains('active')
-        ? ''
-        : 'none';
+    if (backButton && dettePage) {
+        backButton.style.display =
+            dettePage.classList.contains('active') ? '' : 'none';
+    }
 }
