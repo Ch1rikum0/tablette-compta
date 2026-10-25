@@ -1268,6 +1268,7 @@ function toggleDebtSection(sectionId, title) {
 }
 
 
+
 function updateDetteButtonVisibility() {
     const detteButton = document.getElementById('openDetteCell');
     const backButton = document.getElementById('backCompta');
@@ -1275,21 +1276,29 @@ function updateDetteButtonVisibility() {
     const dettePage = document.getElementById('page-dette-cell');
 
     if (detteButton && comptaPage) {
-        detteButton.style.setProperty(
-            'display',
-            comptaPage.classList.contains('active') ? 'block' : 'none',
-            'important'
-        );
+        detteButton.style.display =
+            comptaPage.classList.contains('active') ? '' : 'none';
     }
 
     if (backButton && dettePage) {
-        backButton.style.setProperty(
-            'display',
-            dettePage.classList.contains('active') ? 'block' : 'none',
-            'important'
-        );
+        backButton.style.display =
+            dettePage.classList.contains('active') ? '' : 'none';
     }
 }
+
+function initialiserVisibiliteDette() {
+    updateDetteButtonVisibility();
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener(
+        'DOMContentLoaded',
+        initialiserVisibiliteDette
+    );
+} else {
+    initialiserVisibiliteDette();
+}
+
 
 // Vérifier l'affichage dès que le HTML est chargé
 if (document.readyState === 'loading') {
