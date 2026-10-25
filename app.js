@@ -1287,3 +1287,5 @@ function updateDetteButtonVisibility() {
         }
     }
 }
+
+updateDetteButtonVisibility();
