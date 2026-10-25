@@ -2289,3 +2289,9 @@ article.panel.link-panel.tokyo-panel {
     justify-content: space-between !important;
     align-items: center !important;
 }
+
+
+/* Inverser le titre et le bouton retour sur la page Dette */
+#page-dette-cell.active ~ .topbar {
+    flex-direction: row-reverse !important;
+}
