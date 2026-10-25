@@ -1279,13 +1279,12 @@ function updateDetteButtonVisibility() {
             comptaPage.classList.contains('active') ? '' : 'none';
     }
 
-    if (backButton && dettePage) {
-        if (dettePage.classList.contains('active')) {
-            backButton.style.setProperty('display', 'block', 'important');
-        } else {
-            backButton.style.setProperty('display', 'none', 'important');
-        }
-    }
+   if (backButton && dettePage) {
+    backButton.style.setProperty(
+        'display',
+        dettePage.classList.contains('active') ? 'block' : 'none',
+        'important'
+    );
 }
 
 updateDetteButtonVisibility();
