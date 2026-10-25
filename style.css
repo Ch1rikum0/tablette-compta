@@ -1952,17 +1952,16 @@ article.panel.link-panel.tokyo-panel {
 
 
 
+
 #backCompta {
-    position: fixed !important;
+    position: absolute !important;
     top: 25px !important;
     right: 30px !important;
-    left: auto !important;
-    bottom: auto !important;
     width: fit-content !important;
     margin: 0 !important;
     padding: 10px 18px !important;
     z-index: 999999 !important;
-    transform: none !important;
+    display: none;
 }
 
 
