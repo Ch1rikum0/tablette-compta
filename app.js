@@ -1288,3 +1288,7 @@ function updateDetteButtonVisibility() {
 }
 
 updateDetteButtonVisibility()
+
+document.addEventListener('DOMContentLoaded', function () {
+    updateDetteButtonVisibility();
+});
