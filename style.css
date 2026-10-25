@@ -2280,3 +2280,12 @@ article.panel.link-panel.tokyo-panel {
     transform: none !important;
     z-index: 1000 !important;
 }
+
+
+/* Inverser les éléments en haut de la page Dette */
+#page-dette-cell .topbar {
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
