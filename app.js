@@ -1275,19 +1275,30 @@ function updateDetteButtonVisibility() {
     const dettePage = document.getElementById('page-dette-cell');
 
     if (detteButton && comptaPage) {
-        detteButton.style.display =
-            comptaPage.classList.contains('active') ? '' : 'none';
+        detteButton.style.setProperty(
+            'display',
+            comptaPage.classList.contains('active') ? 'block' : 'none',
+            'important'
+        );
     }
 
-   if (backButton && dettePage) {
-    backButton.style.setProperty(
-        'display',
-        dettePage.classList.contains('active') ? 'block' : 'none',
-        'important'
-    );
+    if (backButton && dettePage) {
+        backButton.style.setProperty(
+            'display',
+            dettePage.classList.contains('active') ? 'block' : 'none',
+            'important'
+        );
+    }
 }
 
-updateDetteButtonVisibility()
+// Vérifier l'affichage dès que le HTML est chargé
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+        updateDetteButtonVisibility();
+    });
+} else {
+    updateDetteButtonVisibility();
+}
 
 document.addEventListener('DOMContentLoaded', function () {
     updateDetteButtonVisibility();
