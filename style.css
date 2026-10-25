@@ -2267,20 +2267,6 @@ article.panel.link-panel.tokyo-panel {
 }
 
 
-html body #backCompta {
-    position: fixed !important;
-    top: 25px !important;
-    right: 30px !important;
-    left: auto !important;
-    bottom: auto !important;
-
-    width: auto !important;
-    margin: 0 !important;
-    transform: none !important;
-
-    z-index: 2147483647 !important;
-}
-
 
 body > #backCompta {
     position: fixed !important;
