@@ -529,6 +529,8 @@ const pageDetteCell = document.getElementById('page-dette-cell');
 
 
 openDetteCell.addEventListener('click', () => {
+    console.log("Ouverture Dette : clic détecté");
+    console.log("Conteneur :", document.querySelector('.main-content'));
     document.querySelector('.main-content').classList.add('dette-ouverte');
     Object.values(pages).forEach(page => {
         if (page) page.classList.remove('active');
