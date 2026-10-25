@@ -797,12 +797,12 @@ function renderDebts() {
             debt.player.toLowerCase().includes(search) ||
             debt.reason.toLowerCase().includes(search);
 
-        const matchesFilter =
-            filter === 'all' ||
-            (filter === 'receive' && debt.direction === 'receive') ||
-            (filter === 'pay' && debt.direction === 'pay') ||
-            (filter === 'open' && debt.remaining > 0) ||
-            (filter === 'paid' && debt.remaining <= 0);
+    const matchesFilter =
+        (filter === 'all' && debt.remaining > 0) ||
+        (filter === 'receive' && debt.direction === 'receive' && debt.remaining > 0) ||
+        (filter === 'pay' && debt.direction === 'pay' && debt.remaining > 0) ||
+        (filter === 'open' && debt.remaining > 0) ||
+        (filter === 'paid' && debt.remaining <= 0);
 
         return matchesSearch && matchesFilter;
     });
