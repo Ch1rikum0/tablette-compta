@@ -903,40 +903,146 @@ if (filteredDebts.length === 0) {
             repaymentButton.className = 'secondary-btn';
             repaymentButton.textContent = 'Enregistrer le remboursement';
 
-            repaymentButton.addEventListener('click', () => {
-                const repayment = Number(repaymentInput.value);
 
-                if (
-                    !Number.isFinite(repayment) ||
-                    repayment <= 0 ||
-                    repayment > debt.remaining
-                ) {
-                    alert(
-                        `Entre un montant entre 1 et ${debt.remaining} $.`
-                    );
-                    return;
-                }
+repaymentButton.addEventListener('click', async () => {
+    const repayment = Number(repaymentInput.value);
 
-                debt.remaining -= repayment;
+    if (
+        !Number.isFinite(repayment) ||
+        repayment <= 0 ||
+        repayment > debt.remaining
+    ) {
+        alert(`Entre un montant entre 1 et ${debt.remaining} $.`);
+        return;
+    }
 
-                if (debt.remaining < 0.001) {
-                    debt.remaining = 0;
-                }
+    repaymentButton.disabled = true;
 
-                debt.paid = debt.remaining === 0;
+    try {
+        // 1. Lire le solde partagé
+        const { data: comptaRow, error: balanceError } =
+            await supabaseClient
+                .from('compta')
+                .select('id, solde')
+                .limit(1)
+                .maybeSingle();
 
-                if (!Array.isArray(debt.repayments)) {
-                    debt.repayments = [];
-                }
+        if (balanceError) throw balanceError;
 
-                debt.repayments.push({
-                    amount: repayment,
-                    date: new Date().toISOString()
-                });
+        if (!comptaRow) {
+            throw new Error('Aucune ligne trouvée dans la table compta.');
+        }
 
-                saveDebts();
-                renderDebts();
-            });
+        // 2. Déterminer le sens de l'opération
+        // receive : le joueur rembourse les Silent Ghost -> entrée
+        // pay : les Silent Ghost remboursent le joueur -> sortie
+        const typeOperation =
+            debt.direction === 'receive' ? 'entree' : 'sortie';
+
+        const montant = Math.round(repayment * 100) / 100;
+        const ancienSolde = Number(comptaRow.solde) || 0;
+
+        const nouveauSolde = ancienSolde +
+            (typeOperation === 'entree' ? montant : -montant);
+
+        const operation = {
+            type: typeOperation,
+            montant: montant,
+            description: `Remboursement dette - ${debt.player} - ${debt.reason || ''}`,
+            date_operation: new Date().toISOString(),
+            joueur: debt.player || 'Local',
+            archivee: false
+        };
+
+        // 3. Enregistrer l'opération comptable
+        const { data: operationEnregistree, error: insertError } =
+            await supabaseClient
+                .from('operations')
+                .insert([operation])
+                .select()
+                .single();
+
+        if (insertError) throw insertError;
+
+        // 4. Mettre à jour le solde partagé
+        const { error: updateError } = await supabaseClient
+            .from('compta')
+            .update({
+                solde: nouveauSolde,
+                updated_at: new Date().toISOString()
+            })
+            .eq('id', comptaRow.id);
+
+        if (updateError) {
+            const { error: rollbackError } = await supabaseClient
+                .from('operations')
+                .delete()
+                .eq('id', operationEnregistree.id);
+
+            if (rollbackError) {
+                console.error('Erreur lors de l’annulation :', rollbackError);
+            }
+
+            throw updateError;
+        }
+
+        // 5. Mettre à jour la dette après confirmation comptable
+        debt.remaining = Math.max(0, debt.remaining - montant);
+
+        if (debt.remaining < 0.001) {
+            debt.remaining = 0;
+        }
+
+        debt.paid = debt.remaining === 0;
+
+        if (!Array.isArray(debt.repayments)) {
+            debt.repayments = [];
+        }
+
+        debt.repayments.push({
+            amount: montant,
+            date: new Date().toISOString()
+        });
+
+        // 6. Actualiser le solde local et l'affichage
+        currentBalance = nouveauSolde;
+
+        transactions.unshift({
+            id: operationEnregistree.id,
+            type: operationEnregistree.type,
+            amount: Number(operationEnregistree.montant) || 0,
+            description: operationEnregistree.description || '',
+            date: new Date(
+                operationEnregistree.date_operation
+            ).toLocaleString('fr-FR'),
+            player: operationEnregistree.joueur || 'Local'
+        });
+
+        saveTransactions();
+        renderData();
+
+        // 7. Sauvegarder la dette et actualiser les données
+        saveDebts();
+        renderDebts();
+
+        notify('Remboursement enregistré en comptabilité.', 'success');
+
+    } catch (error) {
+        console.error('Erreur lors du remboursement :', error);
+
+        notify(
+            'Erreur lors du remboursement. Consulte la console.',
+            'error'
+        );
+
+        await loadSharedBalance();
+        await loadSharedOperations();
+
+    } finally {
+        repaymentButton.disabled = false;
+    }
+});
+
 
             details.append(repaymentInput, repaymentButton);
         }
