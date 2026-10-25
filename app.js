@@ -1404,3 +1404,200 @@ if (document.readyState === 'loading') {
 } else {
     updateDetteButtonVisibility();
 }
+
+
+/* =================================
+   GESTION DU STOCK - PAGE DROGUE
+================================= */
+
+(() => {
+    const stockForm = document.getElementById('stockForm');
+    const stockTableBody = document.getElementById('stockTableBody');
+
+    const stockProductCount = document.getElementById('stockProductCount');
+    const stockQuantityTotal = document.getElementById('stockQuantityTotal');
+    const stockValueTotal = document.getElementById('stockValueTotal');
+
+    const stockName = document.getElementById('stockName');
+    const stockCategory = document.getElementById('stockCategory');
+    const stockQuantity = document.getElementById('stockQuantity');
+    const stockUnitPrice = document.getElementById('stockUnitPrice');
+
+    const STOCK_STORAGE_KEY = 'silent-ghost-stock-v1';
+
+    // Arrêter proprement si le formulaire HTML n'est pas présent.
+    if (
+        !stockForm ||
+        !stockTableBody ||
+        !stockProductCount ||
+        !stockQuantityTotal ||
+        !stockValueTotal
+    ) {
+        return;
+    }
+
+    let stockItems = [];
+
+    function loadStock() {
+        try {
+            const savedStock = localStorage.getItem(STOCK_STORAGE_KEY);
+            stockItems = savedStock ? JSON.parse(savedStock) : [];
+
+            if (!Array.isArray(stockItems)) {
+                stockItems = [];
+            }
+        } catch (error) {
+            stockItems = [];
+            console.error('Erreur de chargement du stock :', error);
+        }
+    }
+
+    function saveStock() {
+        try {
+            localStorage.setItem(
+                STOCK_STORAGE_KEY,
+                JSON.stringify(stockItems)
+            );
+            return true;
+        } catch (error) {
+            console.error('Erreur de sauvegarde du stock :', error);
+
+            if (typeof notify === 'function') {
+                notify('Impossible de sauvegarder le stock.', 'error');
+            }
+
+            return false;
+        }
+    }
+
+    function stockMoney(value) {
+        return `${Math.round(value).toLocaleString('fr-FR')} $`;
+    }
+
+    function renderStock() {
+        let totalQuantity = 0;
+        let totalValue = 0;
+
+        stockItems.forEach(item => {
+            totalQuantity += Number(item.quantity) || 0;
+            totalValue +=
+                (Number(item.quantity) || 0) *
+                (Number(item.unitPrice) || 0);
+        });
+
+        stockProductCount.textContent = stockItems.length;
+        stockQuantityTotal.textContent =
+            totalQuantity.toLocaleString('fr-FR');
+        stockValueTotal.textContent = stockMoney(totalValue);
+
+        if (stockItems.length === 0) {
+            stockTableBody.innerHTML =
+                '<tr><td colspan="6">Aucun produit dans le stock.</td></tr>';
+            return;
+        }
+
+        stockTableBody.innerHTML = stockItems.map(item => {
+            const quantity = Number(item.quantity) || 0;
+            const unitPrice = Number(item.unitPrice) || 0;
+            const total = quantity * unitPrice;
+
+            return `
+                <tr>
+                    <td>${escapeHtml(item.name)}</td>
+                    <td>${escapeHtml(item.category)}</td>
+                    <td>${quantity.toLocaleString('fr-FR')}</td>
+                    <td>${stockMoney(unitPrice)}</td>
+                    <td>${stockMoney(total)}</td>
+                    <td>
+                        <button
+                            type="button"
+                            class="secondary-btn stock-delete-btn"
+                            data-stock-delete="${escapeHtml(item.id)}"
+                        >
+                            Supprimer
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    stockForm.addEventListener('submit', event => {
+        event.preventDefault();
+
+        const name = stockName.value.trim();
+        const category = stockCategory.value.trim();
+        const quantity = Number(stockQuantity.value);
+        const unitPrice = Number(stockUnitPrice.value);
+
+        if (
+            !name ||
+            !category ||
+            stockQuantity.value.trim() === '' ||
+            stockUnitPrice.value.trim() === '' ||
+            !Number.isFinite(quantity) ||
+            !Number.isFinite(unitPrice) ||
+            quantity < 0 ||
+            unitPrice < 0
+        ) {
+            if (typeof notify === 'function') {
+                notify('Vérifie les informations du produit.', 'error');
+            } else {
+                alert('Vérifie les informations du produit.');
+            }
+            return;
+        }
+
+        if (!Number.isInteger(quantity)) {
+            alert('La quantité doit être un nombre entier.');
+            return;
+        }
+
+        stockItems.push({
+            id: String(Date.now()) + '-' +
+                Math.random().toString(16).slice(2),
+            name: name,
+            category: category,
+            quantity: quantity,
+            unitPrice: unitPrice
+        });
+
+        if (!saveStock()) {
+            stockItems.pop();
+            return;
+        }
+
+        renderStock();
+        stockForm.reset();
+
+        if (typeof notify === 'function') {
+            notify('Produit ajouté au stock.', 'success');
+        }
+    });
+
+    stockTableBody.addEventListener('click', event => {
+        const button = event.target.closest('[data-stock-delete]');
+        if (!button) return;
+
+        const id = button.getAttribute('data-stock-delete');
+        const previousItems = stockItems.slice();
+
+        stockItems = stockItems.filter(item => item.id !== id);
+
+        if (!saveStock()) {
+            stockItems = previousItems;
+            return;
+        }
+
+        renderStock();
+
+        if (typeof notify === 'function') {
+            notify('Produit supprimé du stock.', 'success');
+        }
+    });
+
+    loadStock();
+    renderStock();
+
+    console.log('Gestion du stock chargée.');
+})();
