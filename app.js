@@ -529,6 +529,7 @@ const pageDetteCell = document.getElementById('page-dette-cell');
 
 
 openDetteCell.addEventListener('click', () => {
+    document.querySelector('.main-content').classList.add('dette-ouverte');
     Object.values(pages).forEach(page => {
         if (page) page.classList.remove('active');
     });
@@ -558,6 +559,7 @@ openDetteCell.addEventListener('click', () => {
 
 
 backCompta.addEventListener('click', () => {
+    document.querySelector('.main-content').classList.remove('dette-ouverte');
     document.querySelectorAll('.page').forEach(page => {
         page.classList.remove('active');
     });
