@@ -1950,15 +1950,17 @@ article.panel.link-panel.tokyo-panel {
     z-index: 10;
 }
 
+
 #backCompta {
-    position: fixed;
-    top: 25px;
-    right: 30px;
-    width: fit-content;
-    margin: 0;
-    padding: 10px 18px;
-    z-index: 9999;
+    position: fixed !important;
+    top: 25px !important;
+    right: 30px !important;
+    width: fit-content !important;
+    margin: 0 !important;
+    padding: 10px 18px !important;
+    z-index: 99999 !important;
 }
+
 
 
 /* ================================
