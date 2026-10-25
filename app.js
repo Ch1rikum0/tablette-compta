@@ -1287,7 +1287,4 @@ function updateDetteButtonVisibility() {
     );
 }
 
-updateDetteButtonVisibility();
-
-const backComptaButton = document.getElementById('backCompta');
-if (backComptaButton) backComptaButton.style.setProperty('display', 'none', 'important');
+updateDetteButtonVisibility()
