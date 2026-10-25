@@ -1950,22 +1950,6 @@ article.panel.link-panel.tokyo-panel {
     z-index: 10;
 }
 
-
-
-#backCompta {
-    position: fixed !important;
-    top: 25px !important;
-    right: 30px !important;
-    z-index: 2147483647 !important;
-
-    width: auto !important;
-    margin: 0 !important;
-    padding: 10px 18px !important;
-
-    transform: none !important;
-}
-
-
 /* ================================
    DESIGN DE LA PAGE DETTE
 ================================ */
@@ -2280,4 +2264,19 @@ article.panel.link-panel.tokyo-panel {
     margin-left: 20px !important;
     transform: translateX(25px) !important;
     z-index: 99999 !important;
+}
+
+
+html body #backCompta {
+    position: fixed !important;
+    top: 25px !important;
+    right: 30px !important;
+    left: auto !important;
+    bottom: auto !important;
+
+    width: auto !important;
+    margin: 0 !important;
+    transform: none !important;
+
+    z-index: 2147483647 !important;
 }
