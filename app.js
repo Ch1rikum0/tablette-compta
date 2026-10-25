@@ -1280,7 +1280,10 @@ function updateDetteButtonVisibility() {
     }
 
     if (backButton && dettePage) {
-        backButton.style.display =
-            dettePage.classList.contains('active') ? '' : 'none';
+        if (dettePage.classList.contains('active')) {
+            backButton.style.setProperty('display', 'block', 'important');
+        } else {
+            backButton.style.setProperty('display', 'none', 'important');
+        }
     }
 }
