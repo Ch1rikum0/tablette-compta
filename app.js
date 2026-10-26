@@ -2076,7 +2076,7 @@ loadStock();
 
         toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         toggle.querySelector('.objet-form-arrow').textContent =
-            isOpen ? '−' : '+';
+            isOpen ? '▼' : '+';
     }
 
     toggle.addEventListener('click', toggleObjetForm);
