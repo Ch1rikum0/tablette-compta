@@ -2742,3 +2742,52 @@ article.panel.link-panel.tokyo-panel {
         width: 100%;
     }
 }
+
+
+/* Cadre Ajouter un objet repliable */
+.objet-form-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0;
+    cursor: pointer;
+    user-select: none;
+}
+
+.objet-form-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 22px;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.objet-form-toggle:hover .objet-form-arrow {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.objet-form-wrapper {
+    display: none;
+    margin-top: 18px;
+}
+
+.objet-form-panel.objet-form-open .objet-form-wrapper {
+    display: block;
+}
+
+.objet-form-panel.objet-form-open .objet-form-arrow {
+    transform: rotate(45deg);
+}
+
+.objet-form-toggle:focus-visible {
+    outline: 2px solid var(--red);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
