@@ -1619,7 +1619,7 @@ function renderStock() {
 }
 
 
-    stockForm.addEventListener('submit', event => {
+    stockForm.addEventListener('submit', async event => {
         event.preventDefault();
 
         const name = stockName.value.trim();
@@ -1661,8 +1661,9 @@ function renderStock() {
     unitPrice: unitPrice
 });
 
-        if (!saveStock()) {
+        if (!(await saveStock())) {
             stockItems.pop();
+            renderStock();
             return;
         }
 
