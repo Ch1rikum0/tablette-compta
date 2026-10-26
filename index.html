@@ -253,16 +253,96 @@
 
 
 
-        <!-- PAGE RACHAT D'OBJET -->
        
-        <section class="page" id="page-rachat">
-            <article class="panel">
-              <h3 style="margin-bottom: 1px; text-align: left;">Objets</h3>
-              <p class="muted" style="margin-top: 0; padding-top: 0; text-align: left;">
-                    Gestion des Objets.
-              </p>
-            </article>
-        </section>
+<!-- PAGE OBJETS -->
+<section class="page" id="page-rachat">
+    <article class="panel">
+        <h3 style="margin-bottom: 1px; text-align: left;">Objets</h3>
+        <p class="muted" style="margin-top: 0; padding-top: 0; text-align: left;">
+            Gestion des objets.
+        </p>
+    </article>
+
+    <article class="panel">
+        <h3>Ajouter un objet</h3>
+
+        <form id="objetForm">
+            <label for="objetName">Nom de l'objet</label>
+            <input
+                type="text"
+                id="objetName"
+                placeholder="Ex. : Téléphone"
+                required
+            >
+
+            <label for="objetCategory">Catégorie</label>
+            <input
+                type="text"
+                id="objetCategory"
+                placeholder="Ex. : Électronique"
+                required
+            >
+
+            <label for="objetImage">Lien de l'image (facultatif)</label>
+            <input
+                type="url"
+                id="objetImage"
+                placeholder="https://..."
+            >
+
+            <label for="objetQuantity">Quantité</label>
+            <input
+                type="number"
+                id="objetQuantity"
+                min="0"
+                step="1"
+                value="1"
+                required
+            >
+
+            <label for="objetUnitPrice">Prix unitaire ($)</label>
+            <input
+                type="number"
+                id="objetUnitPrice"
+                min="0"
+                step="1"
+                placeholder="Ex. : 500"
+                required
+            >
+
+            <button type="submit" class="primary-btn">
+                Ajouter l'objet
+            </button>
+        </form>
+    </article>
+
+    <article class="panel">
+        <h3>Résumé des objets</h3>
+
+        <div class="stock-stats">
+            <div>
+                <span>Références</span>
+                <strong id="objetProductCount">0</strong>
+            </div>
+            <div>
+                <span>Quantité totale</span>
+                <strong id="objetQuantityTotal">0</strong>
+            </div>
+            <div>
+                <span>Valeur totale</span>
+                <strong id="objetValueTotal">0 $</strong>
+            </div>
+        </div>
+    </article>
+
+    <article class="panel">
+        <h3>Catalogue des objets</h3>
+        <div id="objetCards" class="stock-cards">
+            <p class="muted">Chargement des objets...</p>
+        </div>
+    </article>
+</section>
+
         
       
 <!-- PAGE DROGUE -->
