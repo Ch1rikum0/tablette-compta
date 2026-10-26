@@ -1637,15 +1637,15 @@ function renderStock() {
             return;
         }
 
-        stockItems.push({
-            id: String(Date.now()) + '-' +
-                Math.random().toString(16).slice(2),
-           name: name,
-            category: category,
-            image: image,
-            quantity: quantity,
-            unitPrice: unitPrice
-        });
+       stockItems.push({
+    id: String(Date.now()) + '-' +
+        Math.random().toString(16).slice(2),
+    name: name,
+    category: category,
+    image: image,
+    quantity: quantity,
+    unitPrice: unitPrice
+});
 
         if (!saveStock()) {
             stockItems.pop();
