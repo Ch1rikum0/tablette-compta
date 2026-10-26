@@ -1467,7 +1467,12 @@ if (document.readyState === 'loading') {
             if (typeof notify === 'function') {
                 notify('Impossible de sauvegarder le stock.', 'error');
             }
+        });
 
+            loadStock();
+            renderStock();
+        })();
+            
             return false;
         }
     }
