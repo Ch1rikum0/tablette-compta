@@ -2791,3 +2791,17 @@ article.panel.link-panel.tokyo-panel {
     outline-offset: 4px;
     border-radius: 4px;
 }
+
+
+.objet-form-arrow {
+    width: auto;
+    height: auto;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    transition: transform 0.2s ease;
+}
+
+.objet-form-panel.objet-form-open .objet-form-arrow {
+    transform: rotate(180deg);
+}
