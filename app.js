@@ -1630,14 +1630,17 @@ function renderStock() {
     
 const stockActionContainer = stockCards || stockTableBody;
 
+
 stockActionContainer.addEventListener('click', event => {
     const updateButton = event.target.closest('[data-stock-update]');
 
     if (updateButton) {
         const id = updateButton.getAttribute('data-stock-update');
         const quantityInput = stockActionContainer.querySelector(
-            `[data-stock-quantity="${id}"]`
+            '[data-stock-quantity="' + id + '"]'
         );
+
+        if (!quantityInput) return;
 
         const quantity = Number(quantityInput.value);
 
@@ -1670,27 +1673,24 @@ stockActionContainer.addEventListener('click', event => {
         return;
     }
 
-   
-const deleteButton = event.target.closest('[data-stock-delete]');
-if (!deleteButton) return;
+    const deleteButton = event.target.closest('[data-stock-delete]');
+    if (!deleteButton) return;
 
-const id = deleteButton.getAttribute('data-stock-delete');
-const itemToDelete = stockItems.find(item => item.id === id);
+    const id = deleteButton.getAttribute('data-stock-delete');
+    const itemToDelete = stockItems.find(item => item.id === id);
 
-if (!itemToDelete) return;
+    if (!itemToDelete) return;
 
-const confirmed = confirm(
-    'Veux-tu vraiment supprimer le produit "' +
-    itemToDelete.name +
-    '" du stock ?\n\nCette action est définitive.'
-);
+    if (!window.confirm(
+        'Veux-tu vraiment supprimer le produit "' +
+        itemToDelete.name +
+        '" du stock ?'
+    )) {
+        return;
+    }
 
-if (!confirmed) return;
-
-const previousItems = stockItems.slice();
-
-stockItems = stockItems.filter(item => item.id !== id);
-
+    const previousItems = stockItems.slice();
+    stockItems = stockItems.filter(item => item.id !== id);
 
     if (!saveStock()) {
         stockItems = previousItems;
@@ -1703,6 +1703,7 @@ stockItems = stockItems.filter(item => item.id !== id);
         notify('Produit supprimé du stock.', 'success');
     }
 });
+
     
 loadStock();
 renderStock();
