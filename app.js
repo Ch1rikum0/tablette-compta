@@ -2038,3 +2038,27 @@ loadStock();
 
     loadObjets();
 })();
+
+
+/* Navigation des sous-onglets Objets */
+(() => {
+    const objetTabs = document.querySelectorAll('[data-objet-tab]');
+    const objetContents = document.querySelectorAll('.objet-tab-content');
+
+    objetTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.getAttribute('data-objet-tab');
+
+            objetTabs.forEach(button => {
+                button.classList.toggle('active', button === tab);
+            });
+
+            objetContents.forEach(content => {
+                content.classList.toggle(
+                    'active',
+                    content.id === 'objet-content-' + target
+                );
+            });
+        });
+    });
+})();
