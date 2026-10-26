@@ -2664,3 +2664,81 @@ article.panel.link-panel.tokyo-panel {
 .objet-tab-content.active {
     display: block;
 }
+
+
+/* =================================
+   SILENT GHOST - FORMULAIRE OBJETS
+================================= */
+
+#objet-content-stock #objetForm {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 18px;
+    margin-top: 22px;
+}
+
+#objet-content-stock #objetForm label {
+    display: block;
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#objet-content-stock #objetForm input {
+    width: 100%;
+    min-width: 0;
+    padding: 12px 14px;
+    margin: 0;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #0b1120;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#objet-content-stock #objetForm input:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(255, 38, 56, 0.12);
+}
+
+#objet-content-stock #objetForm input::placeholder {
+    color: #69758a;
+}
+
+#objet-content-stock #objetForm button[type="submit"] {
+    grid-column: 1 / -1;
+    justify-self: start;
+    margin-top: 12px;
+    padding: 13px 22px;
+    border: 1px solid var(--red);
+    border-radius: 10px;
+    background: var(--red);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease,
+                filter 0.2s ease;
+}
+
+#objet-content-stock #objetForm button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(255, 38, 56, 0.22);
+    filter: brightness(1.08);
+}
+
+#objet-content-stock #objetForm button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* Adaptation aux petits écrans */
+@media (max-width: 600px) {
+    #objet-content-stock #objetForm {
+        grid-template-columns: 1fr;
+    }
+
+    #objet-content-stock #objetForm button[type="submit"] {
+        width: 100%;
+    }
+}
