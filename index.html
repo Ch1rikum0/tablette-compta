@@ -317,24 +317,20 @@
             </button>
         </form>
 
-        <div class="stock-table-container">
-            <table class="stock-table">
-                <thead>
-                    <tr>
-                        <th>Produit</th>
-                        <th>Catégorie</th>
-                        <th>Quantité</th>
-                        <th>Valeur unitaire</th>
-                        <th>Valeur totale</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="stockTableBody">
-                    <tr>
-                        <td colspan="6">Aucun produit dans le stock.</td>
-                    </tr>
-                </tbody>
-            </table>
+        
+<div>
+    <label for="stockImage">Image du produit (URL)</label>
+    <input
+        type="text"
+        id="stockImage"
+        placeholder="https://exemple.com/image.png"
+    >
+</div>
+
+
+       
+        <div id="stockCards" class="stock-cards">
+            <p class="muted">Aucun produit dans le stock.</p>
         </div>
     </article>
 </section>
