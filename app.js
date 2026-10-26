@@ -1430,7 +1430,7 @@ if (document.readyState === 'loading') {
     // Arrêter proprement si le formulaire HTML n'est pas présent.
     if (
         !stockForm ||
-        !stockTableBody ||
+        (!stockCards && !stockTableBody) ||
         !stockProductCount ||
         !stockQuantityTotal ||
         !stockValueTotal
