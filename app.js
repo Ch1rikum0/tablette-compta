@@ -1752,8 +1752,5 @@ stockActionContainer.addEventListener('click', event => {
         notify('Produit supprimé du stock.', 'success');
     }
 });
-
-    
+   
 loadStock();
-renderStock();
-})();
