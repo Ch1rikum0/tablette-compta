@@ -33,7 +33,7 @@ async function loadSharedBalance() {
 }
 
 async function loadSharedOperations() {
-    const { data, error } = await supabaseClient
+   const { data, error } = await supabaseClient
         .from('operations')
         .select('*')
         .eq('archivee', false)
@@ -345,7 +345,7 @@ document.getElementById('refreshBtn').addEventListener('click', async () => {
         return;
     }
 
-    const { error } = await supabaseClient
+   const { error } = await supabaseClient
         .from('operations')
         .update({ archivee: true })
         .in('id', operationIds);
