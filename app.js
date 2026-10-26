@@ -1477,6 +1477,7 @@ if (document.readyState === 'loading') {
     }
 
     
+
 function renderStock() {
     let totalQuantity = 0;
     let totalValue = 0;
@@ -1488,80 +1489,85 @@ function renderStock() {
             (Number(item.unitPrice) || 0);
     });
 
-          stockProductCount.textContent = stockItems.length;
-        stockQuantityTotal.textContent =
-            totalQuantity.toLocaleString('fr-FR');
-        stockValueTotal.textContent = stockMoney(totalValue);
+    stockProductCount.textContent = stockItems.length;
+    stockQuantityTotal.textContent =
+        totalQuantity.toLocaleString('fr-FR');
+    stockValueTotal.textContent = stockMoney(totalValue);
 
-        if (stockItems.length === 0) {
-            stockTableBody.innerHTML =
-                '<tr><td colspan="6">Aucun produit dans le stock.</td></tr>';
-            return;
-        }
+    if (!stockCards) return;
 
-        stockTableBody.innerHTML = stockItems.map(item => {
-            const quantity = Number(item.quantity) || 0;
-            const unitPrice = Number(item.unitPrice) || 0;
-            const total = quantity * unitPrice;
-
-            return `
-                <tr>
-                    <td>${escapeHtml(item.name)}</td>
-                    <td>${escapeHtml(item.category)}</td>
-                    <td>${quantity.toLocaleString('fr-FR')}</td>
-                    <td>${stockMoney(unitPrice)}</td>
-                    <td>${stockMoney(total)}</td>
-                    <td>
-                        <button
-                            type="button"
-                            class="secondary-btn stock-delete-btn"
-                            data-stock-delete="${escapeHtml(item.id)}"
-                        >
-                            Supprimer
-                        </button>
-                    </td>
-                </tr>
-            `;
-        }).join('');
+    if (stockItems.length === 0) {
+        stockCards.innerHTML =
+            '<p class="muted">Aucun produit dans le stock.</p>';
+        return;
     }
 
+    stockCards.innerHTML = stockItems.map(item => {
+        const quantity = Number(item.quantity) || 0;
+        const unitPrice = Number(item.unitPrice) || 0;
+        const total = quantity * unitPrice;
+        const imageUrl = String(item.image || '').trim();
 
-        stockProductCount.textContent = stockItems.length;
-        stockQuantityTotal.textContent =
-            totalQuantity.toLocaleString('fr-FR');
-        stockValueTotal.textContent = stockMoney(totalValue);
+        const imageHtml = imageUrl
+            ? `<img class="stock-product-image"
+                    src="${escapeHtml(imageUrl)}"
+                    alt="${escapeHtml(item.name)}"
+                    onerror="this.style.display='none'">`
+            : '<div class="stock-product-placeholder">📦</div>';
 
-        if (stockItems.length === 0) {
-            stockTableBody.innerHTML =
-                '<tr><td colspan="6">Aucun produit dans le stock.</td></tr>';
-            return;
-        }
+        return `
+            <article class="stock-product-card">
+                <div class="stock-product-visual">
+                    ${imageHtml}
+                </div>
 
-        stockTableBody.innerHTML = stockItems.map(item => {
-            const quantity = Number(item.quantity) || 0;
-            const unitPrice = Number(item.unitPrice) || 0;
-            const total = quantity * unitPrice;
+                <div class="stock-product-info">
+                    <div class="stock-product-heading">
+                        <h4>${escapeHtml(item.name)}</h4>
+                        <strong>${stockMoney(total)}</strong>
+                    </div>
 
-            return `
-                <tr>
-                    <td>${escapeHtml(item.name)}</td>
-                    <td>${escapeHtml(item.category)}</td>
-                    <td>${quantity.toLocaleString('fr-FR')}</td>
-                    <td>${stockMoney(unitPrice)}</td>
-                    <td>${stockMoney(total)}</td>
-                    <td>
+                    <span class="stock-product-category">
+                        ${escapeHtml(item.category)}
+                    </span>
+
+                    <div class="stock-product-details">
+                        <span>Quantité : ${quantity}</span>
+                        <span>Unitaire : ${stockMoney(unitPrice)}</span>
+                    </div>
+
+                    <div class="stock-product-actions">
+                        <input
+                            type="number"
+                            min="0"
+                            step="1"
+                            value="${quantity}"
+                            aria-label="Nouvelle quantité pour ${escapeHtml(item.name)}"
+                            data-stock-quantity="${escapeHtml(item.id)}"
+                        >
+
                         <button
                             type="button"
-                            class="secondary-btn stock-delete-btn"
-                            data-stock-delete="${escapeHtml(item.id)}"
+                            class="primary-btn"
+                            data-stock-update="${escapeHtml(item.id)}"
                         >
-                            Supprimer
+                            Mettre à jour
                         </button>
-                    </td>
-                </tr>
-            `;
-        }).join('');
-    }
+                    </div>
+
+                    <button
+                        type="button"
+                        class="secondary-btn stock-delete-btn"
+                        data-stock-delete="${escapeHtml(item.id)}"
+                    >
+                        Supprimer
+                    </button>
+                </div>
+            </article>
+        `;
+    }).join('');
+}
+
 
     stockForm.addEventListener('submit', event => {
         event.preventDefault();
