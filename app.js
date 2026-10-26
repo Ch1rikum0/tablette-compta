@@ -1443,7 +1443,7 @@ if (document.readyState === 'loading') {
   
 async function loadStock() {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('stock')
             .select('*');
 
