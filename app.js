@@ -1670,13 +1670,27 @@ stockActionContainer.addEventListener('click', event => {
         return;
     }
 
-    const deleteButton = event.target.closest('[data-stock-delete]');
-    if (!deleteButton) return;
+   
+const deleteButton = event.target.closest('[data-stock-delete]');
+if (!deleteButton) return;
 
-    const id = deleteButton.getAttribute('data-stock-delete');
-    const previousItems = stockItems.slice();
+const id = deleteButton.getAttribute('data-stock-delete');
+const itemToDelete = stockItems.find(item => item.id === id);
 
-    stockItems = stockItems.filter(item => item.id !== id);
+if (!itemToDelete) return;
+
+const confirmed = confirm(
+    'Veux-tu vraiment supprimer le produit "' +
+    itemToDelete.name +
+    '" du stock ?\n\nCette action est définitive.'
+);
+
+if (!confirmed) return;
+
+const previousItems = stockItems.slice();
+
+stockItems = stockItems.filter(item => item.id !== id);
+
 
     if (!saveStock()) {
         stockItems = previousItems;
