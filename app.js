@@ -1454,34 +1454,24 @@ if (document.readyState === 'loading') {
         }
     }
 
-    function saveStock() {
-        try {
-            localStorage.setItem(
-                STOCK_STORAGE_KEY,
-                JSON.stringify(stockItems)
-            );
-            return true;
-        } catch (error) {
-            console.error('Erreur de sauvegarde du stock :', error);
-
-            if (typeof notify === 'function') {
-                notify('Impossible de sauvegarder le stock.', 'error');
-            }
-        });
-
-            loadStock();
-            renderStock();
-        })();
-            
-            return false;
-        }
-    }
-
-    function stockMoney(value) {
-        return `${Math.round(value).toLocaleString('fr-FR')} $`;
-    }
-
     
+function saveStock() {
+    try {
+        localStorage.setItem(
+            STOCK_STORAGE_KEY,
+            JSON.stringify(stockItems)
+        );
+        return true;
+    } catch (error) {
+        console.error('Erreur de sauvegarde du stock :', error);
+
+        if (typeof notify === 'function') {
+            notify('Impossible de sauvegarder le stock.', 'error');
+        }
+
+        return false;
+    }
+}
 
 function renderStock() {
     let totalQuantity = 0;
@@ -1693,3 +1683,7 @@ stockActionContainer.addEventListener('click', event => {
         notify('Produit supprimé du stock.', 'success');
     }
 });
+
+loadStock();
+renderStock();
+})();
