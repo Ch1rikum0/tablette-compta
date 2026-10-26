@@ -274,8 +274,17 @@
     <!-- ONGLET STOCK -->
     <div class="objet-tab-content active" id="objet-content-stock">
 
-        <article class="panel">
-            <h3>Ajouter un objet</h3>
+       
+<article class="panel objet-form-panel">
+    <h3 class="objet-form-toggle" id="objetFormToggle"
+        role="button" tabindex="0" aria-expanded="false"
+        aria-controls="objetFormWrapper">
+        <span>Ajouter un objet</span>
+        <span class="objet-form-arrow">+</span>
+    </h3>
+
+    <div id="objetFormWrapper" class="objet-form-wrapper">
+
 
             <form id="objetForm">
                 <label for="objetName">Nom de l'objet</label>
@@ -295,6 +304,8 @@
 
                 <button type="submit" class="primary-btn">Ajouter l'objet</button>
             </form>
+          </div>
+</article>
         </article>
 
         <article class="panel">
