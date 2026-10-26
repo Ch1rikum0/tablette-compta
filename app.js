@@ -1752,3 +1752,289 @@ try {
    
 loadStock();
 })();
+
+
+/* =================================
+   GESTION DES OBJETS
+================================= */
+
+(() => {
+    const objetForm = document.getElementById('objetForm');
+    const objetCards = document.getElementById('objetCards');
+
+    const objetProductCount = document.getElementById('objetProductCount');
+    const objetQuantityTotal = document.getElementById('objetQuantityTotal');
+    const objetValueTotal = document.getElementById('objetValueTotal');
+
+    const objetName = document.getElementById('objetName');
+    const objetCategory = document.getElementById('objetCategory');
+    const objetImage = document.getElementById('objetImage');
+    const objetQuantity = document.getElementById('objetQuantity');
+    const objetUnitPrice = document.getElementById('objetUnitPrice');
+
+    if (
+        !objetForm ||
+        !objetCards ||
+        !objetProductCount ||
+        !objetQuantityTotal ||
+        !objetValueTotal
+    ) {
+        return;
+    }
+
+    let objets = [];
+
+    function objetMoney(value) {
+        return `${Math.round(Number(value) || 0).toLocaleString('fr-FR')} $`;
+    }
+
+    async function loadObjets() {
+        try {
+            const { data, error } = await supabaseClient
+                .from('objets')
+                .select('*')
+                .order('nom', { ascending: true });
+
+            if (error) throw error;
+
+            objets = (data || []).map(item => ({
+                id: item.id,
+                name: item.nom,
+                category: item.categorie || '',
+                image: item.image || '',
+                quantity: Number(item.quantite) || 0,
+                unitPrice: Number(item.prix_unitaire) || 0
+            }));
+
+            renderObjets();
+        } catch (error) {
+            console.error('Erreur de chargement des objets :', error);
+            objetCards.innerHTML =
+                '<p class="muted">Impossible de charger les objets.</p>';
+
+            notify('Impossible de charger les objets partagés.', 'error');
+        }
+    }
+
+    function renderObjets() {
+        let totalQuantity = 0;
+        let totalValue = 0;
+
+        objets.forEach(item => {
+            totalQuantity += item.quantity;
+            totalValue += item.quantity * item.unitPrice;
+        });
+
+        objetProductCount.textContent = objets.length;
+        objetQuantityTotal.textContent =
+            totalQuantity.toLocaleString('fr-FR');
+        objetValueTotal.textContent = objetMoney(totalValue);
+
+        if (objets.length === 0) {
+            objetCards.innerHTML =
+                '<p class="muted">Aucun objet enregistré.</p>';
+            return;
+        }
+
+        objetCards.innerHTML = objets.map(item => {
+            const imageHtml = item.image
+                ? `<img class="stock-product-image"
+                        src="${escapeHtml(item.image)}"
+                        alt="${escapeHtml(item.name)}"
+                        onerror="this.style.display='none'">`
+                : '<div class="stock-product-placeholder">📦</div>';
+
+            return `
+                <article class="stock-product-card">
+                    <div class="stock-product-visual">
+                        ${imageHtml}
+                    </div>
+
+                    <div class="stock-product-info">
+                        <div class="stock-product-heading">
+                            <h4>${escapeHtml(item.name)}</h4>
+                            <strong>${objetMoney(item.quantity * item.unitPrice)}</strong>
+                        </div>
+
+                        <span class="stock-product-category">
+                            ${escapeHtml(item.category)}
+                        </span>
+
+                        <div class="stock-product-details">
+                            <span>Quantité : ${item.quantity}</span>
+                            <span>Unitaire : ${objetMoney(item.unitPrice)}</span>
+                        </div>
+
+                        <div class="stock-product-actions">
+                            <input
+                                type="number"
+                                min="0"
+                                step="1"
+                                value="${item.quantity}"
+                                aria-label="Nouvelle quantité pour ${escapeHtml(item.name)}"
+                                data-objet-quantity="${escapeHtml(item.id)}"
+                            >
+
+                            <button
+                                type="button"
+                                class="primary-btn"
+                                data-objet-update="${escapeHtml(item.id)}"
+                            >
+                                Mettre à jour
+                            </button>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="secondary-btn stock-delete-btn"
+                            data-objet-delete="${escapeHtml(item.id)}"
+                        >
+                            Supprimer
+                        </button>
+                    </div>
+                </article>
+            `;
+        }).join('');
+    }
+
+    async function saveObjet(item) {
+        const row = {
+            id: String(item.id),
+            nom: item.name,
+            categorie: item.category,
+            image: item.image || '',
+            quantite: Number(item.quantity) || 0,
+            prix_unitaire: Number(item.unitPrice) || 0
+        };
+
+        const { error } = await supabaseClient
+            .from('objets')
+            .upsert(row, { onConflict: 'id' });
+
+        if (error) throw error;
+    }
+
+    objetForm.addEventListener('submit', async event => {
+        event.preventDefault();
+
+        const name = objetName.value.trim();
+        const category = objetCategory.value.trim();
+        const image = objetImage.value.trim();
+        const quantity = Number(objetQuantity.value);
+        const unitPrice = Number(objetUnitPrice.value);
+
+        if (
+            !name ||
+            !category ||
+            objetQuantity.value.trim() === '' ||
+            objetUnitPrice.value.trim() === '' ||
+            !Number.isInteger(quantity) ||
+            quantity < 0 ||
+            !Number.isFinite(unitPrice) ||
+            unitPrice < 0
+        ) {
+            notify('Vérifie les informations de l’objet.', 'error');
+            return;
+        }
+
+        const button = objetForm.querySelector('button[type="submit"]');
+        button.disabled = true;
+
+        const item = {
+            id: String(Date.now()) + '-' +
+                Math.random().toString(16).slice(2),
+            name,
+            category,
+            image,
+            quantity,
+            unitPrice
+        };
+
+        try {
+            await saveObjet(item);
+            objets.push(item);
+            renderObjets();
+            objetForm.reset();
+            notify('Objet ajouté avec succès.', 'success');
+        } catch (error) {
+            console.error('Erreur de sauvegarde de l’objet :', error);
+            notify('Impossible de sauvegarder cet objet.', 'error');
+        } finally {
+            button.disabled = false;
+        }
+    });
+
+    objetCards.addEventListener('click', async event => {
+        const updateButton = event.target.closest('[data-objet-update]');
+        const deleteButton = event.target.closest('[data-objet-delete]');
+
+        if (updateButton) {
+            const id = updateButton.getAttribute('data-objet-update');
+            const input = objetCards.querySelector(
+                '[data-objet-quantity="' + id + '"]'
+            );
+
+            const quantity = Number(input.value);
+
+            if (
+                input.value.trim() === '' ||
+                !Number.isInteger(quantity) ||
+                quantity < 0
+            ) {
+                notify('Entre une quantité entière positive ou zéro.', 'error');
+                return;
+            }
+
+            const item = objets.find(obj => obj.id === id);
+            if (!item) return;
+
+            const previousQuantity = item.quantity;
+            item.quantity = quantity;
+            updateButton.disabled = true;
+
+            try {
+                await saveObjet(item);
+                renderObjets();
+                notify('Quantité mise à jour.', 'success');
+            } catch (error) {
+                item.quantity = previousQuantity;
+                console.error('Erreur de mise à jour :', error);
+                renderObjets();
+                notify('Impossible de mettre à jour la quantité.', 'error');
+            }
+
+            return;
+        }
+
+        if (deleteButton) {
+            const id = deleteButton.getAttribute('data-objet-delete');
+            const item = objets.find(obj => obj.id === id);
+
+            if (!item) return;
+
+            if (!window.confirm(
+                'Veux-tu vraiment supprimer l’objet "' + item.name + '" ?'
+            )) {
+                return;
+            }
+
+            try {
+                const { error } = await supabaseClient
+                    .from('objets')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                objets = objets.filter(obj => obj.id !== id);
+                renderObjets();
+                notify('Objet supprimé.', 'success');
+            } catch (error) {
+                console.error('Erreur de suppression :', error);
+                notify('Impossible de supprimer cet objet.', 'error');
+            }
+        }
+    });
+
+    loadObjets();
+})();
