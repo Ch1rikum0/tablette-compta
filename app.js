@@ -345,16 +345,16 @@ document.getElementById('refreshBtn').addEventListener('click', async () => {
         return;
     }
 
-  const { error } = await supabaseClient
-    .from('stock')
-    .delete()
-    .eq('id', id);
+ const { error } = await supabaseClient
+    .from('operations')
+    .update({ archivee: true })
+    .in('id', operationIds);
 
-    if (error) {
-        console.error('Erreur lors de l’archivage :', error);
-        notify('Impossible d’archiver les opérations.', 'error');
-        return;
-    }
+if (error) {
+    console.error('Erreur lors de l’archivage :', error);
+    notify('Impossible d’archiver les opérations.', 'error');
+    return;
+}
 
     transactions = [];
     localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
@@ -1483,10 +1483,10 @@ async function saveStock() {
                 prix_unitaire: Number(item.unitPrice) || 0
             };
 
-            const { error } = await supabase
+           const { error } = await supabaseClient
                 .from('stock')
                 .upsert(row, { onConflict: 'id' });
-
+            
             if (error) {
                 throw error;
             }
@@ -1726,11 +1726,11 @@ const previousItems = stockItems.slice();
 stockItems = stockItems.filter(item => item.id !== id);
 
 try {
-    const { error } = await supabase
-        .from('stock')
-        .delete()
-        .eq('id', id);
-
+    const { error } = await supabaseClient
+    .from('stock')
+    .delete()
+    .eq('id', id);
+    
     if (error) {
         throw error;
     }
