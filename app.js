@@ -1681,7 +1681,7 @@ function renderStock() {
 const stockActionContainer = stockCards || stockTableBody;
 
 
-stockActionContainer.addEventListener('click', event => {
+stockActionContainer.addEventListener('click', async event => {
     const updateButton = event.target.closest('[data-stock-update]');
 
     if (updateButton) {
@@ -1709,11 +1709,11 @@ stockActionContainer.addEventListener('click', event => {
         const previousQuantity = item.quantity;
         item.quantity = quantity;
 
-        if (!saveStock()) {
+       if (!(await saveStock())) {
             item.quantity = previousQuantity;
+            renderStock();
             return;
         }
-
         renderStock();
 
         if (typeof notify === 'function') {
@@ -1742,8 +1742,9 @@ stockActionContainer.addEventListener('click', event => {
     const previousItems = stockItems.slice();
     stockItems = stockItems.filter(item => item.id !== id);
 
-    if (!saveStock()) {
+   if (!(await saveStock())) {
         stockItems = previousItems;
+        renderStock();
         return;
     }
 
