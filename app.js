@@ -345,10 +345,10 @@ document.getElementById('refreshBtn').addEventListener('click', async () => {
         return;
     }
 
-   const { error } = await supabaseClient
-        .from('operations')
-        .update({ archivee: true })
-        .in('id', operationIds);
+  const { error } = await supabaseClient
+    .from('stock')
+    .delete()
+    .eq('id', id);
 
     if (error) {
         console.error('Erreur lors de l’archivage :', error);
