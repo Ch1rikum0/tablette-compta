@@ -1440,38 +1440,87 @@ if (document.readyState === 'loading') {
 
     let stockItems = [];
 
-    function loadStock() {
-        try {
-            const savedStock = localStorage.getItem(STOCK_STORAGE_KEY);
-            stockItems = savedStock ? JSON.parse(savedStock) : [];
+  
+async function loadStock() {
+    try {
+        const { data, error } = await supabase
+            .from('stock')
+            .select('*');
 
-            if (!Array.isArray(stockItems)) {
-                stockItems = [];
-            }
-        } catch (error) {
-            stockItems = [];
-            console.error('Erreur de chargement du stock :', error);
+        if (error) {
+            throw error;
+        }
+
+        stockItems = (data || []).map(item => ({
+            id: item.id,
+            name: item.nom,
+            category: item.categorie,
+            image: item.image || '',
+            quantity: Number(item.quantite) || 0,
+            unitPrice: Number(item.prix_unitaire) || 0
+        }));
+
+        renderStock();
+    } catch (error) {
+        console.error('Erreur de chargement du stock :', error);
+
+        if (typeof notify === 'function') {
+            notify('Impossible de charger le stock partagé.', 'error');
         }
     }
+}
 
-    
-function saveStock() {
+async function saveStock() {
     try {
-        localStorage.setItem(
-            STOCK_STORAGE_KEY,
-            JSON.stringify(stockItems)
-        );
+        const rows = stockItems.map(item => ({
+            id: String(item.id),
+            nom: item.name,
+            categorie: item.category,
+            image: item.image || '',
+            quantite: Number(item.quantity) || 0,
+            prix_unitaire: Number(item.unitPrice) || 0
+        }));
+
+        const { error: readError } = await supabase
+            .from('stock')
+            .select('id')
+            .limit(1);
+
+        if (readError) {
+            throw readError;
+        }
+
+        const { error: deleteError } = await supabase
+            .from('stock')
+            .delete()
+            .neq('id', '__aucun_produit__');
+
+        if (deleteError) {
+            throw deleteError;
+        }
+
+        if (rows.length > 0) {
+            const { error: insertError } = await supabase
+                .from('stock')
+                .insert(rows);
+
+            if (insertError) {
+                throw insertError;
+            }
+        }
+
         return true;
     } catch (error) {
         console.error('Erreur de sauvegarde du stock :', error);
 
         if (typeof notify === 'function') {
-            notify('Impossible de sauvegarder le stock.', 'error');
+            notify('Impossible de sauvegarder le stock partagé.', 'error');
         }
 
         return false;
     }
 }
+
 
 function stockMoney(value) {
     return `${Math.round(Number(value) || 0).toLocaleString('fr-FR')} $`;
