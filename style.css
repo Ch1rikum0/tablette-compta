@@ -2801,3 +2801,14 @@ article.panel.link-panel.tokyo-panel {
     font-size: 14px;
     transition: transform 0.2s ease;
 }
+
+
+.objet-form-arrow {
+    display: inline-block;
+    transform: none !important;
+    transition: none !important;
+}
+
+.objet-form-panel.objet-form-open .objet-form-arrow {
+    transform: none !important;
+}
