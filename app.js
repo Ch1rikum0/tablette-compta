@@ -1470,42 +1470,25 @@ async function loadStock() {
     }
 }
 
+
 async function saveStock() {
     try {
-        const rows = stockItems.map(item => ({
-            id: String(item.id),
-            nom: item.name,
-            categorie: item.category,
-            image: item.image || '',
-            quantite: Number(item.quantity) || 0,
-            prix_unitaire: Number(item.unitPrice) || 0
-        }));
+        for (const item of stockItems) {
+            const row = {
+                id: String(item.id),
+                nom: item.name,
+                categorie: item.category,
+                image: item.image || '',
+                quantite: Number(item.quantity) || 0,
+                prix_unitaire: Number(item.unitPrice) || 0
+            };
 
-        const { error: readError } = await supabase
-            .from('stock')
-            .select('id')
-            .limit(1);
-
-        if (readError) {
-            throw readError;
-        }
-
-        const { error: deleteError } = await supabase
-            .from('stock')
-            .delete()
-            .neq('id', '__aucun_produit__');
-
-        if (deleteError) {
-            throw deleteError;
-        }
-
-        if (rows.length > 0) {
-            const { error: insertError } = await supabase
+            const { error } = await supabase
                 .from('stock')
-                .insert(rows);
+                .upsert(row, { onConflict: 'id' });
 
-            if (insertError) {
-                throw insertError;
+            if (error) {
+                throw error;
             }
         }
 
@@ -1520,7 +1503,6 @@ async function saveStock() {
         return false;
     }
 }
-
 
 function stockMoney(value) {
     return `${Math.round(Number(value) || 0).toLocaleString('fr-FR')} $`;
@@ -1617,7 +1599,6 @@ function renderStock() {
         `;
     }).join('');
 }
-
 
     stockForm.addEventListener('submit', async event => {
         event.preventDefault();
