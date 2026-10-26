@@ -1473,6 +1473,10 @@ function saveStock() {
     }
 }
 
+function stockMoney(value) {
+    return `${Math.round(Number(value) || 0).toLocaleString('fr-FR')} $`;
+}
+    
 function renderStock() {
     let totalQuantity = 0;
     let totalValue = 0;
