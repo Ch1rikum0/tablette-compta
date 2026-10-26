@@ -2064,32 +2064,39 @@ loadStock();
 })();
 
 
+
 /* Ouverture et fermeture du formulaire Objet */
 (() => {
     const toggle = document.getElementById('objetFormToggle');
     const panel = document.querySelector('.objet-form-panel');
 
     if (!toggle || !panel) return;
- 
-
-function toggleObjetForm() {
-    const isOpen = panel.classList.toggle('objet-form-open');
-
-    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 
     const arrow = toggle.querySelector('.objet-form-arrow');
 
-    if (arrow) {
-        arrow.textContent = isOpen ? '▼' : '▶';
+    function updateObjetArrow() {
+        const isOpen = panel.classList.contains('objet-form-open');
+
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+
+        if (arrow) {
+            arrow.textContent = isOpen ? '▼' : '▶';
+        }
     }
-}
+
+    function toggleObjetForm() {
+        panel.classList.toggle('objet-form-open');
+        updateObjetArrow();
+    }
 
     toggle.addEventListener('click', toggleObjetForm);
 
-    toggle.addEventListener('keydown', event => {
+    toggle.addEventListener('keydown', function(event) {
         if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
             toggleObjetForm();
         }
     });
+
+    updateObjetArrow();
 })();
