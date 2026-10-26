@@ -1720,14 +1720,32 @@ stockActionContainer.addEventListener('click', async event => {
         return;
     }
 
-    const previousItems = stockItems.slice();
-    stockItems = stockItems.filter(item => item.id !== id);
+   
+const previousItems = stockItems.slice();
 
-   if (!(await saveStock())) {
-        stockItems = previousItems;
-        renderStock();
-        return;
+stockItems = stockItems.filter(item => item.id !== id);
+
+try {
+    const { error } = await supabase
+        .from('stock')
+        .delete()
+        .eq('id', id);
+
+    if (error) {
+        throw error;
     }
+} catch (error) {
+    console.error('Erreur de suppression du stock :', error);
+
+    stockItems = previousItems;
+    renderStock();
+
+    if (typeof notify === 'function') {
+        notify('Impossible de supprimer le produit partagé.', 'error');
+    }
+
+    return;
+}
 
     renderStock();
 
