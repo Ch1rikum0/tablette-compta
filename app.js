@@ -1420,6 +1420,8 @@ if (document.readyState === 'loading') {
 
     const stockName = document.getElementById('stockName');
     const stockCategory = document.getElementById('stockCategory');
+    const stockImage = document.getElementById('stockImage');
+    const stockCards = document.getElementById('stockCards');
     const stockQuantity = document.getElementById('stockQuantity');
     const stockUnitPrice = document.getElementById('stockUnitPrice');
 
@@ -1474,16 +1476,97 @@ if (document.readyState === 'loading') {
         return `${Math.round(value).toLocaleString('fr-FR')} $`;
     }
 
-    function renderStock() {
-        let totalQuantity = 0;
-        let totalValue = 0;
+    
+function renderStock() {
+    let totalQuantity = 0;
+    let totalValue = 0;
 
-        stockItems.forEach(item => {
-            totalQuantity += Number(item.quantity) || 0;
-            totalValue +=
-                (Number(item.quantity) || 0) *
-                (Number(item.unitPrice) || 0);
-        });
+    stockItems.forEach(item => {
+        totalQuantity += Number(item.quantity) || 0;
+        totalValue +=
+            (Number(item.quantity) || 0) *
+            (Number(item.unitPrice) || 0);
+    });
+
+    stockProductCount.textContent = stockItems.length;
+    stockQuantityTotal.textContent =
+        totalQuantity.toLocaleString('fr-FR');
+    stockValueTotal.textContent = stockMoney(totalValue);
+
+    if (!stockCards) return;
+
+    if (stockItems.length === 0) {
+        stockCards.innerHTML =
+            '<p class="muted">Aucun produit dans le stock.</p>';
+        return;
+    }
+
+    stockCards.innerHTML = stockItems.map(item => {
+        const quantity = Number(item.quantity) || 0;
+        const unitPrice = Number(item.unitPrice) || 0;
+        const total = quantity * unitPrice;
+        const imageUrl = String(item.image || '').trim();
+
+        const imageHtml = imageUrl
+            ? `<img class="stock-product-image"
+                    src="${escapeHtml(imageUrl)}"
+                    alt="${escapeHtml(item.name)}"
+                    onerror="this.style.display='none'">`
+            : `<div class="stock-product-placeholder">📦</div>`;
+
+        return `
+            <article class="stock-product-card">
+                <div class="stock-product-visual">
+                    ${imageHtml}
+                </div>
+
+                <div class="stock-product-info">
+                    <div class="stock-product-heading">
+                        <h4>${escapeHtml(item.name)}</h4>
+                        <strong>${stockMoney(total)}</strong>
+                    </div>
+
+                    <span class="stock-product-category">
+                        ${escapeHtml(item.category)}
+                    </span>
+
+                    <div class="stock-product-details">
+                        <span>Quantité : ${quantity}</span>
+                        <span>Unitaire : ${stockMoney(unitPrice)}</span>
+                    </div>
+
+                    <div class="stock-product-actions">
+                        <input
+                            type="number"
+                            min="0"
+                            step="1"
+                            value="${quantity}"
+                            aria-label="Nouvelle quantité pour ${escapeHtml(item.name)}"
+                            data-stock-quantity="${escapeHtml(item.id)}"
+                        >
+
+                        <button
+                            type="button"
+                            class="primary-btn"
+                            data-stock-update="${escapeHtml(item.id)}"
+                        >
+                            Mettre à jour
+                        </button>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="secondary-btn stock-delete-btn"
+                        data-stock-delete="${escapeHtml(item.id)}"
+                    >
+                        Supprimer
+                    </button>
+                </div>
+            </article>
+        `;
+    }).join('');
+}
+
 
         stockProductCount.textContent = stockItems.length;
         stockQuantityTotal.textContent =
