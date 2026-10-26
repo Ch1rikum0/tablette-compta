@@ -1488,84 +1488,42 @@ function renderStock() {
             (Number(item.unitPrice) || 0);
     });
 
-    stockProductCount.textContent = stockItems.length;
-    stockQuantityTotal.textContent =
-        totalQuantity.toLocaleString('fr-FR');
-    stockValueTotal.textContent = stockMoney(totalValue);
+          stockProductCount.textContent = stockItems.length;
+        stockQuantityTotal.textContent =
+            totalQuantity.toLocaleString('fr-FR');
+        stockValueTotal.textContent = stockMoney(totalValue);
 
-    if (!stockCards) return;
+        if (stockItems.length === 0) {
+            stockTableBody.innerHTML =
+                '<tr><td colspan="6">Aucun produit dans le stock.</td></tr>';
+            return;
+        }
 
-    if (stockItems.length === 0) {
-        stockCards.innerHTML =
-            '<p class="muted">Aucun produit dans le stock.</p>';
-        return;
-    }
+        stockTableBody.innerHTML = stockItems.map(item => {
+            const quantity = Number(item.quantity) || 0;
+            const unitPrice = Number(item.unitPrice) || 0;
+            const total = quantity * unitPrice;
 
-    stockCards.innerHTML = stockItems.map(item => {
-        const quantity = Number(item.quantity) || 0;
-        const unitPrice = Number(item.unitPrice) || 0;
-        const total = quantity * unitPrice;
-        const imageUrl = String(item.image || '').trim();
-
-        const imageHtml = imageUrl
-            ? `<img class="stock-product-image"
-                    src="${escapeHtml(imageUrl)}"
-                    alt="${escapeHtml(item.name)}"
-                    onerror="this.style.display='none'">`
-            : `<div class="stock-product-placeholder">📦</div>`;
-
-        return `
-            <article class="stock-product-card">
-                <div class="stock-product-visual">
-                    ${imageHtml}
-                </div>
-
-                <div class="stock-product-info">
-                    <div class="stock-product-heading">
-                        <h4>${escapeHtml(item.name)}</h4>
-                        <strong>${stockMoney(total)}</strong>
-                    </div>
-
-                    <span class="stock-product-category">
-                        ${escapeHtml(item.category)}
-                    </span>
-
-                    <div class="stock-product-details">
-                        <span>Quantité : ${quantity}</span>
-                        <span>Unitaire : ${stockMoney(unitPrice)}</span>
-                    </div>
-
-                    <div class="stock-product-actions">
-                        <input
-                            type="number"
-                            min="0"
-                            step="1"
-                            value="${quantity}"
-                            aria-label="Nouvelle quantité pour ${escapeHtml(item.name)}"
-                            data-stock-quantity="${escapeHtml(item.id)}"
-                        >
-
+            return `
+                <tr>
+                    <td>${escapeHtml(item.name)}</td>
+                    <td>${escapeHtml(item.category)}</td>
+                    <td>${quantity.toLocaleString('fr-FR')}</td>
+                    <td>${stockMoney(unitPrice)}</td>
+                    <td>${stockMoney(total)}</td>
+                    <td>
                         <button
                             type="button"
-                            class="primary-btn"
-                            data-stock-update="${escapeHtml(item.id)}"
+                            class="secondary-btn stock-delete-btn"
+                            data-stock-delete="${escapeHtml(item.id)}"
                         >
-                            Mettre à jour
+                            Supprimer
                         </button>
-                    </div>
-
-                    <button
-                        type="button"
-                        class="secondary-btn stock-delete-btn"
-                        data-stock-delete="${escapeHtml(item.id)}"
-                    >
-                        Supprimer
-                    </button>
-                </div>
-            </article>
-        `;
-    }).join('');
-}
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
 
 
         stockProductCount.textContent = stockItems.length;
