@@ -2070,14 +2070,15 @@ loadStock();
     const panel = document.querySelector('.objet-form-panel');
 
     if (!toggle || !panel) return;
+ 
+function toggleObjetForm() {
+    const isOpen = panel.classList.toggle('objet-form-open');
 
-    function toggleObjetForm() {
-        const isOpen = panel.classList.toggle('objet-form-open');
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 
-        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        toggle.querySelector('.objet-form-arrow').textContent =
-            isOpen ? '▼' : '+';
-    }
+    toggle.querySelector('.objet-form-arrow').textContent =
+        isOpen ? '▼' : '▶';
+}
 
     toggle.addEventListener('click', toggleObjetForm);
 
