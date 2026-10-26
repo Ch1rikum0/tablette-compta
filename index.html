@@ -254,8 +254,10 @@
 
 
        
+
 <!-- PAGE OBJETS -->
 <section class="page" id="page-rachat">
+
     <article class="panel">
         <h3 style="margin-bottom: 1px; text-align: left;">Objets</h3>
         <p class="muted" style="margin-top: 0; padding-top: 0; text-align: left;">
@@ -263,98 +265,96 @@
         </p>
     </article>
 
-    <article class="panel">
-        <h3>Ajouter un objet</h3>
+    <!-- SOUS-ONGLETS -->
+    <div class="objet-tabs">
+        <button type="button" class="objet-tab active" data-objet-tab="stock">
+            Stock
+        </button>
+        <button type="button" class="objet-tab" data-objet-tab="rachat">
+            Rachat
+        </button>
+        <button type="button" class="objet-tab" data-objet-tab="vente">
+            Vente
+        </button>
+    </div>
 
-        <form id="objetForm">
-            <label for="objetName">Nom de l'objet</label>
-            <input
-                type="text"
-                id="objetName"
-                placeholder="Ex. : Téléphone"
-                required
-            >
+    <!-- ONGLET STOCK -->
+    <div class="objet-tab-content active" id="objet-content-stock">
 
-            <label for="objetCategory">Catégorie</label>
-            <input
-                type="text"
-                id="objetCategory"
-                placeholder="Ex. : Électronique"
-                required
-            >
+        <article class="panel">
+            <h3>Ajouter un objet</h3>
 
-            <label for="objetImage">Lien de l'image (facultatif)</label>
-            <input
-                type="url"
-                id="objetImage"
-                placeholder="https://..."
-            >
+            <form id="objetForm">
+                <label for="objetName">Nom de l'objet</label>
+                <input type="text" id="objetName" placeholder="Ex. : Téléphone" required>
 
-            <label for="objetQuantity">Quantité</label>
-            <input
-                type="number"
-                id="objetQuantity"
-                min="0"
-                step="1"
-                value="1"
-                required
-            >
+                <label for="objetCategory">Catégorie</label>
+                <input type="text" id="objetCategory" placeholder="Ex. : Électronique" required>
 
-            <label for="objetUnitPrice">Prix unitaire ($)</label>
-            <input
-                type="number"
-                id="objetUnitPrice"
-                min="0"
-                step="1"
-                placeholder="Ex. : 500"
-                required
-            >
+                <label for="objetImage">Lien de l'image (facultatif)</label>
+                <input type="url" id="objetImage" placeholder="https://...">
 
-            <button type="submit" class="primary-btn">
-                Ajouter l'objet
-            </button>
-        </form>
-    </article>
+                <label for="objetQuantity">Quantité</label>
+                <input type="number" id="objetQuantity" min="0" step="1" value="1" required>
 
-    <article class="panel">
-        <h3>Résumé des objets</h3>
+                <label for="objetUnitPrice">Prix unitaire ($)</label>
+                <input type="number" id="objetUnitPrice" min="0" step="1" placeholder="Ex. : 500" required>
 
-        <div class="stock-stats">
-            <div>
-                <span>Références</span>
-                <strong id="objetProductCount">0</strong>
+                <button type="submit" class="primary-btn">Ajouter l'objet</button>
+            </form>
+        </article>
+
+        <article class="panel">
+            <h3>Résumé des objets</h3>
+            <div class="stock-stats">
+                <div>
+                    <span>Références</span>
+                    <strong id="objetProductCount">0</strong>
+                </div>
+                <div>
+                    <span>Quantité totale</span>
+                    <strong id="objetQuantityTotal">0</strong>
+                </div>
+                <div>
+                    <span>Valeur totale</span>
+                    <strong id="objetValueTotal">0 $</strong>
+                </div>
             </div>
-            <div>
-                <span>Quantité totale</span>
-                <strong id="objetQuantityTotal">0</strong>
-            </div>
-            <div>
-                <span>Valeur totale</span>
-                <strong id="objetValueTotal">0 $</strong>
-            </div>
-        </div>
-    </article>
+        </article>
 
-    <article class="panel">
-        <h3>Catalogue des objets</h3>
-        <div id="objetCards" class="stock-cards">
-            <p class="muted">Chargement des objets...</p>
-        </div>
-    </article>
+        <article class="panel">
+            <h3>Catalogue des objets</h3>
+            <div id="objetCards" class="stock-cards">
+                <p class="muted">Chargement des objets...</p>
+            </div>
+        </article>
+
+    </div>
+
+    <!-- ONGLET RACHAT -->
+    <div class="objet-tab-content" id="objet-content-rachat">
+        <article class="panel">
+            <h3>Rachat d'objets</h3>
+            <p class="muted">
+                Gestion des objets rachetés aux joueurs.
+            </p>
+            <p>La fonctionnalité de rachat sera ajoutée dans la prochaine étape.</p>
+        </article>
+    </div>
+
+    <!-- ONGLET VENTE -->
+    <div class="objet-tab-content" id="objet-content-vente">
+        <article class="panel">
+            <h3>Vente d'objets</h3>
+            <p class="muted">
+                Gestion des objets vendus aux joueurs.
+            </p>
+            <p>La fonctionnalité de vente sera ajoutée dans la prochaine étape.</p>
+        </article>
+    </div>
+
 </section>
 
-      
-<div class="objet-tabs">
-    <button type="button" class="objet-tab active" data-objet-tab="stock">
-        Stock
-    </button>
-    <button type="button" class="objet-tab" data-objet-tab="rachat">
-        Rachat
-    </button>
-    <button type="button" class="objet-tab" data-objet-tab="vente">
-        Vente
-    </button>
-</div>
   
       
 <!-- PAGE DROGUE -->
