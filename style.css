@@ -2801,7 +2801,3 @@ article.panel.link-panel.tokyo-panel {
     font-size: 14px;
     transition: transform 0.2s ease;
 }
-
-.objet-form-panel.objet-form-open .objet-form-arrow {
-    transform: rotate(180deg);
-}
