@@ -1610,6 +1610,7 @@ function renderStock() {
 
         const name = stockName.value.trim();
         const category = stockCategory.value.trim();
+        const image = stockImage ? stockImage.value.trim() : '';
         const quantity = Number(stockQuantity.value);
         const unitPrice = Number(stockUnitPrice.value);
 
@@ -1639,8 +1640,9 @@ function renderStock() {
         stockItems.push({
             id: String(Date.now()) + '-' +
                 Math.random().toString(16).slice(2),
-            name: name,
+           name: name,
             category: category,
+            image: image,
             quantity: quantity,
             unitPrice: unitPrice
         });
@@ -1653,34 +1655,73 @@ function renderStock() {
         renderStock();
         stockForm.reset();
 
+        if (stockImage) stockImage.value = '';
+
         if (typeof notify === 'function') {
             notify('Produit ajouté au stock.', 'success');
         }
     });
 
-    stockTableBody.addEventListener('click', event => {
-        const button = event.target.closest('[data-stock-delete]');
-        if (!button) return;
+    
+const stockActionContainer = stockCards || stockTableBody;
 
-        const id = button.getAttribute('data-stock-delete');
-        const previousItems = stockItems.slice();
+stockActionContainer.addEventListener('click', event => {
+    const updateButton = event.target.closest('[data-stock-update]');
 
-        stockItems = stockItems.filter(item => item.id !== id);
+    if (updateButton) {
+        const id = updateButton.getAttribute('data-stock-update');
+        const quantityInput = stockActionContainer.querySelector(
+            `[data-stock-quantity="${id}"]`
+        );
+
+        const quantity = Number(quantityInput.value);
+
+        if (
+            quantityInput.value.trim() === '' ||
+            !Number.isInteger(quantity) ||
+            quantity < 0
+        ) {
+            alert('Entre une quantité entière supérieure ou égale à zéro.');
+            return;
+        }
+
+        const item = stockItems.find(product => product.id === id);
+        if (!item) return;
+
+        const previousQuantity = item.quantity;
+        item.quantity = quantity;
 
         if (!saveStock()) {
-            stockItems = previousItems;
+            item.quantity = previousQuantity;
             return;
         }
 
         renderStock();
 
         if (typeof notify === 'function') {
-            notify('Produit supprimé du stock.', 'success');
+            notify('Quantité mise à jour.', 'success');
         }
-    });
 
-    loadStock();
+        return;
+    }
+
+    const deleteButton = event.target.closest('[data-stock-delete]');
+    if (!deleteButton) return;
+
+    const id = deleteButton.getAttribute('data-stock-delete');
+    const previousItems = stockItems.slice();
+
+    stockItems = stockItems.filter(item => item.id !== id);
+
+    if (!saveStock()) {
+        stockItems = previousItems;
+        return;
+    }
+
     renderStock();
 
-    console.log('Gestion du stock chargée.');
-})();
+    if (typeof notify === 'function') {
+        notify('Produit supprimé du stock.', 'success');
+    }
+});
+
