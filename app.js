@@ -1478,7 +1478,8 @@ function stockMoney(value) {
 }
     
 function renderStock() {
-    console.log('stockMoney disponible :', typeof stockMoney);
+    console.log("stockMoney dans renderStock :", typeof stockMoney);
+
     let totalQuantity = 0;
     let totalValue = 0;
 
