@@ -2090,14 +2090,6 @@ function ouvrirModificationObjet(item) {
 
     document.getElementById('objetEditName').value = item.name || '';
 
- 
-const categorie = document.getElementById('objetEditCategory');
-
-if (categorie) {
-    categorie.value = item.category || '';
-}
-
-
     // Conserve aussi les catégories déjà utilisées.
     let optionExiste = false;
 
