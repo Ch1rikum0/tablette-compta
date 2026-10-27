@@ -3052,3 +3052,15 @@ article.panel.link-panel.tokyo-panel {
     padding: 7px;
     font-size: 10px;
 }
+
+
+#objetCards .stock-product-actions button {
+    background: #ff2638;
+    color: #ffffff;
+}
+
+#objetCards .stock-product-actions button:hover {
+    background: #e51f30;
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+}
