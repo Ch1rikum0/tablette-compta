@@ -1982,8 +1982,11 @@ loadStock();
     });
 
     objetCards.addEventListener('click', async event => {
-        const updateButton = event.target.closest('[data-objet-update]');
-        const deleteButton = event.target.closest('[data-objet-delete]');
+       
+    const editButton = event.target.closest('[data-objet-edit]');
+    const updateButton = event.target.closest('[data-objet-update]');
+    const deleteButton = event.target.closest('[data-objet-delete]');
+
 
         if (updateButton) {
             const id = updateButton.getAttribute('data-objet-update');
