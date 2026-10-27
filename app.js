@@ -2099,12 +2099,13 @@ if (categorie) {
     // Conserve aussi les catégories déjà utilisées.
     let optionExiste = false;
 
-    for (let i = 0; i < categorie.options.length; i++) {
-        if (categorie.options[i].value === (item.category || '')) {
-            optionExiste = true;
-            break;
-        }
-    }
+    
+const categorie = document.getElementById('objetEditCategory');
+
+if (categorie) {
+    categorie.value = item.category || '';
+}
+
 
     if (item.category && !optionExiste) {
         const option = document.createElement('option');
