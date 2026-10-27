@@ -2105,6 +2105,7 @@ function ouvrirModificationObjet(item) {
     document.getElementById('objetEditImage').value = item.image || '';
     document.getElementById('objetEditQuantity').value = item.quantity;
     document.getElementById('objetEditPrice').value = item.unitPrice;
+    document.getElementById('objetEditWeight').value = item.weight != null ? item.weight : '';
 
     objetEditModal.classList.add('objet-modal-open');
     objetEditModal.setAttribute('aria-hidden', 'false');
@@ -2163,6 +2164,7 @@ if (objetEditForm) {
             image: document.getElementById('objetEditImage').value.trim(),
             quantity: Number(document.getElementById('objetEditQuantity').value),
             unitPrice: Number(document.getElementById('objetEditPrice').value)
+            weight: Number(document.getElementById('objetEditWeight').value) || 0,
         };
 
         try {
