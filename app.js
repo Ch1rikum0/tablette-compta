@@ -1811,7 +1811,8 @@ loadStock();
                 category: item.categorie || '',
                 image: item.image || '',
                 quantity: Number(item.quantite) || 0,
-                unitPrice: Number(item.prix_unitaire) || 0
+                unitPrice: Number(item.prix_unitaire) || 0,
+                weight: Number(item.poids) || 0
             }));
 
             renderObjets();
@@ -1871,7 +1872,7 @@ loadStock();
                         <div class="stock-product-details">
                             <span>Quantité : ${item.quantity}</span>
                             <span>Unitaire : ${objetMoney(item.unitPrice)}</span>
-                            <span>Poids : ${item.weight || 0} kg</span>
+                            <span>Poids : ${item.weight} kg</span>
                         </div>
 
                         <div class="stock-product-actions">
