@@ -3064,3 +3064,23 @@ article.panel.link-panel.tokyo-panel {
     filter: brightness(1.08);
     transform: translateY(-1px);
 }
+
+
+#objetCards .objet-edit-btn {
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    padding: 7px;
+    font-size: 10px;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--line);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+#objetCards .objet-edit-btn:hover {
+    background: var(--panel2);
+    transform: translateY(-1px);
+}
