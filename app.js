@@ -1988,6 +1988,19 @@ loadStock();
     const deleteButton = event.target.closest('[data-objet-delete]');
 
 
+        
+        if (editButton) {
+            const id = editButton.getAttribute('data-objet-edit');
+            const item = objets.find(obj => String(obj.id) === String(id));
+        
+            if (item) {
+                ouvrirModificationObjet(item);
+            }
+        
+            return;
+        }
+
+        
         if (updateButton) {
             const id = updateButton.getAttribute('data-objet-update');
             const input = objetCards.querySelector(
