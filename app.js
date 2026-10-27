@@ -2088,17 +2088,11 @@ function ouvrirModificationObjet(item) {
 
     objetEnModification = item;
 
-    document.getElementById('objetEditName').value = item.name || '';
+    const categorie = document.getElementById('objetEditCategory');
 
-    // Conserve aussi les catégories déjà utilisées.
-    let optionExiste = false;
-
-    if (item.category && !optionExiste) {
-        const option = document.createElement('option');
-        option.value = item.category;
-        option.textContent = item.category;
-        categorie.appendChild(option);
-    }
+if (categorie) {
+    categorie.value = item.category || '';
+}
 
     categorie.value = item.category || '';
 
@@ -2157,16 +2151,16 @@ if (objetEditForm) {
 
         if (boutonEnregistrer) boutonEnregistrer.disabled = true;
 
-        const itemModifie = {
-            ...objetEnModification,
-            name: document.getElementById('objetEditName').value.trim(),
-            category: document.getElementById('objetEditCategory').value,
-            image: document.getElementById('objetEditImage').value.trim(),
-            quantity: Number(document.getElementById('objetEditQuantity').value),
-            unitPrice: Number(document.getElementById('objetEditPrice').value),
-            weight: Number(document.getElementById('objetEditWeight').value) || 0,
-        };
-
+       const itemModifie = {
+    ...objetEnModification,
+    name: document.getElementById('objetEditName').value.trim(),
+    category: document.getElementById('objetEditCategory').value,
+    image: document.getElementById('objetEditImage').value.trim(),
+    quantity: Number(document.getElementById('objetEditQuantity').value),
+    unitPrice: Number(document.getElementById('objetEditPrice').value),
+    weight: Number(document.getElementById('objetEditWeight').value) || 0
+};
+        
         try {
             if (!itemModifie.name || itemModifie.quantity < 0 ||
                 itemModifie.unitPrice < 0 ||
