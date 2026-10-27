@@ -2054,6 +2054,139 @@ loadStock();
     });
 
     loadObjets();
+
+    
+/* Fenêtre de modification des objets */
+const objetEditModal = document.getElementById('objetEditModal');
+const objetEditForm = document.getElementById('objetEditForm');
+const objetEditClose = document.getElementById('objetEditClose');
+const objetEditCancel = document.getElementById('objetEditCancel');
+
+let objetEnModification = null;
+
+function ouvrirModificationObjet(item) {
+    if (!objetEditModal || !objetEditForm) {
+        alert("La fenêtre de modification est introuvable dans index.html.");
+        return;
+    }
+
+    objetEnModification = item;
+
+    document.getElementById('objetEditName').value = item.name || '';
+
+    const categorie = document.getElementById('objetEditCategory');
+
+    // Conserve aussi les catégories déjà utilisées.
+    let optionExiste = false;
+
+    for (let i = 0; i < categorie.options.length; i++) {
+        if (categorie.options[i].value === (item.category || '')) {
+            optionExiste = true;
+            break;
+        }
+    }
+
+    if (item.category && !optionExiste) {
+        const option = document.createElement('option');
+        option.value = item.category;
+        option.textContent = item.category;
+        categorie.appendChild(option);
+    }
+
+    categorie.value = item.category || '';
+
+    document.getElementById('objetEditImage').value = item.image || '';
+    document.getElementById('objetEditQuantity').value = item.quantity;
+    document.getElementById('objetEditPrice').value = item.unitPrice;
+
+    objetEditModal.classList.add('objet-modal-open');
+    objetEditModal.setAttribute('aria-hidden', 'false');
+}
+
+function fermerModificationObjet() {
+    if (!objetEditModal) return;
+
+    objetEditModal.classList.remove('objet-modal-open');
+    objetEditModal.setAttribute('aria-hidden', 'true');
+    objetEnModification = null;
+}
+
+objetCards.addEventListener('click', function(event) {
+    const bouton = event.target.closest('[data-objet-edit]');
+    if (!bouton) return;
+
+    const id = bouton.getAttribute('data-objet-edit');
+    const item = objets.find(obj => String(obj.id) === String(id));
+
+    if (item) ouvrirModificationObjet(item);
+});
+
+if (objetEditClose) {
+    objetEditClose.addEventListener('click', fermerModificationObjet);
+}
+
+if (objetEditCancel) {
+    objetEditCancel.addEventListener('click', fermerModificationObjet);
+}
+
+if (objetEditModal) {
+    objetEditModal.addEventListener('click', function(event) {
+        if (event.target === objetEditModal) {
+            fermerModificationObjet();
+        }
+    });
+}
+
+if (objetEditForm) {
+    objetEditForm.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        if (!objetEnModification) return;
+
+        const boutonEnregistrer = objetEditForm.querySelector(
+            'button[type="submit"]'
+        );
+
+        if (boutonEnregistrer) boutonEnregistrer.disabled = true;
+
+        const itemModifie = {
+            ...objetEnModification,
+            name: document.getElementById('objetEditName').value.trim(),
+            category: document.getElementById('objetEditCategory').value,
+            image: document.getElementById('objetEditImage').value.trim(),
+            quantity: Number(document.getElementById('objetEditQuantity').value),
+            unitPrice: Number(document.getElementById('objetEditPrice').value)
+        };
+
+        try {
+            if (!itemModifie.name || itemModifie.quantity < 0 ||
+                itemModifie.unitPrice < 0 ||
+                !Number.isFinite(itemModifie.quantity) ||
+                !Number.isFinite(itemModifie.unitPrice)) {
+                alert("Vérifie le nom, la quantité et le prix.");
+                return;
+            }
+
+            await saveObjet(itemModifie);
+
+            const index = objets.findIndex(
+                obj => String(obj.id) === String(itemModifie.id)
+            );
+
+            if (index !== -1) {
+                objets[index] = itemModifie;
+            }
+
+            renderObjets();
+            fermerModificationObjet();
+        } catch (error) {
+            console.error("Erreur de modification de l'objet :", error);
+            alert("Impossible d'enregistrer les modifications dans Supabase.");
+        } finally {
+            if (boutonEnregistrer) boutonEnregistrer.disabled = false;
+        }
+    });
+}
 })();
 
 
