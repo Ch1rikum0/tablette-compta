@@ -2093,14 +2093,6 @@ function ouvrirModificationObjet(item) {
     // Conserve aussi les catégories déjà utilisées.
     let optionExiste = false;
 
-    
-const categorie = document.getElementById('objetEditCategory');
-
-if (categorie) {
-    categorie.value = item.category || '';
-}
-
-
     if (item.category && !optionExiste) {
         const option = document.createElement('option');
         option.value = item.category;
