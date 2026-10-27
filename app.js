@@ -1871,6 +1871,7 @@ loadStock();
                         <div class="stock-product-details">
                             <span>Quantité : ${item.quantity}</span>
                             <span>Unitaire : ${objetMoney(item.unitPrice)}</span>
+                            <span>Poids : ${item.weight || 0} kg</span>
                         </div>
 
                         <div class="stock-product-actions">
