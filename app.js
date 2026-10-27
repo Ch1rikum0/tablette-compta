@@ -2090,11 +2090,13 @@ function ouvrirModificationObjet(item) {
 
     document.getElementById('objetEditName').value = item.name || '';
 
-  const categorie = document.getElementById('objetEditCategory');
+ 
+const categorie = document.getElementById('objetEditCategory');
 
 if (categorie) {
     categorie.value = item.category || '';
 }
+
 
     // Conserve aussi les catégories déjà utilisées.
     let optionExiste = false;
@@ -2270,136 +2272,4 @@ if (objetEditForm) {
     });
 
     updateObjetArrow();
-})();
-
-
-/* Modification complète d'un objet */
-(() => {
-    const cards = document.getElementById('objetCards');
-    const modal = document.getElementById('objetEditModal');
-    const form = document.getElementById('objetEditForm');
-
-    if (!cards || !modal || !form) return;
-
-    const nameInput = document.getElementById('objetEditName');
-    const categoryInput = document.getElementById('objetEditCategory');
-    const imageInput = document.getElementById('objetEditImage');
-    const quantityInput = document.getElementById('objetEditQuantity');
-    const priceInput = document.getElementById('objetEditPrice');
-
-    let editingId = null;
-
-    function closeModal() {
-        modal.classList.remove('objet-modal-open');
-        modal.setAttribute('aria-hidden', 'true');
-        editingId = null;
-    }
-
-    function openModal(item) {
-        editingId = item.id;
-
-        nameInput.value = item.name;
-        categoryInput.value = item.category;
-        imageInput.value = item.image || '';
-        quantityInput.value = item.quantity;
-        priceInput.value = item.unitPrice;
-
-        modal.classList.add('objet-modal-open');
-        modal.setAttribute('aria-hidden', 'false');
-        nameInput.focus();
-    }
-
-    cards.addEventListener('click', function(event) {
-        const button = event.target.closest('[data-objet-edit]');
-        if (!button) return;
-
-        const id = button.getAttribute('data-objet-edit');
-        const item = objets.find(obj => String(obj.id) === id);
-
-        if (item) openModal(item);
-    });
-
-    document.getElementById('objetEditClose')
-        .addEventListener('click', closeModal);
-
-    document.getElementById('objetEditCancel')
-        .addEventListener('click', closeModal);
-
-    modal.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            closeModal();
-        }
-    });
-
-    document.addEventListener('keydown', function(event) {
-        if (
-            event.key === 'Escape' &&
-            modal.classList.contains('objet-modal-open')
-        ) {
-            closeModal();
-        }
-    });
-
-    form.addEventListener('submit', async function(event) {
-        event.preventDefault();
-
-        const item = objets.find(
-            obj => String(obj.id) === String(editingId)
-        );
-
-        if (!item) {
-            notify('Objet introuvable.', 'error');
-            closeModal();
-            return;
-        }
-
-        const name = nameInput.value.trim();
-        const category = categoryInput.value.trim();
-        const image = imageInput.value.trim();
-        const quantity = Number(quantityInput.value);
-        const unitPrice = Number(priceInput.value);
-
-        if (
-            !name ||
-            !category ||
-            quantityInput.value.trim() === '' ||
-            priceInput.value.trim() === '' ||
-            !Number.isInteger(quantity) ||
-            quantity < 0 ||
-            !Number.isFinite(unitPrice) ||
-            unitPrice < 0
-        ) {
-            notify('Vérifie les informations saisies.', 'error');
-            return;
-        }
-
-        const oldItem = { ...item };
-        const saveButton = form.querySelector('button[type="submit"]');
-
-        saveButton.disabled = true;
-
-        item.name = name;
-        item.category = category;
-        item.image = image;
-        item.quantity = quantity;
-        item.unitPrice = unitPrice;
-
-        try {
-            await saveObjet(item);
-            renderObjets();
-            closeModal();
-
-            notify('Objet modifié avec succès.', 'success');
-        } catch (error) {
-            Object.assign(item, oldItem);
-
-            console.error('Erreur de modification :', error);
-            notify(
-                'Impossible d’enregistrer les modifications.',
-                'error'
-            );
-        } finally {
-            saveButton.disabled = false;
-        }
-    });
 })();
