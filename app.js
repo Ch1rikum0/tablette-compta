@@ -1894,11 +1894,20 @@ loadStock();
 
                         <button
                             type="button"
+                            class="secondary-btn objet-edit-btn"
+                            data-objet-edit="${escapeHtml(item.id)}"
+                        >
+                            Modifier les informations
+                        </button>
+
+                        <button
+                            type="button"
                             class="secondary-btn stock-delete-btn"
                             data-objet-delete="${escapeHtml(item.id)}"
                         >
                             Supprimer
                         </button>
+
                     </div>
                 </article>
             `;
