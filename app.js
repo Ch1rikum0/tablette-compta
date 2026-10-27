@@ -2088,18 +2088,19 @@ function ouvrirModificationObjet(item) {
 
     objetEnModification = item;
 
+    const nom = document.getElementById('objetEditName');
     const categorie = document.getElementById('objetEditCategory');
+    const image = document.getElementById('objetEditImage');
+    const quantite = document.getElementById('objetEditQuantity');
+    const prix = document.getElementById('objetEditPrice');
+    const poids = document.getElementById('objetEditWeight');
 
-if (categorie) {
-    categorie.value = item.category || '';
-}
-
-    categorie.value = item.category || '';
-
-    document.getElementById('objetEditImage').value = item.image || '';
-    document.getElementById('objetEditQuantity').value = item.quantity;
-    document.getElementById('objetEditPrice').value = item.unitPrice;
-    document.getElementById('objetEditWeight').value = item.weight != null ? item.weight : '';
+    if (nom) nom.value = item.name || '';
+    if (categorie) categorie.value = item.category || '';
+    if (image) image.value = item.image || '';
+    if (quantite) quantite.value = item.quantity ?? 0;
+    if (prix) prix.value = item.unitPrice ?? 0;
+    if (poids) poids.value = item.weight ?? '';
 
     objetEditModal.classList.add('objet-modal-open');
     objetEditModal.setAttribute('aria-hidden', 'false');
