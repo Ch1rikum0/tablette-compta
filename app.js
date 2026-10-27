@@ -2163,7 +2163,7 @@ if (objetEditForm) {
             category: document.getElementById('objetEditCategory').value,
             image: document.getElementById('objetEditImage').value.trim(),
             quantity: Number(document.getElementById('objetEditQuantity').value),
-            unitPrice: Number(document.getElementById('objetEditPrice').value)
+            unitPrice: Number(document.getElementById('objetEditPrice').value),
             weight: Number(document.getElementById('objetEditWeight').value) || 0,
         };
 
