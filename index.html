@@ -333,7 +333,49 @@
             </div>
         </article>
 
+<!-- FENÊTRE DE MODIFICATION D'UN OBJET -->
+<div id="objetEditModal" class="objet-modal" aria-hidden="true">
+    <div class="objet-modal-box" role="dialog" aria-modal="true"
+         aria-labelledby="objetEditTitle">
+
+        <div class="objet-modal-header">
+            <h3 id="objetEditTitle">Modifier l'objet</h3>
+            <button type="button" id="objetEditClose"
+                    class="objet-modal-close" aria-label="Fermer">
+                ×
+            </button>
+        </div>
+
+        <form id="objetEditForm">
+            <label for="objetEditName">Nom de l'objet</label>
+            <input type="text" id="objetEditName" required>
+
+            <label for="objetEditCategory">Catégorie</label>
+            <input type="text" id="objetEditCategory" required>
+
+            <label for="objetEditImage">Lien de l'image</label>
+            <input type="url" id="objetEditImage">
+
+            <label for="objetEditQuantity">Quantité</label>
+            <input type="number" id="objetEditQuantity"
+                   min="0" step="1" required>
+
+            <label for="objetEditPrice">Prix unitaire ($)</label>
+            <input type="number" id="objetEditPrice"
+                   min="0" step="1" required>
+
+            <div class="objet-modal-actions">
+                <button type="button" id="objetEditCancel"
+                        class="secondary-btn">
+                    Annuler
+                </button>
+                <button type="submit" class="primary-btn">
+                    Enregistrer
+                </button>
+            </div>
+        </form>
     </div>
+</div>
 
     <!-- ONGLET RACHAT -->
     <div class="objet-tab-content" id="objet-content-rachat">
