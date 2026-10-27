@@ -2986,3 +2986,69 @@ article.panel.link-panel.tokyo-panel {
         grid-template-columns: 1fr;
     }
 }
+
+
+/* Stock - cartes plus petites, style Drogue */
+#objetCards.stock-cards {
+    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+    gap: 12px;
+}
+
+#objetCards .stock-product-card {
+    min-height: 320px;
+    padding: 12px;
+    border-radius: 11px;
+}
+
+#objetCards .stock-product-visual {
+    height: 105px;
+    margin-bottom: 10px;
+}
+
+#objetCards .stock-product-heading {
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+#objetCards .stock-product-heading h4,
+#objetCards .stock-product-heading > strong {
+    font-size: 12px;
+}
+
+#objetCards .stock-product-category {
+    margin-bottom: 7px;
+    padding: 4px 6px;
+    font-size: 9px;
+}
+
+#objetCards .stock-product-details {
+    gap: 5px;
+    margin-bottom: 12px;
+}
+
+#objetCards .stock-product-details span {
+    padding: 4px 6px;
+    font-size: 9px;
+}
+
+#objetCards .stock-product-actions {
+    gap: 6px;
+}
+
+#objetCards .stock-product-actions input {
+    width: 48px;
+    min-width: 48px;
+    padding: 8px 3px;
+    font-size: 11px;
+}
+
+#objetCards .stock-product-actions button {
+    padding: 9px 5px;
+    font-size: 10px;
+}
+
+#objetCards .stock-delete-btn {
+    margin-top: 6px;
+    padding: 7px;
+    font-size: 10px;
+}
