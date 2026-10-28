@@ -2009,6 +2009,9 @@ const objetsCategorie = objets.filter(function (item) {
     }
 
     return false;
+}).sort(function (a, b) {
+    return (Number(b.unitPrice) || 0) -
+           (Number(a.unitPrice) || 0);
 });
 
         if (objetsCategorie.length === 0) {
