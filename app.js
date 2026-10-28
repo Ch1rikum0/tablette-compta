@@ -1585,15 +1585,15 @@ function renderStock() {
                             data-stock-quantity="${escapeHtml(item.id)}"
                         >
                         
-<div class="rachat-edit-actions">
-    <button
-        type="button"
-        class="rachat-edit-btn"
-        data-rachat-edit="${item.id}"
-    >
-        Modifier les informations
-    </button>
-</div>
+                        <div class="rachat-edit-actions">
+                            <button
+                                type="button"
+                                class="rachat-edit-btn"
+                                data-rachat-edit="${item.id}"
+                            >
+                                Modifier les informations
+                            </button>
+                        </div>
 
                         <button
                             type="button"
