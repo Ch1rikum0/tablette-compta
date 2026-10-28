@@ -1923,7 +1923,8 @@ loadStock();
             categorie: item.category,
             image: item.image || '',
             quantite: Number(item.quantity) || 0,
-            prix_unitaire: Number(item.unitPrice) || 0
+            prix_unitaire: Number(item.unitPrice) || 0,
+            poids: Number(item.weight) || 0
         };
 
         const { error } = await supabaseClient
