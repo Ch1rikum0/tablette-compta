@@ -3852,3 +3852,9 @@ article.panel.link-panel.tokyo-panel {
     border-color: #ff6470;
     box-shadow: 0 0 0 2px rgba(255, 38, 56, 0.2);
 }
+
+/* Masquer les boutons de modification dans la page Drogue uniquement */
+#page-drogue .rachat-edit-btn,
+#page-drogue [data-rachat-edit] {
+    display: none !important;
+}
