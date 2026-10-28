@@ -2292,7 +2292,7 @@ if (objetEditForm) {
 
             try {
                 const result = await supabaseClient
-                    .from('objets')
+                    .from('objets_rachat')
                     .delete()
                     .eq('id', id);
 
@@ -2346,7 +2346,7 @@ console.log("RACHAT : éléments HTML détectés", {
 
         try {
             const { data, error } = await supabaseClient
-                .from('objets')
+                .from('objets_rachat')
                 .select('*')
                 .order('nom', { ascending: true });
 
@@ -2499,7 +2499,7 @@ console.log("RACHAT : éléments HTML détectés", {
 async function modifierObjetRachat(id) {
     try {
         const { data: objet, error } = await supabaseClient
-            .from('objets')
+            .from('objets_rachat')
             .select('*')
             .eq('id', id)
             .single();
@@ -2597,7 +2597,7 @@ async function modifierObjetRachat(id) {
 
             try {
                 const { error: updateError } = await supabaseClient
-                    .from('objets')
+                    .from('objets_rachat')
                     .update({
                         nom: nom,
                         categorie: categorie,
