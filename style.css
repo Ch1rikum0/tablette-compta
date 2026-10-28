@@ -3831,3 +3831,24 @@ article.panel.link-panel.tokyo-panel {
     opacity: 0.6;
     cursor: wait;
 }
+
+
+/* Quantité modifiable sur les cartes Rachat */
+#page-rachat .rachat-quantity-input {
+    width: 65px;
+    min-width: 65px;
+    padding: 10px 5px;
+    text-align: center;
+    color: #fff;
+    background: #101012;
+    border: 1px solid #ff2638;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 700;
+    outline: none;
+}
+
+#page-rachat .rachat-quantity-input:focus {
+    border-color: #ff6470;
+    box-shadow: 0 0 0 2px rgba(255, 38, 56, 0.2);
+}
