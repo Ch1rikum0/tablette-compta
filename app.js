@@ -2638,6 +2638,7 @@ async function modifierObjetRachat(id) {
 
     
    
+
 rachatCards.addEventListener('click', async event => {
     // Bouton Modifier les informations
     const editButton = event.target.closest('[data-rachat-edit]');
@@ -2648,7 +2649,7 @@ rachatCards.addEventListener('click', async event => {
         return;
     }
 
-    // Bouton Sélectionner — fonctionnement existant
+    // Bouton Sélectionner
     const button = event.target.closest('[data-rachat-select]');
     if (!button) return;
 
@@ -2660,13 +2661,13 @@ rachatCards.addEventListener('click', async event => {
     if (!input) return;
 
     const quantite = Number(input.value);
-    const maximum = Number(input.max);
 
-   if (
-    !Number.isInteger(quantite) ||
-    quantite < 1
-    )
-        notify('Choisis une quantité disponible et valide.', 'error');
+    // Vérifier la quantité saisie, sans limite de stock
+    if (
+        !Number.isInteger(quantite) ||
+        quantite < 1
+    ) {
+        notify('Saisis une quantité entière supérieure à zéro.', 'error');
         return;
     }
 
@@ -2676,9 +2677,9 @@ rachatCards.addEventListener('click', async event => {
     );
 });
 
-
-    afficherObjetsRachat();
+afficherObjetsRachat();
 })();
+
 
 
 /* Navigation des sous-onglets Objets */
