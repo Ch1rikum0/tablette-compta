@@ -1923,6 +1923,16 @@ console.log("Conteneur HTML :", objetCards);
         }).join('');
         console.log("HTML généré :", objetCards.innerHTML);
         console.log("Nombre de cartes HTML :", objetCards.querySelectorAll('.stock-product-card').length);
+
+        console.log(
+            "Nombre de cartes HTML :",
+            objetCards.querySelectorAll('.stock-product-card').length
+        );
+        
+        console.log(
+            "Conteneur visible :",
+            objetCards.getBoundingClientRect().height
+        );
     }
 
     async function saveObjet(item) {
