@@ -2505,32 +2505,147 @@ console.log("RACHAT : éléments HTML détectés", {
         total.textContent = 'Total : ' + prixRachat(prix * quantite);
     });
 
-    rachatCards.addEventListener('click', event => {
-        const button = event.target.closest('[data-rachat-select]');
-        if (!button) return;
+async function modifierObjetRachat(id) {
+    try {
+        // Récupérer les informations actuelles depuis Supabase
+        const { data: objet, error: erreurLecture } = await supabaseClient
+            .from('objets')
+            .select('*')
+            .eq('id', id)
+            .single();
 
-        const id = button.getAttribute('data-rachat-select');
-        const input = rachatCards.querySelector(
-            '[data-rachat-quantity="' + id + '"]'
-        );
+        if (erreurLecture) throw erreurLecture;
 
-        const quantite = Number(input.value);
-        const maximum = Number(input.max);
-
-        if (
-            !Number.isInteger(quantite) ||
-            quantite < 1 ||
-            quantite > maximum
-        ) {
-            notify('Choisis une quantité disponible et valide.', 'error');
+        if (!objet) {
+            notify('Objet introuvable.', 'error');
             return;
         }
 
-        notify(
-            'Objet sélectionné. Le paiement et la mise à jour du stock restent à connecter.',
-            'info'
+        // Demander les nouvelles informations
+        const nom = prompt('Nom de l’objet :', objet.nom || '');
+        if (nom === null) return;
+
+        const categorie = prompt(
+            'Catégorie :',
+            objet.categorie || ''
         );
-    });
+        if (categorie === null) return;
+
+        const image = prompt(
+            'URL de l’image :',
+            objet.image || ''
+        );
+        if (image === null) return;
+
+        const quantiteTexte = prompt(
+            'Quantité disponible :',
+            String(objet.quantite ?? 0)
+        );
+        if (quantiteTexte === null) return;
+
+        const prixTexte = prompt(
+            'Prix unitaire :',
+            String(objet.prix_unitaire ?? 0)
+        );
+        if (prixTexte === null) return;
+
+        // Vérifier les valeurs saisies
+        const quantite = Number(quantiteTexte);
+        const prix = Number(prixTexte.replace(',', '.'));
+
+        if (!nom.trim()) {
+            notify('Le nom ne peut pas être vide.', 'error');
+            return;
+        }
+
+        if (!categorie.trim()) {
+            notify('La catégorie ne peut pas être vide.', 'error');
+            return;
+        }
+
+        if (
+            quantiteTexte.trim() === '' ||
+            !Number.isInteger(quantite) ||
+            quantite < 0
+        ) {
+            notify('La quantité doit être un entier positif ou nul.', 'error');
+            return;
+        }
+
+        if (
+            prixTexte.trim() === '' ||
+            !Number.isFinite(prix) ||
+            prix < 0
+        ) {
+            notify('Le prix doit être positif ou nul.', 'error');
+            return;
+        }
+
+        // Enregistrer les changements dans Supabase
+        const { error: erreurModification } = await supabaseClient
+            .from('objets')
+            .update({
+                nom: nom.trim(),
+                categorie: categorie.trim(),
+                image: image.trim(),
+                quantite: quantite,
+                prix_unitaire: prix
+            })
+            .eq('id', id);
+
+        if (erreurModification) throw erreurModification;
+
+        notify('Les informations ont été modifiées.', 'success');
+
+        // Actualiser les cartes et les totaux
+        await afficherObjetsRachat();
+
+    } catch (error) {
+        console.error('Erreur de modification du rachat :', error);
+        notify('Impossible de modifier cet objet.', 'error');
+    }
+}
+    
+   
+rachatCards.addEventListener('click', async event => {
+    // Bouton Modifier les informations
+    const editButton = event.target.closest('[data-rachat-edit]');
+
+    if (editButton) {
+        const id = editButton.getAttribute('data-rachat-edit');
+        await modifierObjetRachat(id);
+        return;
+    }
+
+    // Bouton Sélectionner — fonctionnement existant
+    const button = event.target.closest('[data-rachat-select]');
+    if (!button) return;
+
+    const id = button.getAttribute('data-rachat-select');
+    const input = rachatCards.querySelector(
+        '[data-rachat-quantity="' + id + '"]'
+    );
+
+    if (!input) return;
+
+    const quantite = Number(input.value);
+    const maximum = Number(input.max);
+
+    if (
+        !Number.isInteger(quantite) ||
+        quantite < 1 ||
+        quantite > maximum
+    ) {
+        notify('Choisis une quantité disponible et valide.', 'error');
+        return;
+    }
+
+    notify(
+        'Objet sélectionné. Le paiement et la mise à jour du stock restent à connecter.',
+        'info'
+    );
+});
+
 
     afficherObjetsRachat();
 })();
