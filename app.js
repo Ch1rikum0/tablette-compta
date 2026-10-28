@@ -2271,31 +2271,42 @@ if (objetEditForm) {
 })();
 
 
-/* Menu dépliant : Objets Illégaux */
+
+/* Menus dépliants des catégories d'objets */
 (function () {
-    const toggle = document.getElementById('objetListToggle');
-    const content = document.getElementById('objetListWrapper');
-    console.log("Conteneur objets :", content);
-    console.log("Cartes objets :", document.getElementById('objetCards'));
-    
-    if (!toggle || !content) return;
+    const toggles = document.querySelectorAll(
+        '#objetListToggle, [data-objet-toggle]'
+    );
 
-    function basculerObjets() {
-    
-        toggle.setAttribute('aria-expanded', String(!replie));
+    toggles.forEach(function (toggle) {
+        const contentId = toggle.getAttribute('aria-controls');
+        const content = document.getElementById(contentId);
 
-        const fleche = toggle.querySelector('.objet-form-arrow');
-        if (fleche) {
-            fleche.textContent = replie ? '▶' : '▼';
+        if (!content) return;
+
+        function basculerObjets() {
+            const replie = content.classList.toggle('replie');
+
+            toggle.setAttribute(
+                'aria-expanded',
+                String(!replie)
+            );
+
+            const fleche = toggle.querySelector('.objet-form-arrow');
+
+            if (fleche) {
+                fleche.textContent = replie ? '▶' : '▼';
+            }
         }
-    }
 
-   toggle.addEventListener('click', basculerObjets);
+        toggle.addEventListener('click', basculerObjets);
 
-    toggle.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            basculerObjets();
-        }
+        toggle.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                basculerObjets();
+            }
+        });
     });
 })();
+
