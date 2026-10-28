@@ -2333,12 +2333,16 @@ loadObjets();
     const rachatQuantityTotal = document.getElementById('rachatQuantityTotal');
     const rachatValueTotal = document.getElementById('rachatValueTotal');
 
-    if (
-        !rachatCards ||
-        !rachatProductCount ||
-        !rachatQuantityTotal ||
-        !rachatValueTotal
-    ) return;
+    if (!rachatCards) {
+    console.error("RACHAT : l'élément rachatCards est introuvable.");
+    return;
+}
+
+console.log("RACHAT : éléments HTML détectés", {
+    compteur: !!rachatProductCount,
+    quantite: !!rachatQuantityTotal,
+    valeur: !!rachatValueTotal
+});
 
     function prixRachat(value) {
         return `${Math.round(Number(value) || 0).toLocaleString('fr-FR')} $`;
