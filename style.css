@@ -3144,6 +3144,7 @@ article.panel.link-panel.tokyo-panel {
     flex: 1 !important;
 }
 
+
 .stock-product-details {
     display: flex !important;
     flex-direction: row !important;
@@ -3153,5 +3154,7 @@ article.panel.link-panel.tokyo-panel {
 }
 
 .stock-product-details span {
+    display: inline-block !important;
     white-space: nowrap !important;
+    margin: 0 !important;
 }
