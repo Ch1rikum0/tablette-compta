@@ -2431,17 +2431,15 @@ console.log("RACHAT : éléments HTML détectés", {
                         </div>
             
                         <div class="stock-product-actions">
-                            
+                             
                             <input
                                 type="number"
                                 min="1"
-                                max="${item.quantity}"
                                 step="1"
                                 value="1"
-                                ${item.quantity <= 0 ? 'disabled' : ''}
                                 aria-label="Quantité à racheter pour ${escapeHtml(item.name)}"
                                 data-rachat-quantity="${escapeHtml(item.id)}"
-                                style="width: 75px; min-width: 75px; height: 42px; padding: 8px; text-align: center; color: white; background: #101012; border: 1px solid #ff2638; border-radius: 7px; font-size: 16px; pointer-events: auto;"
+                                style="width: 75px; min-width: 75px; height: 42px; padding: 8px; text-align: center; color: white; background: #101012; border: 1px solid #ff2638; border-radius: 7px; font-size: 16px;"
                             >
 
                             <button
@@ -2664,11 +2662,10 @@ rachatCards.addEventListener('click', async event => {
     const quantite = Number(input.value);
     const maximum = Number(input.max);
 
-    if (
-        !Number.isInteger(quantite) ||
-        quantite < 1 ||
-        quantite > maximum
-    ) {
+   if (
+    !Number.isInteger(quantite) ||
+    quantite < 1
+    )
         notify('Choisis une quantité disponible et valide.', 'error');
         return;
     }
