@@ -2448,7 +2448,8 @@ console.log("RACHAT : éléments HTML détectés", {
                     </div>
                 </article>
             `;
-           
+            }).join('');
+
             console.log(
                 "RACHAT : cartes HTML créées",
                 rachatCards.children.length
