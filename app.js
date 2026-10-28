@@ -2257,3 +2257,34 @@ if (objetEditForm) {
 
     updateObjetArrow();
 })();
+
+
+/* Menu dépliant : Objets Illégaux */
+(function () {
+    const toggle = document.getElementById('objetListToggle');
+    const content = document.getElementById('objetListWrapper');
+
+    if (!toggle || !content) return;
+
+    function basculerObjets() {
+        const replie = content.classList.toggle('replie');
+
+        toggle.setAttribute('aria-expanded', String(!replie));
+
+        const fleche = toggle.querySelector('.objet-form-arrow');
+        if (fleche) {
+            fleche.textContent = replie ? '▶' : '▼';
+        }
+    }
+
+    content.classList.add('replie');
+
+    toggle.addEventListener('click', basculerObjets);
+
+    toggle.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            basculerObjets();
+        }
+    });
+})();
