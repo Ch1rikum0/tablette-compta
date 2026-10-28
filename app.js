@@ -2360,6 +2360,9 @@ console.log("RACHAT : éléments HTML détectés", {
 
             if (error) throw error;
 
+            console.log("RACHAT : données reçues de Supabase", data);
+            console.log("RACHAT : nombre d'objets reçus", (data || []).length);
+            
             const objetsRachat = (data || []).map(item => ({
                 id: String(item.id),
                 name: item.nom || '',
