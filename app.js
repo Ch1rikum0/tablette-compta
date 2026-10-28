@@ -2537,10 +2537,10 @@ async function modifierObjetRachat(id) {
                     <input id="editRachatImage" type="text"
                         value="${escapeHtml(objet.image || '')}">
 
-                    <label for="editRachatQuantite">Poids</label>
-                    <input id="editRachatQuantite" type="number"
-                        min="0" step="1" required
-                        value="${Number(objet.quantite) || 0}">
+                    <label for="editRachatPoids">Poids (kg)</label>
+                    <input id="editRachatPoids" type="number"
+                        min="0" step="0.01" required
+                        value="${Number(objet.poids) || 0}">
 
                     <label for="editRachatPrix">Prix unitaire ($)</label>
                     <input id="editRachatPrix" type="number"
@@ -2571,10 +2571,10 @@ async function modifierObjetRachat(id) {
             const nom = document.getElementById('editRachatNom').value.trim();
             const categorie = document.getElementById('editRachatCategorie').value.trim();
             const image = document.getElementById('editRachatImage').value.trim();
-            const quantiteTexte = document.getElementById('editRachatQuantite').value;
+            const poidsTexte = document.getElementById('editRachatPoids').value;
             const prixTexte = document.getElementById('editRachatPrix').value;
-
-            const quantite = Number(quantiteTexte);
+            
+            const poids = Number(poidsTexte);
             const prix = Number(prixTexte);
 
             if (
@@ -2583,9 +2583,9 @@ async function modifierObjetRachat(id) {
                 quantiteTexte.trim() === '' ||
                 !Number.isInteger(quantite) ||
                 quantite < 0 ||
-                prixTexte.trim() === '' ||
-                !Number.isFinite(prix) ||
-                prix < 0
+                poidsTexte.trim() === '' ||
+                !Number.isFinite(poids) ||
+                poids < 0 ||
             ) {
                 notify('Vérifie les informations saisies.', 'error');
                 return;
