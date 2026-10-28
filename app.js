@@ -2537,7 +2537,7 @@ async function modifierObjetRachat(id) {
                     <input id="editRachatImage" type="text"
                         value="${escapeHtml(objet.image || '')}">
 
-                    <label for="editRachatQuantite">Quantité disponible</label>
+                    <label for="editRachatQuantite">Poids</label>
                     <input id="editRachatQuantite" type="number"
                         min="0" step="1" required
                         value="${Number(objet.quantite) || 0}">
