@@ -2118,31 +2118,41 @@ if (objetEditForm) {
     });
 }
 
-    objetCards.addEventListener('click', async event => {
-       
-    const editButton = event.target.closest('[data-objet-edit]');
-    const updateButton = event.target.closest('[data-objet-update]');
-    const deleteButton = event.target.closest('[data-objet-delete]');
 
+/* Gestion des boutons dans les 4 catégories d'objets */
+[
+    'objetCards',
+    'objetLegalCards',
+    'interimCards',
+    'autresCards'
+].forEach(function (containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
 
-        
+    container.addEventListener('click', async function (event) {
+        const editButton = event.target.closest('[data-objet-edit]');
+        const updateButton = event.target.closest('[data-objet-update]');
+        const deleteButton = event.target.closest('[data-objet-delete]');
+
         if (editButton) {
             const id = editButton.getAttribute('data-objet-edit');
-            const item = objets.find(obj => String(obj.id) === String(id));
-        
+            const item = objets.find(function (obj) {
+                return String(obj.id) === String(id);
+            });
+
             if (item) {
                 ouvrirModificationObjet(item);
             }
-        
             return;
         }
 
-        
         if (updateButton) {
             const id = updateButton.getAttribute('data-objet-update');
-            const input = objetCards.querySelector(
+            const input = container.querySelector(
                 '[data-objet-quantity="' + id + '"]'
             );
+
+            if (!input) return;
 
             const quantity = Number(input.value);
 
@@ -2155,7 +2165,10 @@ if (objetEditForm) {
                 return;
             }
 
-            const item = objets.find(obj => obj.id === id);
+            const item = objets.find(function (obj) {
+                return String(obj.id) === String(id);
+            });
+
             if (!item) return;
 
             const previousQuantity = item.quantity;
@@ -2172,13 +2185,14 @@ if (objetEditForm) {
                 renderObjets();
                 notify('Impossible de mettre à jour la quantité.', 'error');
             }
-
             return;
         }
 
         if (deleteButton) {
             const id = deleteButton.getAttribute('data-objet-delete');
-            const item = objets.find(obj => obj.id === id);
+            const item = objets.find(function (obj) {
+                return String(obj.id) === String(id);
+            });
 
             if (!item) return;
 
@@ -2189,14 +2203,17 @@ if (objetEditForm) {
             }
 
             try {
-                const { error } = await supabaseClient
+                const result = await supabaseClient
                     .from('objets')
                     .delete()
                     .eq('id', id);
 
-                if (error) throw error;
+                if (result.error) throw result.error;
 
-                objets = objets.filter(obj => obj.id !== id);
+                objets = objets.filter(function (obj) {
+                    return String(obj.id) !== String(id);
+                });
+
                 renderObjets();
                 notify('Objet supprimé.', 'success');
             } catch (error) {
@@ -2205,8 +2222,9 @@ if (objetEditForm) {
             }
         }
     });
+});
 
-     loadObjets();
+loadObjets();
 })();
     
 /* Navigation des sous-onglets Objets */
