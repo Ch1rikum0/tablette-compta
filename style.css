@@ -3158,3 +3158,15 @@ article.panel.link-panel.tokyo-panel {
     position: static !important;
     margin-top: 0 !important;
 }
+
+#toggleObjets {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+}
+
+#contenuObjets.replie {
+    display: none !important;
+}
