@@ -3171,3 +3171,14 @@ article.panel.link-panel.tokyo-panel {
 #objetListWrapper.replie {
     display: none !important;
 }
+
+/* Affichage des objets quand le menu est ouvert */
+#objetListWrapper:not(.replie) {
+    display: block !important;
+}
+
+#objetListWrapper:not(.replie) #objetCards {
+    display: grid !important;
+    width: 100% !important;
+    min-width: 0 !important;
+}
