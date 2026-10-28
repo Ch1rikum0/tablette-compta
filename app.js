@@ -2032,7 +2032,7 @@ const objetsCategorie = objets.filter(function (item) {
         };
 
         const { error } = await supabaseClient
-            .from('objets')
+            .from('objets_rachat')
             .upsert(row, { onConflict: 'id' });
 
         if (error) throw error;
