@@ -2455,6 +2455,13 @@ console.log("RACHAT : éléments HTML détectés", {
                         <p class="muted" data-rachat-total="${escapeHtml(item.id)}">
                             Total : ${prixRachat(item.unitPrice)}
                         </p>
+                        <button
+                            type="button"
+                            class="rachat-edit-btn"
+                            data-rachat-edit="${escapeHtml(item.id)}"
+                        >
+                            Modifier les informations
+                        </button>
                     </div>
                 </article>
             `;
