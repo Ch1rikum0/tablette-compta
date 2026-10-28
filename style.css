@@ -3517,60 +3517,178 @@ article.panel.link-panel.tokyo-panel {
     margin-bottom: 24px !important;
 }
 
-/* =================================
-   STYLE DES CARTES DU RACHAT
-   ================================= */
 
-.rachat-product-card {
+/* =========================================
+   RACHAT — MÊME STYLE QUE LES CARTES DU STOCK
+   ========================================= */
+
+#page-rachat #rachatCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+    gap: 12px;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+}
+
+#page-rachat .rachat-product-card {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    min-width: 0;
+    min-height: 320px;
+    padding: 12px;
     overflow: hidden;
+    background: #101012;
+    border: 1px solid #27272b;
+    border-radius: 11px;
+    color: #f5f5f5;
+    transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
-.rachat-product-card .stock-product-visual {
-    width: 100%;
-    overflow: hidden;
+#page-rachat .rachat-product-card:hover {
+    border-color: #45454d;
+    transform: translateY(-2px);
 }
 
-.rachat-product-card .stock-product-image {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
+#page-rachat .rachat-product-card .stock-product-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 105px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    background: radial-gradient(circle, #19191d 0%, #101012 68%);
+    border-radius: 10px;
+}
+
+#page-rachat .rachat-product-card .stock-product-image {
     display: block;
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+    object-fit: contain;
 }
 
-.rachat-product-card .stock-product-info {
+#page-rachat .rachat-product-card .stock-product-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 54px;
+    opacity: 0.8;
+}
+
+#page-rachat .rachat-product-card .stock-product-info {
     display: flex;
     flex-direction: column;
     flex: 1;
+    min-width: 0;
+    gap: 0;
 }
 
-.rachat-product-card .stock-product-heading {
+#page-rachat .rachat-product-card .stock-product-heading {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-}
-
-.rachat-product-card .stock-product-details {
-    display: flex;
-    flex-direction: column;
     gap: 6px;
+    margin-bottom: 10px;
 }
 
-.rachat-product-card .stock-product-actions {
+#page-rachat .rachat-product-card .stock-product-heading h4 {
+    margin: 0;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+}
+
+#page-rachat .rachat-product-card .stock-product-heading strong {
+    flex-shrink: 0;
+    color: #16c765;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+#page-rachat .rachat-product-card .stock-product-category {
+    align-self: flex-start;
+    max-width: 100%;
+    margin-bottom: 7px;
+    padding: 4px 6px;
+    overflow-wrap: anywhere;
+    border: 1px solid #29292f;
+    border-radius: 5px;
+    background: #17171b;
+    color: #a5a5b0;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+#page-rachat .rachat-product-card .stock-product-details {
     display: flex;
-    gap: 10px;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 0 0 12px;
+}
+
+#page-rachat .rachat-product-card .stock-product-details span {
+    padding: 4px 6px;
+    border: 1px solid #29292f;
+    border-radius: 5px;
+    background: #17171b;
+    color: #b8b8c2;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+#page-rachat .rachat-product-card .stock-product-actions {
+    display: flex;
     align-items: center;
-    margin-top: 12px;
+    gap: 6px;
+    margin-top: auto;
 }
 
-.rachat-product-card .stock-product-actions input {
-    min-width: 0;
-    width: 80px;
+#page-rachat .rachat-product-card .stock-product-actions input {
+    width: 48px;
+    min-width: 48px;
+    padding: 8px 3px;
+    border: 1px solid #29292f;
+    border-radius: 9px;
+    background: #080809;
+    color: #fff;
+    font-size: 11px;
 }
 
-.rachat-product-card .stock-product-actions button {
+#page-rachat .rachat-product-card .stock-product-actions button {
     flex: 1;
+    min-width: 0;
+    margin-top: 0;
+    padding: 9px 5px;
+    border: none;
+    border-radius: 9px;
+    background: #ff2638;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+#page-rachat .rachat-product-card .stock-product-actions button:hover {
+    background: #e51f30;
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+}
+
+#page-rachat .rachat-product-card [data-rachat-total] {
+    margin-top: 10px;
+    font-size: 10px;
+}
+
+@media (max-width: 500px) {
+    #page-rachat #rachatCards {
+        grid-template-columns: 1fr;
+    }
 }
