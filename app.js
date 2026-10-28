@@ -2505,106 +2505,137 @@ console.log("RACHAT : éléments HTML détectés", {
         total.textContent = 'Total : ' + prixRachat(prix * quantite);
     });
 
+
 async function modifierObjetRachat(id) {
     try {
-        // Récupérer les informations actuelles depuis Supabase
-        const { data: objet, error: erreurLecture } = await supabaseClient
+        const { data: objet, error } = await supabaseClient
             .from('objets')
             .select('*')
             .eq('id', id)
             .single();
 
-        if (erreurLecture) throw erreurLecture;
+        if (error) throw error;
 
         if (!objet) {
             notify('Objet introuvable.', 'error');
             return;
         }
 
-        // Demander les nouvelles informations
-        const nom = prompt('Nom de l’objet :', objet.nom || '');
-        if (nom === null) return;
+        // Créer une seule fenêtre avec tous les champs
+        const ancienneFenetre = document.getElementById('rachatEditModal');
+        if (ancienneFenetre) ancienneFenetre.remove();
 
-        const categorie = prompt(
-            'Catégorie :',
-            objet.categorie || ''
-        );
-        if (categorie === null) return;
+        const modal = document.createElement('div');
+        modal.id = 'rachatEditModal';
+        modal.className = 'rachat-edit-modal';
 
-        const image = prompt(
-            'URL de l’image :',
-            objet.image || ''
-        );
-        if (image === null) return;
+        modal.innerHTML = `
+            <div class="rachat-edit-window">
+                <h2>Modifier les informations</h2>
+                <p class="muted">Modifie les informations de cet objet.</p>
 
-        const quantiteTexte = prompt(
-            'Quantité disponible :',
-            String(objet.quantite ?? 0)
-        );
-        if (quantiteTexte === null) return;
+                <form id="rachatEditForm">
+                    <label for="editRachatNom">Nom de l'objet</label>
+                    <input id="editRachatNom" type="text" required
+                        value="${escapeHtml(objet.nom || '')}">
 
-        const prixTexte = prompt(
-            'Prix unitaire :',
-            String(objet.prix_unitaire ?? 0)
-        );
-        if (prixTexte === null) return;
+                    <label for="editRachatCategorie">Catégorie</label>
+                    <input id="editRachatCategorie" type="text" required
+                        value="${escapeHtml(objet.categorie || '')}">
 
-        // Vérifier les valeurs saisies
-        const quantite = Number(quantiteTexte);
-        const prix = Number(prixTexte.replace(',', '.'));
+                    <label for="editRachatImage">URL de l'image</label>
+                    <input id="editRachatImage" type="text"
+                        value="${escapeHtml(objet.image || '')}">
 
-        if (!nom.trim()) {
-            notify('Le nom ne peut pas être vide.', 'error');
-            return;
-        }
+                    <label for="editRachatQuantite">Quantité disponible</label>
+                    <input id="editRachatQuantite" type="number"
+                        min="0" step="1" required
+                        value="${Number(objet.quantite) || 0}">
 
-        if (!categorie.trim()) {
-            notify('La catégorie ne peut pas être vide.', 'error');
-            return;
-        }
+                    <label for="editRachatPrix">Prix unitaire ($)</label>
+                    <input id="editRachatPrix" type="number"
+                        min="0" step="any" required
+                        value="${Number(objet.prix_unitaire) || 0}">
 
-        if (
-            quantiteTexte.trim() === '' ||
-            !Number.isInteger(quantite) ||
-            quantite < 0
-        ) {
-            notify('La quantité doit être un entier positif ou nul.', 'error');
-            return;
-        }
+                    <div class="rachat-edit-buttons">
+                        <button type="button" id="cancelRachatEdit">
+                            Annuler
+                        </button>
+                        <button type="submit" id="saveRachatEdit">
+                            Enregistrer
+                        </button>
+                    </div>
+                </form>
+            </div>
+        `;
 
-        if (
-            prixTexte.trim() === '' ||
-            !Number.isFinite(prix) ||
-            prix < 0
-        ) {
-            notify('Le prix doit être positif ou nul.', 'error');
-            return;
-        }
+        document.body.appendChild(modal);
 
-        // Enregistrer les changements dans Supabase
-        const { error: erreurModification } = await supabaseClient
-            .from('objets')
-            .update({
-                nom: nom.trim(),
-                categorie: categorie.trim(),
-                image: image.trim(),
-                quantite: quantite,
-                prix_unitaire: prix
-            })
-            .eq('id', id);
+        document.getElementById('cancelRachatEdit').onclick = () => {
+            modal.remove();
+        };
 
-        if (erreurModification) throw erreurModification;
+        document.getElementById('rachatEditForm').onsubmit = async event => {
+            event.preventDefault();
 
-        notify('Les informations ont été modifiées.', 'success');
+            const nom = document.getElementById('editRachatNom').value.trim();
+            const categorie = document.getElementById('editRachatCategorie').value.trim();
+            const image = document.getElementById('editRachatImage').value.trim();
+            const quantiteTexte = document.getElementById('editRachatQuantite').value;
+            const prixTexte = document.getElementById('editRachatPrix').value;
 
-        // Actualiser les cartes et les totaux
-        await afficherObjetsRachat();
+            const quantite = Number(quantiteTexte);
+            const prix = Number(prixTexte);
+
+            if (
+                !nom ||
+                !categorie ||
+                quantiteTexte.trim() === '' ||
+                !Number.isInteger(quantite) ||
+                quantite < 0 ||
+                prixTexte.trim() === '' ||
+                !Number.isFinite(prix) ||
+                prix < 0
+            ) {
+                notify('Vérifie les informations saisies.', 'error');
+                return;
+            }
+
+            const saveButton = document.getElementById('saveRachatEdit');
+            saveButton.disabled = true;
+            saveButton.textContent = 'Enregistrement...';
+
+            try {
+                const { error: updateError } = await supabaseClient
+                    .from('objets')
+                    .update({
+                        nom: nom,
+                        categorie: categorie,
+                        image: image,
+                        quantite: quantite,
+                        prix_unitaire: prix
+                    })
+                    .eq('id', id);
+
+                if (updateError) throw updateError;
+
+                modal.remove();
+                await afficherObjetsRachat();
+                notify('Objet modifié avec succès.', 'success');
+            } catch (saveError) {
+                console.error('Erreur de sauvegarde :', saveError);
+                notify('Impossible d’enregistrer les modifications.', 'error');
+                saveButton.disabled = false;
+                saveButton.textContent = 'Enregistrer';
+            }
+        };
 
     } catch (error) {
         console.error('Erreur de modification du rachat :', error);
-        notify('Impossible de modifier cet objet.', 'error');
+        notify('Impossible de charger les informations de cet objet.', 'error');
     }
 }
+
     
    
 rachatCards.addEventListener('click', async event => {
