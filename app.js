@@ -2449,7 +2449,17 @@ console.log("RACHAT : éléments HTML détectés", {
                     </article>
                 `;
             }).join('');
-
+           
+            console.log(
+                "RACHAT : cartes HTML créées",
+                rachatCards.children.length
+            );
+            
+            console.log(
+                "RACHAT : contenu visible",
+                rachatCards.innerHTML.length
+            );
+            
         } catch (error) {
             console.error('Erreur de chargement du rachat :', error);
             rachatCards.innerHTML =
