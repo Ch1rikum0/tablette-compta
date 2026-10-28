@@ -2075,10 +2075,17 @@ function renderObjets() {
             renderObjets();
             objetForm.reset();
             notify('Objet ajouté avec succès.', 'success');
-        } catch (error) {
-            console.error('Erreur de sauvegarde de l’objet :', error);
-            notify('Impossible de sauvegarder cet objet.', 'error');
-        } finally {
+       
+    } catch (error) {
+        console.error('Erreur de sauvegarde de l’objet :', error);
+    
+        const detail = error && error.message
+            ? error.message
+            : String(error);
+    
+        notify('Erreur lors de l’ajout : ' + detail, 'error');
+    }
+
             button.disabled = false;
         }
     });
