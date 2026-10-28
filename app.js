@@ -2399,56 +2399,55 @@ console.log("RACHAT : éléments HTML détectés", {
                             onerror="this.style.display='none'">`
                     : '<div class="stock-product-placeholder">📦</div>';
 
-                return `
-                    <article class="stock-product-card">
-                        <div class="stock-product-visual">
-                            ${imageHtml}
+             return `
+                <article class="stock-product-card rachat-product-card">
+                    <div class="stock-product-visual">
+                        ${imageHtml}
+                    </div>
+            
+                    <div class="stock-product-info">
+                        <div class="stock-product-heading">
+                            <h4>${escapeHtml(item.name)}</h4>
+                            <strong>${prixRachat(item.unitPrice)}</strong>
                         </div>
-
-                        <div class="stock-product-info">
-                            <div class="stock-product-heading">
-                                <h4>${escapeHtml(item.name)}</h4>
-                                <strong>${prixRachat(item.unitPrice)}</strong>
-                            </div>
-
-                            <span class="stock-product-category">
-                                ${escapeHtml(item.category)}
-                            </span>
-
-                            <div class="stock-product-details">
-                                <span>Disponible : ${item.quantity}</span>
-                                <span>Prix de rachat : ${prixRachat(item.unitPrice)}</span>
-                            </div>
-
-                            <div class="stock-product-actions">
-                                <input
-                                    type="number"
-                                    min="1"
-                                    max="${item.quantity}"
-                                    step="1"
-                                    value="1"
-                                    ${item.quantity <= 0 ? 'disabled' : ''}
-                                    aria-label="Quantité à racheter pour ${escapeHtml(item.name)}"
-                                    data-rachat-quantity="${escapeHtml(item.id)}"
-                                >
-
-                                <button
-                                    type="button"
-                                    class="primary-btn"
-                                    data-rachat-select="${escapeHtml(item.id)}"
-                                    ${item.quantity <= 0 ? 'disabled' : ''}
-                                >
-                                    Sélectionner
-                                </button>
-                            </div>
-
-                            <p class="muted" data-rachat-total="${escapeHtml(item.id)}">
-                                Total : ${prixRachat(item.unitPrice)}
-                            </p>
+            
+                        <span class="stock-product-category">
+                            ${escapeHtml(item.category)}
+                        </span>
+            
+                        <div class="stock-product-details">
+                            <span>Disponible : ${item.quantity}</span>
+                            <span>Prix de rachat : ${prixRachat(item.unitPrice)}</span>
                         </div>
-                    </article>
-                `;
-            }).join('');
+            
+                        <div class="stock-product-actions">
+                            <input
+                                type="number"
+                                min="1"
+                                max="${item.quantity}"
+                                step="1"
+                                value="1"
+                                ${item.quantity <= 0 ? 'disabled' : ''}
+                                aria-label="Quantité à racheter pour ${escapeHtml(item.name)}"
+                                data-rachat-quantity="${escapeHtml(item.id)}"
+                            >
+            
+                            <button
+                                type="button"
+                                class="primary-btn"
+                                data-rachat-select="${escapeHtml(item.id)}"
+                                ${item.quantity <= 0 ? 'disabled' : ''}
+                            >
+                                Sélectionner
+                            </button>
+                        </div>
+            
+                        <p class="muted" data-rachat-total="${escapeHtml(item.id)}">
+                            Total : ${prixRachat(item.unitPrice)}
+                        </p>
+                    </div>
+                </article>
+            `;
            
             console.log(
                 "RACHAT : cartes HTML créées",
