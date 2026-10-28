@@ -1796,42 +1796,39 @@ loadStock();
         return `${Math.round(Number(value) || 0).toLocaleString('fr-FR')} $`;
     }
 
-    async function loadObjets() {
-        try {
-            const { data, error } = await supabaseClient
-                .from('objets')
-                .select('*')
-                .order('nom', { ascending: true });
+   
+async function loadObjets() {
+    try {
+        const { data, error } = await supabaseClient
+            .from('objets')
+            .select('*')
+            .order('nom', { ascending: true });
 
-          if (error) throw error;
+        if (error) throw error;
 
-            console.log("Objets reçus de Supabase :", data);
-            
-            objets = (data || []).map(item => ({
-                id: item.id,
-                name: item.nom,
-                category: item.categorie || '',
-                image: item.image || '',
-                quantity: Number(item.quantite) || 0,
-                unitPrice: Number(item.prix_unitaire) || 0,
-                weight: Number(item.poids) || 0
-            }));
+        console.log("Objets reçus de Supabase :", data);
 
-            renderObjets();
-    function renderObjets() {
-        console.log("Nombre d'objets à afficher :", objets.length);
-        console.log("Conteneur objetCards :", objetCards);
+        objets = (data || []).map(item => ({
+            id: item.id,
+            name: item.nom,
+            category: item.categorie || '',
+            image: item.image || '',
+            quantity: Number(item.quantite) || 0,
+            unitPrice: Number(item.prix_unitaire) || 0,
+            weight: Number(item.poids) || 0
+        }));
 
-    let totalQuantity = 0;
-                
-        } catch (error) {
-            console.error('Erreur de chargement des objets :', error);
-            objetCards.innerHTML =
-                '<p class="muted">Impossible de charger les objets.</p>';
+        renderObjets();
 
-            notify('Impossible de charger les objets partagés.', 'error');
-        }
+    } catch (error) {
+        console.error('Erreur de chargement des objets :', error);
+
+        objetCards.innerHTML =
+            '<p class="muted">Impossible de charger les objets.</p>';
+
+        notify('Impossible de charger les objets partagés.', 'error');
     }
+}
 
     function renderObjets() {
         let totalQuantity = 0;
