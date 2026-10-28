@@ -2033,62 +2033,63 @@ function renderObjets() {
         if (error) throw error;
     }
 
-    objetForm.addEventListener('submit', async event => {
-        event.preventDefault();
 
-        const name = objetName.value.trim();
-        const category = objetCategory.value.trim();
-        const image = objetImage.value.trim();
-        const quantity = Number(objetQuantity.value);
-        const unitPrice = Number(objetUnitPrice.value);
+objetForm.addEventListener('submit', async event => {
+    event.preventDefault();
 
-        if (
-            !name ||
-            !category ||
-            objetQuantity.value.trim() === '' ||
-            objetUnitPrice.value.trim() === '' ||
-            !Number.isInteger(quantity) ||
-            quantity < 0 ||
-            !Number.isFinite(unitPrice) ||
-            unitPrice < 0
-        ) {
-            notify('Vérifie les informations de l’objet.', 'error');
-            return;
-        }
+    const name = objetName.value.trim();
+    const category = objetCategory.value.trim();
+    const image = objetImage.value.trim();
+    const quantity = Number(objetQuantity.value);
+    const unitPrice = Number(objetUnitPrice.value);
 
-        const button = objetForm.querySelector('button[type="submit"]');
-        button.disabled = true;
+    if (
+        !name ||
+        !category ||
+        objetQuantity.value.trim() === '' ||
+        objetUnitPrice.value.trim() === '' ||
+        !Number.isInteger(quantity) ||
+        quantity < 0 ||
+        !Number.isFinite(unitPrice) ||
+        unitPrice < 0
+    ) {
+        notify('Vérifie les informations de l’objet.', 'error');
+        return;
+    }
 
-        const item = {
-            id: String(Date.now()) + '-' +
-                Math.random().toString(16).slice(2),
-            name,
-            category,
-            image,
-            quantity,
-            unitPrice
-        };
+    const button = objetForm.querySelector('button[type="submit"]');
 
-        try {
-            await saveObjet(item);
-            objets.push(item);
-            renderObjets();
-            objetForm.reset();
-            notify('Objet ajouté avec succès.', 'success');
-       
+    if (button) button.disabled = true;
+
+    const item = {
+        id: String(Date.now()) + '-' +
+            Math.random().toString(16).slice(2),
+        name: name,
+        category: category,
+        image: image,
+        quantity: quantity,
+        unitPrice: unitPrice
+    };
+
+    try {
+        await saveObjet(item);
+        objets.push(item);
+        renderObjets();
+        objetForm.reset();
+        notify('Objet ajouté avec succès.', 'success');
     } catch (error) {
         console.error('Erreur de sauvegarde de l’objet :', error);
-    
+
         const detail = error && error.message
             ? error.message
             : String(error);
-    
-        notify('Erreur lors de l’ajout : ' + detail, 'error');
-    }
 
-            button.disabled = false;
-        }
-    });
+        notify('Erreur lors de l’ajout : ' + detail, 'error');
+    } finally {
+        if (button) button.disabled = false;
+    }
+});
+
 
 /* Fenêtre de modification des objets */
 const objetEditModal = document.getElementById('objetEditModal');
