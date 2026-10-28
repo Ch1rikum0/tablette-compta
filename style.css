@@ -3158,3 +3158,13 @@ article.panel.link-panel.tokyo-panel {
     white-space: nowrap !important;
     margin: 0 !important;
 }
+
+.stock-product-details {
+    gap: 4px !important;
+    justify-content: flex-start !important;
+}
+
+.stock-product-details span {
+    margin: 0 !important;
+    padding: 4px 6px !important;
+}
