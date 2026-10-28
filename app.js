@@ -2076,8 +2076,8 @@ async function loadObjets() {
         }
     });
 
-    loadObjets();
-
+     loadObjets();
+})();
     
 /* Fenêtre de modification des objets */
 const objetEditModal = document.getElementById('objetEditModal');
