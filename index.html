@@ -327,20 +327,75 @@
         </article>
 
        
+
+<!-- OBJETS ILLEGAUX -->
 <article class="panel objet-list-panel">
-    <h3 class="objet-form-toggle" id="objetListToggle"
+    <h3 class="objet-form-toggle objet-category-toggle"
+        id="objetListToggle"
         role="button" tabindex="0" aria-expanded="false"
         aria-controls="objetListWrapper">
         <span>Objets Illégaux</span>
         <span class="objet-form-arrow">▶</span>
     </h3>
 
-    <div id="objetListWrapper" class="objet-form-wrapper">
+    <div id="objetListWrapper" class="objet-form-wrapper replie">
         <div id="objetCards" class="stock-cards">
             <p class="muted">Chargement des objets...</p>
         </div>
     </div>
 </article>
+
+<!-- OBJETS LEGAUX -->
+<article class="panel objet-list-panel">
+    <h3 class="objet-form-toggle objet-category-toggle"
+        data-objet-toggle="objetLegalWrapper"
+        role="button" tabindex="0" aria-expanded="false"
+        aria-controls="objetLegalWrapper">
+        <span>Objets Légaux</span>
+        <span class="objet-form-arrow">▶</span>
+    </h3>
+
+    <div id="objetLegalWrapper" class="objet-form-wrapper replie">
+        <div id="objetLegalCards" class="stock-cards">
+            <p class="muted">Chargement des objets...</p>
+        </div>
+    </div>
+</article>
+
+<!-- INTERIM -->
+<article class="panel objet-list-panel">
+    <h3 class="objet-form-toggle objet-category-toggle"
+        data-objet-toggle="interimWrapper"
+        role="button" tabindex="0" aria-expanded="false"
+        aria-controls="interimWrapper">
+        <span>Intérim</span>
+        <span class="objet-form-arrow">▶</span>
+    </h3>
+
+    <div id="interimWrapper" class="objet-form-wrapper replie">
+        <div id="interimCards" class="stock-cards">
+            <p class="muted">Chargement des objets...</p>
+        </div>
+    </div>
+</article>
+
+<!-- AUTRES -->
+<article class="panel objet-list-panel">
+    <h3 class="objet-form-toggle objet-category-toggle"
+        data-objet-toggle="autresWrapper"
+        role="button" tabindex="0" aria-expanded="false"
+        aria-controls="autresWrapper">
+        <span>Autres</span>
+        <span class="objet-form-arrow">▶</span>
+    </h3>
+
+    <div id="autresWrapper" class="objet-form-wrapper replie">
+        <div id="autresCards" class="stock-cards">
+            <p class="muted">Chargement des objets...</p>
+        </div>
+    </div>
+</article>
+
 
 <!-- FENÊTRE DE MODIFICATION D'UN OBJET -->
 <div id="objetEditModal" class="objet-modal" aria-hidden="true">
