@@ -3497,3 +3497,22 @@ article.panel.link-panel.tokyo-panel {
 .objet-list-panel {
     box-sizing: border-box;
 }
+
+
+/* Séparer les panneaux de gestion des objets */
+.panel.objet-list-panel {
+    margin-top: 24px !important;
+    margin-bottom: 24px !important;
+}
+
+/* Séparer le résumé et le formulaire des objets */
+#objetQuantityTotal,
+#objetValueTotal,
+#objetWeightTotal {
+    scroll-margin-top: 24px;
+}
+
+.objet-form-panel {
+    margin-top: 24px !important;
+    margin-bottom: 24px !important;
+}
