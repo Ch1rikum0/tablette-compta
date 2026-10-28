@@ -1923,6 +1923,11 @@ console.log("Conteneur HTML :", objetCards);
         }).join('');
         console.log("HTML généré :", objetCards.innerHTML);
         console.log("Nombre de cartes HTML :", objetCards.querySelectorAll('.stock-product-card').length);
+        console.log("Hauteur du conteneur :", objetCards.getBoundingClientRect().height);
+        console.log("Largeur du conteneur :", objetCards.getBoundingClientRect().width);
+        console.log("Style du conteneur :", window.getComputedStyle(objetCards).display);
+        console.log("Visibilité du conteneur :", window.getComputedStyle(objetCards).visibility);
+        console.log("Hauteur du panneau parent :", objetCards.parentElement.getBoundingClientRect().height);
 
         console.log(
             "Nombre de cartes HTML :",
