@@ -1831,9 +1831,10 @@ renderObjets();
 
 
 function renderObjets() {
-    let totalQuantity = 0;
+   let totalQuantity = 0;
+    let totalWeight = 0;
     let totalValue = 0;
-
+    
     objets.forEach(function (item) {
         totalQuantity += Number(item.quantity) || 0;
         totalValue +=
