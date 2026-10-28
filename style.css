@@ -3853,16 +3853,18 @@ article.panel.link-panel.tokyo-panel {
     box-shadow: 0 0 0 2px rgba(255, 38, 56, 0.2);
 }
 
-/* Masquer les boutons de modification dans la page Drogue uniquement */
-#page-drogue .rachat-edit-btn,
-#page-drogue [data-rachat-edit] {
-    display: none !important;
+
+/* Masquer les boutons de modification uniquement dans Drogue */
+#page-drogue button.rachat-edit-btn,
+#page-drogue button[data-rachat-edit],
+#page-drogue .rachat-edit-actions,
+#page-drogue button {
+    /* Ne pas masquer tous les boutons de la page */
 }
 
-/* Supprimer les boutons de modification dans la page Drogue */
-#page-drogue button[data-rachat-edit],
-#page-drogue button.rachat-edit-btn,
-#page-drogue [data-rachat-edit] {
+/* Cibler uniquement les boutons de modification connus */
+#page-drogue .rachat-edit-btn,
+#page-drogue [data-rachat-edit],
+#page-drogue .rachat-edit-actions {
     display: none !important;
-    visibility: hidden !important;
 }
