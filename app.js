@@ -1921,6 +1921,8 @@ console.log("Conteneur HTML :", objetCards);
                 </article>
             `;
         }).join('');
+        console.log("HTML généré :", objetCards.innerHTML);
+        console.log("Nombre de cartes HTML :", objetCards.querySelectorAll('.stock-product-card').length);
     }
 
     async function saveObjet(item) {
