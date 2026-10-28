@@ -1852,9 +1852,6 @@ loadStock();
                 '<p class="muted">Aucun objet enregistré.</p>';
             return;
         }
-
-        console.log("Nombre d'objets à afficher :", objets.length);
-        console.log("Conteneur objetCards :", objetCards);
         
         objetCards.innerHTML = objets.map(item => {
             const imageHtml = item.image
