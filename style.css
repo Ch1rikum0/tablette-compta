@@ -3159,7 +3159,8 @@ article.panel.link-panel.tokyo-panel {
     margin-top: 0 !important;
 }
 
-#toggleObjets {
+/* Menu dépliant Objets Illégaux */
+#objetListToggle {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -3167,6 +3168,6 @@ article.panel.link-panel.tokyo-panel {
     cursor: pointer;
 }
 
-#contenuObjets.replie {
+#objetListWrapper.replie {
     display: none !important;
 }
