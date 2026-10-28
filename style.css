@@ -3485,3 +3485,9 @@ article.panel.link-panel.tokyo-panel {
         grid-template-columns: 1fr;
     }
 }
+
+/* Espacement entre les cadres de gestion des objets */
+#page-objets .panel,
+.objet-list-panel {
+    margin-bottom: 24px !important;
+}
