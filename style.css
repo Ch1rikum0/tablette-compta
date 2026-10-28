@@ -3516,3 +3516,61 @@ article.panel.link-panel.tokyo-panel {
     margin-top: 24px !important;
     margin-bottom: 24px !important;
 }
+
+/* =================================
+   STYLE DES CARTES DU RACHAT
+   ================================= */
+
+.rachat-product-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.rachat-product-card .stock-product-visual {
+    width: 100%;
+    overflow: hidden;
+}
+
+.rachat-product-card .stock-product-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.rachat-product-card .stock-product-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.rachat-product-card .stock-product-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.rachat-product-card .stock-product-details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.rachat-product-card .stock-product-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.rachat-product-card .stock-product-actions input {
+    min-width: 0;
+    width: 80px;
+}
+
+.rachat-product-card .stock-product-actions button {
+    flex: 1;
+}
