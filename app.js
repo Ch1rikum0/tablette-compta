@@ -2263,7 +2263,9 @@ if (objetEditForm) {
 (function () {
     const toggle = document.getElementById('objetListToggle');
     const content = document.getElementById('objetListWrapper');
-
+    console.log("Conteneur objets :", content);
+    console.log("Cartes objets :", document.getElementById('objetCards'));
+    
     if (!toggle || !content) return;
 
     function basculerObjets() {
