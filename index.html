@@ -326,12 +326,22 @@
             </div>
         </article>
 
-        <article class="panel">
-            <h3>Objets Illégaux</h3>
-            <div id="objetCards" class="stock-cards">
-                <p class="muted">Chargement des objets...</p>
-            </div>
-        </article>
+       
+<article class="panel objet-list-panel">
+    <h3 class="objet-form-toggle" id="objetListToggle"
+        role="button" tabindex="0" aria-expanded="false"
+        aria-controls="objetListWrapper">
+        <span>Objets Illégaux</span>
+        <span class="objet-form-arrow">▶</span>
+    </h3>
+
+    <div id="objetListWrapper" class="objet-form-wrapper">
+        <div id="objetCards" class="stock-cards">
+            <p class="muted">Chargement des objets...</p>
+        </div>
+    </div>
+</article>
+
 
 <!-- FENÊTRE DE MODIFICATION D'UN OBJET -->
 <div id="objetEditModal" class="objet-modal" aria-hidden="true">
