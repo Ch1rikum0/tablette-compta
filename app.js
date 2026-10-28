@@ -2426,12 +2426,12 @@ console.log("RACHAT : éléments HTML détectés", {
                         </span>
             
                         <div class="stock-product-details">
-                            <span>Disponible : ${item.quantity}</span>
                             <span>Prix de rachat : ${prixRachat(item.unitPrice)}</span>
                         </div>
             
                         <div class="stock-product-actions">
                              
+                            
                             <input
                                 type="number"
                                 min="1"
@@ -2439,8 +2439,8 @@ console.log("RACHAT : éléments HTML détectés", {
                                 value="1"
                                 aria-label="Quantité à racheter pour ${escapeHtml(item.name)}"
                                 data-rachat-quantity="${escapeHtml(item.id)}"
-                                style="width: 75px; min-width: 75px; height: 42px; padding: 8px; text-align: center; color: white; background: #101012; border: 1px solid #ff2638; border-radius: 7px; font-size: 16px;"
                             >
+
 
                             <button
                                 type="button"
