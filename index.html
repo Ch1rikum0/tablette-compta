@@ -290,8 +290,16 @@
                 <label for="objetName">Nom de l'objet</label>
                 <input type="text" id="objetName" placeholder="Ex. : Téléphone" required>
 
+               
                 <label for="objetCategory">Catégorie</label>
-                <input type="text" id="objetCategory" placeholder="Ex. : Électronique" required>
+                <select id="objetCategory" required>
+                    <option value="" selected disabled>Choisir une catégorie</option>
+                    <option value="Objets Illégaux">Objets Illégaux</option>
+                    <option value="Objets Légal">Objets Légal</option>
+                    <option value="Intérim">Intérim</option>
+                    <option value="Autres">Autres</option>
+                </select>
+
 
                 <label for="objetImage">Lien de l'image (facultatif)</label>
                 <input type="url" id="objetImage" placeholder="https://...">
@@ -414,8 +422,15 @@
             <label for="objetEditName">Nom de l'objet</label>
             <input type="text" id="objetEditName" required>
 
+            
             <label for="objetEditCategory">Catégorie</label>
-            <input type="text" id="objetEditCategory" required>
+            <select id="objetEditCategory" required>
+                <option value="Objets Illégaux">Objets Illégaux</option>
+                <option value="Objets Légal">Objets Légal</option>
+                <option value="Intérim">Intérim</option>
+                <option value="Autres">Autres</option>
+            </select>
+
 
             <label for="objetEditImage">Lien de l'image</label>
             <input type="url" id="objetEditImage">
