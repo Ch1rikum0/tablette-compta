@@ -2378,11 +2378,11 @@ console.log("RACHAT : éléments HTML détectés", {
                 (total, item) => total + item.quantity * item.unitPrice, 0
             );
 
-            rachatProductCount.textContent = objetsRachat.length;
-           rachatQuantityTotal.textContent =
-                totalWeight.toLocaleString('fr-FR', {
-                    maximumFractionDigits: 2
-                }) + ' kg';
+          rachatProductCount.textContent = objetsRachat.length;
+
+            rachatQuantityTotal.textContent =
+                totalQuantity.toLocaleString('fr-FR');
+            
             rachatValueTotal.textContent = prixRachat(totalValue);
 
             if (objetsRachat.length === 0) {
@@ -2505,6 +2505,9 @@ async function modifierObjetRachat(id) {
             .single();
 
         if (error) throw error;
+        console.log("RACHAT : objets récupérés", data);
+        console.log("RACHAT : conteneur", rachatCards);
+        console.log("RACHAT : quantité reçue", data ? data.length : 0);
 
         if (!objet) {
             notify('Objet introuvable.', 'error');
