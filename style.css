@@ -3737,3 +3737,97 @@ article.panel.link-panel.tokyo-panel {
     background: #ff2638;
     transform: translateY(-2px);
 }
+
+
+/* Fenêtre unique de modification des objets Rachat */
+.rachat-edit-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.82);
+    backdrop-filter: blur(5px);
+}
+
+.rachat-edit-window {
+    width: 100%;
+    max-width: 460px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 24px;
+    background: #101012;
+    border: 1px solid #ff2638;
+    border-radius: 14px;
+    color: #fff;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+}
+
+.rachat-edit-window h2 {
+    margin: 0 0 8px;
+    font-size: 20px;
+}
+
+.rachat-edit-window .muted {
+    margin-bottom: 20px;
+}
+
+.rachat-edit-window form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.rachat-edit-window label {
+    margin-top: 7px;
+    color: #c7c7cb;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.rachat-edit-window input {
+    width: 100%;
+    min-width: 0;
+    padding: 11px;
+    background: #1a1a1e;
+    border: 1px solid #34343a;
+    border-radius: 7px;
+    color: #fff;
+    outline: none;
+}
+
+.rachat-edit-window input:focus {
+    border-color: #ff2638;
+}
+
+.rachat-edit-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.rachat-edit-buttons button {
+    flex: 1;
+    padding: 12px 8px;
+    border: 1px solid #ff2638;
+    border-radius: 7px;
+    background: #1a1013;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.rachat-edit-buttons button:last-child {
+    background: #ff2638;
+}
+
+.rachat-edit-buttons button:hover {
+    filter: brightness(1.2);
+}
+
+.rachat-edit-buttons button:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
