@@ -3858,3 +3858,11 @@ article.panel.link-panel.tokyo-panel {
 #page-drogue [data-rachat-edit] {
     display: none !important;
 }
+
+/* Supprimer les boutons de modification dans la page Drogue */
+#page-drogue button[data-rachat-edit],
+#page-drogue button.rachat-edit-btn,
+#page-drogue [data-rachat-edit] {
+    display: none !important;
+    visibility: hidden !important;
+}
