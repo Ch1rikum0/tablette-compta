@@ -2256,15 +2256,3 @@ if (objetEditForm) {
 
     updateObjetArrow();
 })();
-
-.stock-product-details {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    flex-wrap: nowrap !important;
-    gap: 12px !important;
-}
-
-.stock-product-details span {
-    white-space: nowrap !important;
-}
