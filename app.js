@@ -2602,7 +2602,7 @@ async function modifierObjetRachat(id) {
                         nom: nom,
                         categorie: categorie,
                         image: image,
-                        quantite: quantite,
+                        poids: poids,
                         prix_unitaire: prix
                     })
                     .eq('id', id);
