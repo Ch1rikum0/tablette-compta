@@ -2505,9 +2505,6 @@ async function modifierObjetRachat(id) {
             .single();
 
         if (error) throw error;
-        console.log("RACHAT : objets récupérés", data);
-        console.log("RACHAT : conteneur", rachatCards);
-        console.log("RACHAT : quantité reçue", data ? data.length : 0);
 
         if (!objet) {
             notify('Objet introuvable.', 'error');
