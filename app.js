@@ -2441,7 +2441,7 @@ console.log("RACHAT : éléments HTML détectés", {
                                 ${item.quantity <= 0 ? 'disabled' : ''}
                                 aria-label="Quantité à racheter pour ${escapeHtml(item.name)}"
                                 data-rachat-quantity="${escapeHtml(item.id)}"
-                                class="rachat-quantity-input"
+                                style="width: 75px; min-width: 75px; height: 42px; padding: 8px; text-align: center; color: white; background: #101012; border: 1px solid #ff2638; border-radius: 7px; font-size: 16px; pointer-events: auto;"
                             >
 
                             <button
