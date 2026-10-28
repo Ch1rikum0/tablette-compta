@@ -2431,6 +2431,7 @@ console.log("RACHAT : éléments HTML détectés", {
                         </div>
             
                         <div class="stock-product-actions">
+                            
                             <input
                                 type="number"
                                 min="1"
@@ -2440,8 +2441,9 @@ console.log("RACHAT : éléments HTML détectés", {
                                 ${item.quantity <= 0 ? 'disabled' : ''}
                                 aria-label="Quantité à racheter pour ${escapeHtml(item.name)}"
                                 data-rachat-quantity="${escapeHtml(item.id)}"
+                                class="rachat-quantity-input"
                             >
-            
+
                             <button
                                 type="button"
                                 class="primary-btn"
