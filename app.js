@@ -2100,8 +2100,7 @@ if (objetEditForm) {
         }
     });
 }
-})();
-    
+
     objetCards.addEventListener('click', async event => {
        
     const editButton = event.target.closest('[data-objet-edit]');
