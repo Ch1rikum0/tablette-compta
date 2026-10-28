@@ -3491,3 +3491,9 @@ article.panel.link-panel.tokyo-panel {
 .objet-list-panel {
     margin-bottom: 24px !important;
 }
+
+/* Espace intérieur autour des cadres */
+#page-objets .panel,
+.objet-list-panel {
+    box-sizing: border-box;
+}
