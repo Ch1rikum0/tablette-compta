@@ -2281,8 +2281,7 @@ if (objetEditForm) {
     if (!toggle || !content) return;
 
     function basculerObjets() {
-        const replie = content.classList.toggle('replie');
-
+    
         toggle.setAttribute('aria-expanded', String(!replie));
 
         const fleche = toggle.querySelector('.objet-form-arrow');
@@ -2291,9 +2290,7 @@ if (objetEditForm) {
         }
     }
 
-    content.classList.add('replie');
-
-    toggle.addEventListener('click', basculerObjets);
+   toggle.addEventListener('click', basculerObjets);
 
     toggle.addEventListener('keydown', function (event) {
         if (event.key === 'Enter' || event.key === ' ') {
