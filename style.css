@@ -3162,6 +3162,7 @@ article.panel.link-panel.tokyo-panel {
 .stock-product-details {
     gap: 4px !important;
     justify-content: flex-start !important;
+    margin-left: -10px !important;
 }
 
 .stock-product-details span {
