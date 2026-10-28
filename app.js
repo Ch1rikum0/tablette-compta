@@ -1818,6 +1818,12 @@ loadStock();
             }));
 
             renderObjets();
+    function renderObjets() {
+        console.log("Nombre d'objets à afficher :", objets.length);
+        console.log("Conteneur objetCards :", objetCards);
+
+    let totalQuantity = 0;
+                
         } catch (error) {
             console.error('Erreur de chargement des objets :', error);
             objetCards.innerHTML =
