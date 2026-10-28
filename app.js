@@ -757,34 +757,45 @@ function formatDebtAmount(value) {
 function saveDebts() {
     localStorage.setItem(DEBT_STORAGE_KEY, JSON.stringify(debts));
 
-    // Ne rien envoyer au serveur avant le chargement initial.
+    // Attendre que le chargement initial depuis le serveur soit terminé.
     if (!debtsLoadedFromServer) return;
 
     const sharedDebts = debts.map(debt => ({
         id: String(debt.id),
         joueur: debt.player,
         direction: debt.direction,
-        montant: debt.amount,
-        reste: debt.remaining,
-        motif: debt.reason,
+        montant: Number(debt.amount) || 0,
+        reste: Number(debt.remaining) || 0,
+        motif: debt.reason || '',
         remboursements: debt.repayments || [],
-        soldee: debt.remaining <= 0,
+        soldee: Number(debt.remaining) <= 0,
         cree_le: debt.createdAt || new Date().toISOString()
     }));
 
-    if (sharedDebts.length === 0) return;
+    // Ne pas envoyer une requête vide.
+    if (sharedDebts.length === 0) {
+        console.log('Aucune dette à synchroniser.');
+        return;
+    }
 
     supabaseClient
         .from('dettes')
         .upsert(sharedDebts, { onConflict: 'id' })
         .then(({ error }) => {
             if (error) {
-                console.error('Erreur de sauvegarde des dettes :', error);
+                console.error(
+                    'Erreur de sauvegarde des dettes :',
+                    error.message || error
+                );
+                return;
             }
+
+            console.log('Dettes sauvegardées sur Supabase.');
+        })
+        .catch(error => {
+            console.error('Erreur réseau lors de la sauvegarde des dettes :', error);
         });
 }
-
-
 
 function renderDebts() {
     if (!debtList) return;
