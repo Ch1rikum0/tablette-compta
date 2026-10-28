@@ -3218,3 +3218,40 @@ article.panel.link-panel.tokyo-panel {
     background: var(--panel);
     color: var(--text);
 }
+
+
+/* Résumé des objets */
+.stock-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.stock-stat-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    min-width: 0;
+    padding: 16px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+}
+
+.stock-stat-card span {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.stock-stat-card strong {
+    color: var(--text);
+    font-size: 22px;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+    .stock-stats {
+        grid-template-columns: 1fr;
+    }
+}
