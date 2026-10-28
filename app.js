@@ -1847,6 +1847,9 @@ loadStock();
             return;
         }
 
+        console.log("Nombre d'objets à afficher :", objets.length);
+        console.log("Conteneur objetCards :", objetCards);
+        
         objetCards.innerHTML = objets.map(item => {
             const imageHtml = item.image
                 ? `<img class="stock-product-image"
