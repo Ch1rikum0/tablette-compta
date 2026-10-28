@@ -1837,6 +1837,11 @@ function renderObjets() {
     
     objets.forEach(function (item) {
         totalQuantity += Number(item.quantity) || 0;
+
+    totalWeight +=
+        (Number(item.quantity) || 0) *
+        (Number(item.weight) || 0);
+        
         totalValue +=
             (Number(item.quantity) || 0) *
             (Number(item.unitPrice) || 0);
@@ -1845,6 +1850,15 @@ function renderObjets() {
     objetProductCount.textContent = objets.length;
     objetQuantityTotal.textContent =
         totalQuantity.toLocaleString('fr-FR');
+    const objetWeightTotal = document.getElementById('objetWeightTotal');
+
+    if (objetWeightTotal) {
+        objetWeightTotal.textContent =
+            totalWeight.toLocaleString('fr-FR', {
+                maximumFractionDigits: 2
+            }) + ' kg';
+    }
+    
     objetValueTotal.textContent = objetMoney(totalValue);
 
     const categories = [
