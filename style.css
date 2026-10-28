@@ -3147,25 +3147,14 @@ article.panel.link-panel.tokyo-panel {
 
 .stock-product-details {
     display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    flex-wrap: nowrap !important;
-    gap: 12px !important;
-}
-
-.stock-product-details span {
-    display: inline-block !important;
-    white-space: nowrap !important;
-    margin: 0 !important;
-}
-
-.stock-product-details {
+    flex-wrap: wrap !important;
     gap: 4px !important;
     justify-content: flex-start !important;
     margin-left: -10px !important;
 }
 
-.stock-product-details span {
-    margin: 0 !important;
-    padding: 4px 6px !important;
+.stock-product-details span:last-child {
+    flex-basis: 100% !important;
+    position: static !important;
+    margin-top: 0 !important;
 }
