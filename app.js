@@ -1829,116 +1829,165 @@ renderObjets();
     }
 }
 
-    function renderObjets() {
-        let totalQuantity = 0;
-        let totalValue = 0;
 
-        objets.forEach(item => {
-            totalQuantity += item.quantity;
-            totalValue += item.quantity * item.unitPrice;
-        });
+function renderObjets() {
+    let totalQuantity = 0;
+    let totalValue = 0;
 
-        objetProductCount.textContent = objets.length;
-        objetQuantityTotal.textContent =
-            totalQuantity.toLocaleString('fr-FR');
-        objetValueTotal.textContent = objetMoney(totalValue);
+    objets.forEach(function (item) {
+        totalQuantity += Number(item.quantity) || 0;
+        totalValue +=
+            (Number(item.quantity) || 0) *
+            (Number(item.unitPrice) || 0);
+    });
 
-        if (objets.length === 0) {
-            objetCards.innerHTML =
-                '<p class="muted">Aucun objet enregistré.</p>';
+    objetProductCount.textContent = objets.length;
+    objetQuantityTotal.textContent =
+        totalQuantity.toLocaleString('fr-FR');
+    objetValueTotal.textContent = objetMoney(totalValue);
+
+    const categories = [
+        {
+            nom: 'Objets Illégaux',
+            conteneur: document.getElementById('objetCards')
+        },
+        {
+            nom: 'Objets Légal',
+            conteneur: document.getElementById('objetLegalCards')
+        },
+        {
+            nom: 'Intérim',
+            conteneur: document.getElementById('interimCards')
+        },
+        {
+            nom: 'Autres',
+            conteneur: document.getElementById('autresCards')
+        }
+    ];
+
+    function normaliserCategorie(texte) {
+        return String(texte || '')
+            .trim()
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '');
+    }
+
+    function creerCarteObjet(item) {
+        const imageHtml = item.image
+            ? `<img class="stock-product-image"
+                    src="${escapeHtml(item.image)}"
+                    alt="${escapeHtml(item.name)}"
+                    onerror="this.style.display='none'">`
+            : '<div class="stock-product-placeholder">📦</div>';
+
+        return `
+            <article class="stock-product-card">
+                <div class="stock-product-visual">
+                    ${imageHtml}
+                </div>
+
+                <div class="stock-product-info">
+                    <div class="stock-product-heading">
+                        <h4>${escapeHtml(item.name)}</h4>
+                        <strong>${objetMoney(
+                            item.quantity * item.unitPrice
+                        )}</strong>
+                    </div>
+
+                    <span class="stock-product-category">
+                        ${escapeHtml(item.category)}
+                    </span>
+
+                    <div class="stock-product-details">
+                        <span>Quantité : ${item.quantity}</span>
+                        <span>Unitaire : ${objetMoney(item.unitPrice)}</span>
+                        <span>Poids : ${Number(item.weight) || 0} kg</span>
+                    </div>
+
+                    <div class="stock-product-actions">
+                        <input
+                            type="number"
+                            min="0"
+                            step="1"
+                            value="${item.quantity}"
+                            aria-label="Nouvelle quantité pour ${escapeHtml(item.name)}"
+                            data-objet-quantity="${escapeHtml(item.id)}"
+                        >
+
+                        <button
+                            type="button"
+                            class="primary-btn"
+                            data-objet-update="${escapeHtml(item.id)}"
+                        >
+                            Mettre à jour
+                        </button>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="secondary-btn objet-edit-btn"
+                        data-objet-edit="${escapeHtml(item.id)}"
+                    >
+                        Modifier les informations
+                    </button>
+
+                    <button
+                        type="button"
+                        class="secondary-btn stock-delete-btn"
+                        data-objet-delete="${escapeHtml(item.id)}"
+                    >
+                        Supprimer
+                    </button>
+                </div>
+            </article>
+        `;
+    }
+
+    categories.forEach(function (categorie) {
+        if (!categorie.conteneur) {
+            console.warn(
+                'Conteneur introuvable :',
+                categorie.nom
+            );
             return;
         }
 
-console.log("Objets à afficher :", objets.length);
-console.log("Conteneur HTML :", objetCards);
-        
-        objetCards.innerHTML = objets.map(item => {
-            const imageHtml = item.image
-                ? `<img class="stock-product-image"
-                        src="${escapeHtml(item.image)}"
-                        alt="${escapeHtml(item.name)}"
-                        onerror="this.style.display='none'">`
-                : '<div class="stock-product-placeholder">📦</div>';
+        const nomCategorie = normaliserCategorie(categorie.nom);
 
-            return `
-                <article class="stock-product-card">
-                    <div class="stock-product-visual">
-                        ${imageHtml}
-                    </div>
+        const objetsCategorie = objets.filter(function (item) {
+            const categorieObjet = normaliserCategorie(item.category);
 
-                    <div class="stock-product-info">
-                        <div class="stock-product-heading">
-                            <h4>${escapeHtml(item.name)}</h4>
-                            <strong>${objetMoney(item.quantity * item.unitPrice)}</strong>
-                        </div>
+            if (
+                categorieObjet !== 'objets illegaux' &&
+                categorieObjet !== 'objets illegal' &&
+                categorieObjet !== 'objets legal' &&
+                categorieObjet !== 'interim' &&
+                categorieObjet !== 'autres'
+            ) {
+                return nomCategorie === 'autres';
+            }
 
-                        <span class="stock-product-category">
-                            ${escapeHtml(item.category)}
-                        </span>
+            return categorieObjet === nomCategorie ||
+                (
+                    nomCategorie === 'objets illegaux' &&
+                    categorieObjet === 'objets illegal'
+                );
+        });
 
-                        <div class="stock-product-details">
-                            <span>Quantité : ${item.quantity}</span>
-                            <span>Unitaire : ${objetMoney(item.unitPrice)}</span>
-                            <span>Poids : ${item.weight} kg</span>
-                        </div>
+        if (objetsCategorie.length === 0) {
+            categorie.conteneur.innerHTML =
+                '<p class="muted">Aucun objet dans cette catégorie.</p>';
+            return;
+        }
 
-                        <div class="stock-product-actions">
-                            <input
-                                type="number"
-                                min="0"
-                                step="1"
-                                value="${item.quantity}"
-                                aria-label="Nouvelle quantité pour ${escapeHtml(item.name)}"
-                                data-objet-quantity="${escapeHtml(item.id)}"
-                            >
+        categorie.conteneur.innerHTML = objetsCategorie.map(
+            creerCarteObjet
+        ).join('');
+    });
 
-                            <button
-                                type="button"
-                                class="primary-btn"
-                                data-objet-update="${escapeHtml(item.id)}"
-                            >
-                                Mettre à jour
-                            </button>
-                        </div>
-
-                        <button
-                            type="button"
-                            class="secondary-btn objet-edit-btn"
-                            data-objet-edit="${escapeHtml(item.id)}"
-                        >
-                            Modifier les informations
-                        </button>
-
-                        <button
-                            type="button"
-                            class="secondary-btn stock-delete-btn"
-                            data-objet-delete="${escapeHtml(item.id)}"
-                        >
-                            Supprimer
-                        </button>
-
-                    </div>
-                </article>
-            `;
-        }).join('');
-        console.log("HTML généré :", objetCards.innerHTML);
-        console.log("Nombre de cartes HTML :", objetCards.querySelectorAll('.stock-product-card').length);
-        console.log("Hauteur du conteneur :", objetCards.getBoundingClientRect().height);
-        console.log("Largeur du conteneur :", objetCards.getBoundingClientRect().width);
-        console.log("Style du conteneur :", window.getComputedStyle(objetCards).display);
-        console.log("Visibilité du conteneur :", window.getComputedStyle(objetCards).visibility);
-        console.log("Hauteur du panneau parent :", objetCards.parentElement.getBoundingClientRect().height);
-
-        console.log(
-            "Nombre de cartes HTML :",
-            objetCards.querySelectorAll('.stock-product-card').length
-        );
-        
-        console.log(
-            "Conteneur visible :",
-            objetCards.getBoundingClientRect().height
-        );
-    }
+    console.log('Objets chargés :', objets.length);
+}
 
     async function saveObjet(item) {
         const row = {
