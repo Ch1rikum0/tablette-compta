@@ -1795,8 +1795,7 @@ loadStock();
     function objetMoney(value) {
         return `${Math.round(Number(value) || 0).toLocaleString('fr-FR')} $`;
     }
-
-   
+ 
 async function loadObjets() {
     try {
         const { data, error } = await supabaseClient
