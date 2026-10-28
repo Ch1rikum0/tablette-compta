@@ -2355,17 +2355,23 @@ console.log("RACHAT : éléments HTML détectés", {
             console.log("RACHAT : données reçues de Supabase", data);
             console.log("RACHAT : nombre d'objets reçus", (data || []).length);
             
-            const objetsRachat = (data || []).map(item => ({
+           const objetsRachat = (data || []).map(item => ({
                 id: String(item.id),
                 name: item.nom || '',
                 category: item.categorie || '',
                 image: item.image || '',
                 quantity: Number(item.quantite) || 0,
-                unitPrice: Number(item.prix_unitaire) || 0
+                unitPrice: Number(item.prix_unitaire) || 0,
+                weight: Number(item.poids) || 0
             }));
 
             const totalQuantity = objetsRachat.reduce(
                 (total, item) => total + item.quantity, 0
+            );
+
+            const totalWeight = objetsRachat.reduce(
+                (total, item) => total + (item.weight * item.quantity),
+                0
             );
 
             const totalValue = objetsRachat.reduce(
@@ -2373,8 +2379,10 @@ console.log("RACHAT : éléments HTML détectés", {
             );
 
             rachatProductCount.textContent = objetsRachat.length;
-            rachatQuantityTotal.textContent =
-                totalQuantity.toLocaleString('fr-FR');
+           rachatQuantityTotal.textContent =
+                totalWeight.toLocaleString('fr-FR', {
+                    maximumFractionDigits: 2
+                }) + ' kg';
             rachatValueTotal.textContent = prixRachat(totalValue);
 
             if (objetsRachat.length === 0) {
