@@ -1980,26 +1980,36 @@ function renderObjets() {
         }
 
         const nomCategorie = normaliserCategorie(categorie.nom);
+ 
+const objetsCategorie = objets.filter(function (item) {
+    const categorieObjet = normaliserCategorie(item.category);
 
-        const objetsCategorie = objets.filter(function (item) {
-            const categorieObjet = normaliserCategorie(item.category);
+    if (nomCategorie === 'objets illegaux') {
+        return categorieObjet === 'objets illegaux' ||
+               categorieObjet === 'objets illegal';
+    }
 
-            if (
-                categorieObjet !== 'objets illegaux' &&
-                categorieObjet !== 'objets illegal' &&
-                categorieObjet !== 'objets legal' &&
-                categorieObjet !== 'interim' &&
-                categorieObjet !== 'autres'
-            ) {
-                return nomCategorie === 'autres';
-            }
+    if (nomCategorie === 'objets legal') {
+        return categorieObjet === 'objets legal' ||
+               categorieObjet === 'objets legaux';
+    }
 
-            return categorieObjet === nomCategorie ||
-                (
-                    nomCategorie === 'objets illegaux' &&
-                    categorieObjet === 'objets illegal'
-                );
-        });
+    if (nomCategorie === 'interim') {
+        return categorieObjet === 'interim';
+    }
+
+    if (nomCategorie === 'autres') {
+        return ![
+            'objets illegaux',
+            'objets illegal',
+            'objets legal',
+            'objets legaux',
+            'interim'
+        ].includes(categorieObjet);
+    }
+
+    return false;
+});
 
         if (objetsCategorie.length === 0) {
             categorie.conteneur.innerHTML =
