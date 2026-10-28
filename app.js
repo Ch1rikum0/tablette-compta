@@ -1807,17 +1807,17 @@ async function loadObjets() {
 
         console.log("Objets reçus de Supabase :", data);
 
-        objets = (data || []).map(item => ({
-            id: item.id,
-            name: item.nom,
-            category: item.categorie || '',
-            image: item.image || '',
-            quantity: Number(item.quantite) || 0,
-            unitPrice: Number(item.prix_unitaire) || 0,
-            weight: Number(item.poids) || 0
-        }));
+      objets = (data || []).map(item => ({
+    id: String(item.id),
+    name: item.nom || '',
+    category: item.categorie || '',
+    image: item.image || '',
+    quantity: Number(item.quantite) || 0,
+    unitPrice: Number(item.prix_unitaire) || 0,
+    weight: Number(item.poids) || 0
+}));
 
-        renderObjets();
+renderObjets();
 
     } catch (error) {
         console.error('Erreur de chargement des objets :', error);
