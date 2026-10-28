@@ -2580,12 +2580,12 @@ async function modifierObjetRachat(id) {
             if (
                 !nom ||
                 !categorie ||
-                quantiteTexte.trim() === '' ||
-                !Number.isInteger(quantite) ||
-                quantite < 0 ||
                 poidsTexte.trim() === '' ||
                 !Number.isFinite(poids) ||
                 poids < 0 ||
+                prixTexte.trim() === '' ||
+                !Number.isFinite(prix) ||
+                prix < 0
             ) {
                 notify('Vérifie les informations saisies.', 'error');
                 return;
