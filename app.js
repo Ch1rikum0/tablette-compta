@@ -1584,16 +1584,6 @@ function renderStock() {
                             aria-label="Nouvelle quantité pour ${escapeHtml(item.name)}"
                             data-stock-quantity="${escapeHtml(item.id)}"
                         >
-                        
-                        <div class="rachat-edit-actions">
-                            <button
-                                type="button"
-                                class="rachat-edit-btn"
-                                data-rachat-edit="${item.id}"
-                            >
-                                Modifier les informations
-                            </button>
-                        </div>
 
                         <button
                             type="button"
