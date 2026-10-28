@@ -1803,8 +1803,10 @@ loadStock();
                 .select('*')
                 .order('nom', { ascending: true });
 
-            if (error) throw error;
+          if (error) throw error;
 
+            console.log("Objets reçus de Supabase :", data);
+            
             objets = (data || []).map(item => ({
                 id: item.id,
                 name: item.nom,
