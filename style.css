@@ -3182,3 +3182,20 @@ article.panel.link-panel.tokyo-panel {
     width: 100% !important;
     min-width: 0 !important;
 }
+
+/* Affichage des catégories d'objets */
+.objet-list-panel .objet-form-wrapper {
+    display: block;
+    margin-top: 18px;
+}
+
+.objet-list-panel .objet-form-wrapper.replie {
+    display: none !important;
+}
+
+.objet-category-toggle {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
