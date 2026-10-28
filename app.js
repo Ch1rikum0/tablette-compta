@@ -1991,6 +1991,117 @@ console.log("Conteneur HTML :", objetCards);
         }
     });
 
+/* Fenêtre de modification des objets */
+const objetEditModal = document.getElementById('objetEditModal');
+const objetEditForm = document.getElementById('objetEditForm');
+const objetEditClose = document.getElementById('objetEditClose');
+const objetEditCancel = document.getElementById('objetEditCancel');
+
+let objetEnModification = null;
+
+function ouvrirModificationObjet(item) {
+    if (!objetEditModal || !objetEditForm) {
+        alert("La fenêtre de modification est introuvable dans index.html.");
+        return;
+    }
+
+    objetEnModification = item;
+
+    const nom = document.getElementById('objetEditName');
+    const categorie = document.getElementById('objetEditCategory');
+    const image = document.getElementById('objetEditImage');
+    const quantite = document.getElementById('objetEditQuantity');
+    const prix = document.getElementById('objetEditPrice');
+    const poids = document.getElementById('objetEditWeight');
+
+    if (nom) nom.value = item.name || '';
+    if (categorie) categorie.value = item.category || '';
+    if (image) image.value = item.image || '';
+    if (quantite) quantite.value = item.quantity ?? 0;
+    if (prix) prix.value = item.unitPrice ?? 0;
+    if (poids) poids.value = item.weight ?? '';
+
+    objetEditModal.classList.add('objet-modal-open');
+    objetEditModal.setAttribute('aria-hidden', 'false');
+}
+
+function fermerModificationObjet() {
+    if (!objetEditModal) return;
+
+    objetEditModal.classList.remove('objet-modal-open');
+    objetEditModal.setAttribute('aria-hidden', 'true');
+    objetEnModification = null;
+}
+
+if (objetEditClose) {
+    objetEditClose.addEventListener('click', fermerModificationObjet);
+}
+
+if (objetEditCancel) {
+    objetEditCancel.addEventListener('click', fermerModificationObjet);
+}
+
+if (objetEditModal) {
+    objetEditModal.addEventListener('click', function(event) {
+        if (event.target === objetEditModal) {
+            fermerModificationObjet();
+        }
+    });
+}
+
+if (objetEditForm) {
+    objetEditForm.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        if (!objetEnModification) return;
+
+        const boutonEnregistrer = objetEditForm.querySelector(
+            'button[type="submit"]'
+        );
+
+        if (boutonEnregistrer) boutonEnregistrer.disabled = true;
+
+       const itemModifie = {
+    ...objetEnModification,
+    name: document.getElementById('objetEditName').value.trim(),
+    category: document.getElementById('objetEditCategory').value,
+    image: document.getElementById('objetEditImage').value.trim(),
+    quantity: Number(document.getElementById('objetEditQuantity').value),
+    unitPrice: Number(document.getElementById('objetEditPrice').value),
+    weight: Number(document.getElementById('objetEditWeight').value) || 0
+};
+        
+        try {
+            if (!itemModifie.name || itemModifie.quantity < 0 ||
+                itemModifie.unitPrice < 0 ||
+                !Number.isFinite(itemModifie.quantity) ||
+                !Number.isFinite(itemModifie.unitPrice)) {
+                alert("Vérifie le nom, la quantité et le prix.");
+                return;
+            }
+
+            await saveObjet(itemModifie);
+
+            const index = objets.findIndex(
+                obj => String(obj.id) === String(itemModifie.id)
+            );
+
+            if (index !== -1) {
+                objets[index] = itemModifie;
+            }
+
+            renderObjets();
+            fermerModificationObjet();
+        } catch (error) {
+            console.error("Erreur de modification de l'objet :", error);
+            alert("Impossible d'enregistrer les modifications dans Supabase.");
+        } finally {
+            if (boutonEnregistrer) boutonEnregistrer.disabled = false;
+        }
+    });
+}
+})();
+    
     objetCards.addEventListener('click', async event => {
        
     const editButton = event.target.closest('[data-objet-edit]');
@@ -2082,128 +2193,6 @@ console.log("Conteneur HTML :", objetCards);
      loadObjets();
 })();
     
-/* Fenêtre de modification des objets */
-const objetEditModal = document.getElementById('objetEditModal');
-const objetEditForm = document.getElementById('objetEditForm');
-const objetEditClose = document.getElementById('objetEditClose');
-const objetEditCancel = document.getElementById('objetEditCancel');
-
-let objetEnModification = null;
-
-function ouvrirModificationObjet(item) {
-    if (!objetEditModal || !objetEditForm) {
-        alert("La fenêtre de modification est introuvable dans index.html.");
-        return;
-    }
-
-    objetEnModification = item;
-
-    const nom = document.getElementById('objetEditName');
-    const categorie = document.getElementById('objetEditCategory');
-    const image = document.getElementById('objetEditImage');
-    const quantite = document.getElementById('objetEditQuantity');
-    const prix = document.getElementById('objetEditPrice');
-    const poids = document.getElementById('objetEditWeight');
-
-    if (nom) nom.value = item.name || '';
-    if (categorie) categorie.value = item.category || '';
-    if (image) image.value = item.image || '';
-    if (quantite) quantite.value = item.quantity ?? 0;
-    if (prix) prix.value = item.unitPrice ?? 0;
-    if (poids) poids.value = item.weight ?? '';
-
-    objetEditModal.classList.add('objet-modal-open');
-    objetEditModal.setAttribute('aria-hidden', 'false');
-}
-
-function fermerModificationObjet() {
-    if (!objetEditModal) return;
-
-    objetEditModal.classList.remove('objet-modal-open');
-    objetEditModal.setAttribute('aria-hidden', 'true');
-    objetEnModification = null;
-}
-
-objetCards.addEventListener('click', function(event) {
-    const bouton = event.target.closest('[data-objet-edit]');
-    if (!bouton) return;
-
-    const id = bouton.getAttribute('data-objet-edit');
-    const item = objets.find(obj => String(obj.id) === String(id));
-
-    if (item) ouvrirModificationObjet(item);
-});
-
-if (objetEditClose) {
-    objetEditClose.addEventListener('click', fermerModificationObjet);
-}
-
-if (objetEditCancel) {
-    objetEditCancel.addEventListener('click', fermerModificationObjet);
-}
-
-if (objetEditModal) {
-    objetEditModal.addEventListener('click', function(event) {
-        if (event.target === objetEditModal) {
-            fermerModificationObjet();
-        }
-    });
-}
-
-if (objetEditForm) {
-    objetEditForm.addEventListener('submit', async function(event) {
-        event.preventDefault();
-
-        if (!objetEnModification) return;
-
-        const boutonEnregistrer = objetEditForm.querySelector(
-            'button[type="submit"]'
-        );
-
-        if (boutonEnregistrer) boutonEnregistrer.disabled = true;
-
-       const itemModifie = {
-    ...objetEnModification,
-    name: document.getElementById('objetEditName').value.trim(),
-    category: document.getElementById('objetEditCategory').value,
-    image: document.getElementById('objetEditImage').value.trim(),
-    quantity: Number(document.getElementById('objetEditQuantity').value),
-    unitPrice: Number(document.getElementById('objetEditPrice').value),
-    weight: Number(document.getElementById('objetEditWeight').value) || 0
-};
-        
-        try {
-            if (!itemModifie.name || itemModifie.quantity < 0 ||
-                itemModifie.unitPrice < 0 ||
-                !Number.isFinite(itemModifie.quantity) ||
-                !Number.isFinite(itemModifie.unitPrice)) {
-                alert("Vérifie le nom, la quantité et le prix.");
-                return;
-            }
-
-            await saveObjet(itemModifie);
-
-            const index = objets.findIndex(
-                obj => String(obj.id) === String(itemModifie.id)
-            );
-
-            if (index !== -1) {
-                objets[index] = itemModifie;
-            }
-
-            renderObjets();
-            fermerModificationObjet();
-        } catch (error) {
-            console.error("Erreur de modification de l'objet :", error);
-            alert("Impossible d'enregistrer les modifications dans Supabase.");
-        } finally {
-            if (boutonEnregistrer) boutonEnregistrer.disabled = false;
-        }
-    });
-}
-})();
-
-
 /* Navigation des sous-onglets Objets */
 (() => {
     const objetTabs = document.querySelectorAll('[data-objet-tab]');
