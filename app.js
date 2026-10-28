@@ -2322,7 +2322,186 @@ if (objetEditForm) {
 
 loadObjets();
 })();
-    
+
+
+/* =================================
+   CARTES DU RACHAT
+================================= */
+(() => {
+    const rachatCards = document.getElementById('rachatCards');
+    const rachatProductCount = document.getElementById('rachatProductCount');
+    const rachatQuantityTotal = document.getElementById('rachatQuantityTotal');
+    const rachatValueTotal = document.getElementById('rachatValueTotal');
+
+    if (
+        !rachatCards ||
+        !rachatProductCount ||
+        !rachatQuantityTotal ||
+        !rachatValueTotal
+    ) return;
+
+    function prixRachat(value) {
+        return `${Math.round(Number(value) || 0).toLocaleString('fr-FR')} $`;
+    }
+
+    async function afficherObjetsRachat() {
+        rachatCards.innerHTML =
+            '<p class="muted">Chargement des objets...</p>';
+
+        try {
+            const { data, error } = await supabaseClient
+                .from('objets')
+                .select('*')
+                .order('nom', { ascending: true });
+
+            if (error) throw error;
+
+            const objetsRachat = (data || []).map(item => ({
+                id: String(item.id),
+                name: item.nom || '',
+                category: item.categorie || '',
+                image: item.image || '',
+                quantity: Number(item.quantite) || 0,
+                unitPrice: Number(item.prix_unitaire) || 0
+            }));
+
+            const totalQuantity = objetsRachat.reduce(
+                (total, item) => total + item.quantity, 0
+            );
+
+            const totalValue = objetsRachat.reduce(
+                (total, item) => total + item.quantity * item.unitPrice, 0
+            );
+
+            rachatProductCount.textContent = objetsRachat.length;
+            rachatQuantityTotal.textContent =
+                totalQuantity.toLocaleString('fr-FR');
+            rachatValueTotal.textContent = prixRachat(totalValue);
+
+            if (objetsRachat.length === 0) {
+                rachatCards.innerHTML =
+                    '<p class="muted">Aucun objet disponible.</p>';
+                return;
+            }
+
+            rachatCards.innerHTML = objetsRachat.map(item => {
+                const imageHtml = item.image
+                    ? `<img class="stock-product-image"
+                            src="${escapeHtml(item.image)}"
+                            alt="${escapeHtml(item.name)}"
+                            onerror="this.style.display='none'">`
+                    : '<div class="stock-product-placeholder">📦</div>';
+
+                return `
+                    <article class="stock-product-card">
+                        <div class="stock-product-visual">
+                            ${imageHtml}
+                        </div>
+
+                        <div class="stock-product-info">
+                            <div class="stock-product-heading">
+                                <h4>${escapeHtml(item.name)}</h4>
+                                <strong>${prixRachat(item.unitPrice)}</strong>
+                            </div>
+
+                            <span class="stock-product-category">
+                                ${escapeHtml(item.category)}
+                            </span>
+
+                            <div class="stock-product-details">
+                                <span>Disponible : ${item.quantity}</span>
+                                <span>Prix de rachat : ${prixRachat(item.unitPrice)}</span>
+                            </div>
+
+                            <div class="stock-product-actions">
+                                <input
+                                    type="number"
+                                    min="1"
+                                    max="${item.quantity}"
+                                    step="1"
+                                    value="1"
+                                    ${item.quantity <= 0 ? 'disabled' : ''}
+                                    aria-label="Quantité à racheter pour ${escapeHtml(item.name)}"
+                                    data-rachat-quantity="${escapeHtml(item.id)}"
+                                >
+
+                                <button
+                                    type="button"
+                                    class="primary-btn"
+                                    data-rachat-select="${escapeHtml(item.id)}"
+                                    ${item.quantity <= 0 ? 'disabled' : ''}
+                                >
+                                    Sélectionner
+                                </button>
+                            </div>
+
+                            <p class="muted" data-rachat-total="${escapeHtml(item.id)}">
+                                Total : ${prixRachat(item.unitPrice)}
+                            </p>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+
+        } catch (error) {
+            console.error('Erreur de chargement du rachat :', error);
+            rachatCards.innerHTML =
+                '<p class="muted">Impossible de charger les objets.</p>';
+            notify('Impossible de charger les objets du rachat.', 'error');
+        }
+    }
+
+    rachatCards.addEventListener('input', event => {
+        const input = event.target.closest('[data-rachat-quantity]');
+        if (!input) return;
+
+        const id = input.getAttribute('data-rachat-quantity');
+        const carte = input.closest('.stock-product-info');
+        const prixTexte = carte.querySelector(
+            '.stock-product-heading strong'
+        ).textContent;
+
+        const prix = Number(
+            prixTexte.replace(/\s/g, '').replace('$', '').replace(',', '.')
+        ) || 0;
+
+        const quantite = Math.max(0, Number(input.value) || 0);
+        const total = carte.querySelector('[data-rachat-total]');
+
+        total.textContent = 'Total : ' + prixRachat(prix * quantite);
+    });
+
+    rachatCards.addEventListener('click', event => {
+        const button = event.target.closest('[data-rachat-select]');
+        if (!button) return;
+
+        const id = button.getAttribute('data-rachat-select');
+        const input = rachatCards.querySelector(
+            '[data-rachat-quantity="' + id + '"]'
+        );
+
+        const quantite = Number(input.value);
+        const maximum = Number(input.max);
+
+        if (
+            !Number.isInteger(quantite) ||
+            quantite < 1 ||
+            quantite > maximum
+        ) {
+            notify('Choisis une quantité disponible et valide.', 'error');
+            return;
+        }
+
+        notify(
+            'Objet sélectionné. Le paiement et la mise à jour du stock restent à connecter.',
+            'info'
+        );
+    });
+
+    afficherObjetsRachat();
+})();
+
+
 /* Navigation des sous-onglets Objets */
 (() => {
     const objetTabs = document.querySelectorAll('[data-objet-tab]');
