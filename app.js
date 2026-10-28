@@ -1848,6 +1848,9 @@ async function loadObjets() {
                 '<p class="muted">Aucun objet enregistré.</p>';
             return;
         }
+
+console.log("Objets à afficher :", objets.length);
+console.log("Conteneur HTML :", objetCards);
         
         objetCards.innerHTML = objets.map(item => {
             const imageHtml = item.image
