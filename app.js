@@ -1767,11 +1767,11 @@ try {
     if (typeof notify === 'function') {
         notify('Produit supprimé du stock.', 'success');
     }
+    renderStock();
 });
-   
+
 loadStock();
 })();
-
 
 /* =================================
    GESTION DES OBJETS
