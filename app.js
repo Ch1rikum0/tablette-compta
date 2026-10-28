@@ -1596,14 +1596,6 @@ function renderStock() {
 
                     <button
                         type="button"
-                        class="secondary-btn objet-edit-btn"
-                        data-objet-edit="${escapeHtml(item.id)}"
-                    >
-                        Modifier les informations
-                    </button>
-
-                    <button
-                        type="button"
                         class="secondary-btn stock-delete-btn"
                         data-stock-delete="${escapeHtml(item.id)}"
                     >
