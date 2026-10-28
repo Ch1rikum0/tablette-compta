@@ -465,16 +465,43 @@
     </div>
 </div>
 
-    <!-- ONGLET RACHAT -->
-    <div class="objet-tab-content" id="objet-content-rachat">
-        <article class="panel">
-            <h3>Rachat d'objets</h3>
-            <p class="muted">
-                Gestion des objets rachetés aux joueurs.
-            </p>
-            <p>La fonctionnalité de rachat sera ajoutée dans la prochaine étape.</p>
-        </article>
-    </div>
+   
+<!-- ONGLET RACHAT -->
+<div class="objet-tab-content" id="objet-content-rachat">
+
+    <article class="panel">
+        <h3>Résumé des objets</h3>
+
+        <div class="stock-stats">
+            <div class="stock-stat-card">
+                <span>Nombre d'objets</span>
+                <strong id="rachatProductCount">0</strong>
+            </div>
+
+            <div class="stock-stat-card">
+                <span>Quantité totale</span>
+                <strong id="rachatQuantityTotal">0</strong>
+            </div>
+
+            <div class="stock-stat-card">
+                <span>Valeur totale</span>
+                <strong id="rachatValueTotal">0 $</strong>
+            </div>
+        </div>
+    </article>
+
+    <article class="panel">
+        <h3>Objets disponibles au rachat</h3>
+        <p class="muted">
+            Retrouvez ici les objets enregistrés dans votre stock.
+        </p>
+
+        <div id="rachatCards" class="stock-cards">
+            <p class="muted">Chargement des objets...</p>
+        </div>
+    </article>
+
+</div>
 
     <!-- ONGLET VENTE -->
     <div class="objet-tab-content" id="objet-content-vente">
