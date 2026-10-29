@@ -2640,9 +2640,6 @@ if (!updatedRows || updatedRows.length === 0) {
     }
 }
 
-    
-   
-
 rachatCards.addEventListener('click', async event => {
     // Bouton Modifier les informations
     const editButton = event.target.closest('[data-rachat-edit]');
@@ -2666,10 +2663,13 @@ rachatCards.addEventListener('click', async event => {
 
     const quantite = Number(input.value);
 
-   // Vérifier la quantité disponible dans Supabase
-button.disabled = true;
+    if (!Number.isInteger(quantite) || quantite < 1) {
+        notify('Saisis une quantité entière supérieure à zéro.', 'error');
+        return;
+    }
 
-(async () => {
+    button.disabled = true;
+
     try {
         const { data: objet, error: erreurLecture } = await supabaseClient
             .from('objets_rachat')
@@ -2682,35 +2682,23 @@ button.disabled = true;
         const disponible = Number(objet.quantite) || 0;
 
         if (quantite > disponible) {
-            notify(
-                'Quantité insuffisante. Disponible : ' + disponible,
-                'error'
-            );
+            notify('Quantité insuffisante. Disponible : ' + disponible, 'error');
             return;
         }
 
-        // Ajouter l'objet à la liste des rachats à valider
         const cleListe = 'silent-ghost-rachat-a-valider-v1';
         let liste = [];
 
         try {
             liste = JSON.parse(localStorage.getItem(cleListe)) || [];
+            if (!Array.isArray(liste)) liste = [];
         } catch (e) {
             liste = [];
         }
 
         const prixUnitaire = Number(objet.prix_unitaire) || 0;
 
-        liste.push({
-            id: String(objet.id),
-            nom: objet.nom,
-            quantite: quantite,
-            prixUnitaire: prixUnitaire,
-            total: quantite * prixUnitaire,
-            date: new Date().toISOString()
-        });
-
-        // Déduire la quantité disponible dans Rachat
+        // Déduire la quantité dans la table Rachat uniquement
         const { data: maj, error: erreurMaj } = await supabaseClient
             .from('objets_rachat')
             .update({ quantite: disponible - quantite })
@@ -2720,31 +2708,36 @@ button.disabled = true;
 
         if (erreurMaj) throw erreurMaj;
 
-        // Vérifier que la quantité a bien été mise à jour
         if (!maj || maj.length === 0) {
-            notify(
-                'La quantité a changé. Réessaie la sélection.',
-                'error'
-            );
+            notify('La quantité a changé. Réessaie la sélection.', 'error');
             return;
         }
 
+        // Enregistrer la ligne dans la liste à valider
+        liste.push({
+            id: String(objet.id),
+            nom: objet.nom,
+            quantite: quantite,
+            prixUnitaire: prixUnitaire,
+            total: quantite * prixUnitaire,
+            date: new Date().toISOString()
+        });
+
         localStorage.setItem(cleListe, JSON.stringify(liste));
+
+        input.value = '1';
+
+        await afficherObjetsRachat();
 
         notify('Objet ajouté à la liste des rachats à valider.', 'success');
 
-        // Recharger les cartes et les quantités de Rachat
-        afficherObjetsRachat();
-
-            } catch (erreur) {
-            console.error('Erreur lors de la sélection du rachat :', erreur);
-            notify('Impossible de sélectionner cet objet.', 'error');
-        } finally {
-            button.disabled = false;
-        }
-    })();
+    } catch (erreur) {
+        console.error('Erreur lors de la sélection du rachat :', erreur);
+        notify('Impossible de sélectionner cet objet.', 'error');
+    } finally {
+        button.disabled = false;
+    }
 });
-
 
 /* Navigation des sous-onglets Objets */
 (() => {
