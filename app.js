@@ -2652,7 +2652,24 @@ document.addEventListener('click', async event => {
     const editButton = cible.closest('[data-rachat-edit]');
     const button = cible.closest('[data-rachat-select]');
 
-    console.log('RACHAT : clic dans la zone des objets', cible);
+document.addEventListener('click', function (event) {
+    const cible = event.target;
+
+    console.log('RACHAT TEST — élément cliqué :', cible);
+
+    const bouton = cible.closest(
+        '#page-rachat #rachatCards [data-rachat-select]'
+    );
+
+    console.log('RACHAT TEST — bouton Sélectionner trouvé :', bouton);
+
+    if (bouton) {
+        console.log(
+            'RACHAT TEST — identifiant :',
+            bouton.getAttribute('data-rachat-select')
+        );
+    }
+}, true);
 
     if (editButton) {
         await modifierObjetRachat(
