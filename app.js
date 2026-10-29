@@ -2369,7 +2369,7 @@ const totalQuantity = objetsRachat.reduce(
 );
 
 const totalWeight = objetsRachat.reduce(
-    (total, item) => total + (item.weight * item.quantity),
+    (total, item) => total + item.weight,
     0
 );
 
