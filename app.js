@@ -2645,26 +2645,14 @@ document.addEventListener('click', async event => {
 
     if (!cible || typeof cible.closest !== 'function') return;
 
-    const button = cible.closest('#rachatCards [data-rachat-select]');
-    const editButton = cible.closest('#rachatCards [data-rachat-edit]');
+    // Ne traiter que les clics dans la zone Rachat
+    const zoneRachat = document.getElementById('rachatCards');
+    if (!zoneRachat || !zoneRachat.contains(cible)) return;
 
-    console.log('RACHAT : clic global détecté', cible);
-    console.log('RACHAT : bouton trouvé', !!button);
-    console.log(
-    'RACHAT : nombre de boutons Sélectionner',
-    document.querySelectorAll('#rachatCards [data-rachat-select]').length
-);
+    const editButton = cible.closest('[data-rachat-edit]');
+    const button = cible.closest('[data-rachat-select]');
 
-console.log(
-    'RACHAT : cible du clic',
-    event.target.outerHTML
-);
-    console.log(
-        'RACHAT : boutons présents dans le DOM',
-        document.querySelectorAll('#rachatCards [data-rachat-select]').length
-    );
-    
-    if (!button && !editButton) return;
+    console.log('RACHAT : clic dans la zone des objets', cible);
 
     if (editButton) {
         await modifierObjetRachat(
@@ -2673,7 +2661,15 @@ console.log(
         return;
     }
 
-    console.log('RACHAT : démarrage de la sélection');
+    if (!button) {
+        console.log('RACHAT : clic détecté, mais pas sur Sélectionner');
+        return;
+    }
+
+    console.log(
+        'RACHAT : bouton Sélectionner détecté',
+        button.getAttribute('data-rachat-select')
+    );
 
     // Bouton Sélectionner
     
@@ -2776,17 +2772,6 @@ console.log(
 
 // Charger les objets au démarrage
 afficherObjetsRachat();
-
-rachatCards.addEventListener('click', function (event) {
-    const bouton = event.target.closest('[data-rachat-select]');
-
-    if (!bouton) return;
-
-    console.log(
-        'RACHAT : clic direct sur Sélectionner',
-        bouton.getAttribute('data-rachat-select')
-    );
-});
     
 // Fermer la section CARTES DU RACHAT
 })();
