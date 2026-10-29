@@ -2640,11 +2640,27 @@ if (!updatedRows || updatedRows.length === 0) {
     }
 }
 
-rachatCards.addEventListener('click', async event => {
-    console.log('RACHAT : clic détecté', event.target);
-    
-    // Bouton Modifier les informations
-    const editButton = event.target.closest('[data-rachat-edit]');
+document.addEventListener('click', async event => {
+    const cible = event.target;
+
+    if (!cible || typeof cible.closest !== 'function') return;
+
+    // Ne traiter que les clics dans la section Rachat
+    const button = cible.closest('#rachatCards [data-rachat-select]');
+    const editButton = cible.closest('#rachatCards [data-rachat-edit]');
+
+    if (!button && !editButton) return;
+
+    if (editButton) {
+        await modifierObjetRachat(
+            editButton.getAttribute('data-rachat-edit')
+        );
+        return;
+    }
+
+    console.log('RACHAT : bouton Sélectionner détecté');
+
+    // Continuer ici avec le traitement de sélection existant
 
     if (editButton) {
         const id = editButton.getAttribute('data-rachat-edit');
