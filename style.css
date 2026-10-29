@@ -3868,3 +3868,31 @@ article.panel.link-panel.tokyo-panel {
 #page-drogue .rachat-edit-actions {
     display: none !important;
 }
+
+
+/* =========================================
+   CORRECTION DES CLICS — RACHAT UNIQUEMENT
+========================================= */
+
+#page-rachat #rachatCards {
+    position: relative;
+    isolation: isolate;
+}
+
+#page-rachat .rachat-product-card {
+    position: relative;
+}
+
+#page-rachat .rachat-product-card .stock-product-actions,
+#page-rachat .rachat-product-card .stock-product-actions input,
+#page-rachat .rachat-product-card .stock-product-actions button,
+#page-rachat .rachat-product-card [data-rachat-select],
+#page-rachat .rachat-product-card [data-rachat-edit] {
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
+}
+
+#page-rachat .rachat-product-card .stock-product-actions button {
+    cursor: pointer;
+}
