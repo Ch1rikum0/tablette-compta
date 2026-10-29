@@ -2777,6 +2777,17 @@ console.log(
 // Charger les objets au démarrage
 afficherObjetsRachat();
 
+rachatCards.addEventListener('click', function (event) {
+    const bouton = event.target.closest('[data-rachat-select]');
+
+    if (!bouton) return;
+
+    console.log(
+        'RACHAT : clic direct sur Sélectionner',
+        bouton.getAttribute('data-rachat-select')
+    );
+});
+    
 // Fermer la section CARTES DU RACHAT
 })();
 
