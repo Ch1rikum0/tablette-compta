@@ -2731,10 +2731,10 @@ rachatCards.addEventListener('click', async event => {
 
         notify('Objet ajouté à la liste des rachats à valider.', 'success');
 
-    } catch (erreur) {
+           } catch (erreur) {
         console.error('Erreur lors de la sélection du rachat :', erreur);
         notify('Impossible de sélectionner cet objet.', 'error');
-       } finally {
+    } finally {
         button.disabled = false;
     }
 });
