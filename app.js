@@ -2736,13 +2736,14 @@ button.disabled = true;
         // Recharger les cartes et les quantités de Rachat
         afficherObjetsRachat();
 
-    } catch (erreur) {
-        console.error('Erreur lors de la sélection du rachat :', erreur);
-        notify('Impossible de sélectionner cet objet.', 'error');
-    } finally {
-        button.disabled = false;
-    }
-})();
+            } catch (erreur) {
+            console.error('Erreur lors de la sélection du rachat :', erreur);
+            notify('Impossible de sélectionner cet objet.', 'error');
+        } finally {
+            button.disabled = false;
+        }
+    })();
+});
 
 
 /* Navigation des sous-onglets Objets */
