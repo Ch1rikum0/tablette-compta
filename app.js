@@ -2364,26 +2364,33 @@ console.log("RACHAT : éléments HTML détectés", {
                 unitPrice: Number(item.prix_unitaire) || 0,
                 weight: Number(item.poids) || 0
             }));
+const totalQuantity = objetsRachat.reduce(
+    (total, item) => total + item.quantity, 0
+);
 
-            const totalQuantity = objetsRachat.reduce(
-                (total, item) => total + item.quantity, 0
-            );
+const totalWeight = objetsRachat.reduce(
+    (total, item) => total + (item.weight * item.quantity),
+    0
+);
 
-            const totalWeight = objetsRachat.reduce(
-                (total, item) => total + (item.weight * item.quantity),
-                0
-            );
+const totalValue = objetsRachat.reduce(
+    (total, item) => total + (item.quantity * item.unitPrice), 0
+);
 
-            const totalValue = objetsRachat.reduce(
-                (total, item) => total + item.quantity * item.unitPrice, 0
-            );
+if (rachatProductCount) {
+    rachatProductCount.textContent = objetsRachat.length;
+}
 
-          rachatProductCount.textContent = objetsRachat.length;
+if (rachatQuantityTotal) {
+    rachatQuantityTotal.textContent =
+        totalWeight.toLocaleString('fr-FR', {
+            maximumFractionDigits: 2
+        }) + ' kg';
+}
 
-            rachatQuantityTotal.textContent =
-                totalQuantity.toLocaleString('fr-FR');
-            
-            rachatValueTotal.textContent = prixRachat(totalValue);
+if (rachatValueTotal) {
+    rachatValueTotal.textContent = prixRachat(totalValue);
+}
 
             if (objetsRachat.length === 0) {
                 rachatCards.innerHTML =
