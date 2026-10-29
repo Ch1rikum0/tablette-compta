@@ -2596,7 +2596,7 @@ async function modifierObjetRachat(id) {
             saveButton.textContent = 'Enregistrement...';
 
             try {
-                const { error: updateError } = await supabaseClient
+                const { data: updatedRows, error: updateError } = await supabaseClient
                     .from('objets_rachat')
                     .update({
                         nom: nom,
@@ -2605,9 +2605,16 @@ async function modifierObjetRachat(id) {
                         poids: poids,
                         prix_unitaire: prix
                     })
-                    .eq('id', id);
+                    .eq('id', id)
+                    .select('id');
 
-                if (updateError) throw updateError;
+if (updateError) throw updateError;
+
+if (!updatedRows || updatedRows.length === 0) {
+    throw new Error(
+        "Aucun objet modifié. Vérifie l'identifiant et les permissions Supabase."
+    );
+}
 
                 modal.remove();
                 await afficherObjetsRachat();
