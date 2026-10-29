@@ -2641,6 +2641,8 @@ if (!updatedRows || updatedRows.length === 0) {
 }
 
 rachatCards.addEventListener('click', async event => {
+    console.log('RACHAT : clic détecté', event.target);
+    
     // Bouton Modifier les informations
     const editButton = event.target.closest('[data-rachat-edit]');
 
