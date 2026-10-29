@@ -2673,6 +2673,9 @@ document.addEventListener('click', async event => {
     console.log('RACHAT : identifiant sélectionné', button.getAttribute('data-rachat-select'));
 
     const id = button.getAttribute('data-rachat-select');
+    console.log('RACHAT : bouton déclenché, ID =', id);
+    console.log('RACHAT : client Supabase disponible =', !!supabaseClient);
+    
     const input = rachatCards.querySelector(
         '[data-rachat-quantity="' + id + '"]'
     );
@@ -2689,6 +2692,7 @@ document.addEventListener('click', async event => {
     button.disabled = true;
 
     try {
+        console.log('RACHAT : début de la lecture Supabase');
         const { data: objet, error: erreurLecture } = await supabaseClient
             .from('objets_rachat')
             .select('id, nom, quantite, prix_unitaire')
@@ -2696,6 +2700,7 @@ document.addEventListener('click', async event => {
             .single();
 
         if (erreurLecture) throw erreurLecture;
+        console.log('RACHAT : réponse Supabase =', objet);
 
         const disponible = Number(objet.quantite) || 0;
 
@@ -2715,6 +2720,11 @@ document.addEventListener('click', async event => {
         }
 
         const prixUnitaire = Number(objet.prix_unitaire) || 0;
+        console.log('RACHAT : tentative de mise à jour', {
+            id: id,
+            ancienneQuantite: disponible,
+            nouvelleQuantite: disponible - quantite
+        });
 
         // Déduire la quantité dans la table Rachat uniquement
         const { data: maj, error: erreurMaj } = await supabaseClient
