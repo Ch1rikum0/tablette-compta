@@ -2734,10 +2734,16 @@ rachatCards.addEventListener('click', async event => {
     } catch (erreur) {
         console.error('Erreur lors de la sélection du rachat :', erreur);
         notify('Impossible de sélectionner cet objet.', 'error');
-    } finally {
+       } finally {
         button.disabled = false;
     }
 });
+
+// Charger les objets au démarrage
+afficherObjetsRachat();
+
+// Fermer la section CARTES DU RACHAT
+})();
 
 /* Navigation des sous-onglets Objets */
 (() => {
