@@ -2643,27 +2643,24 @@ if (!updatedRows || updatedRows.length === 0) {
 document.addEventListener('click', async event => {
     const cible = event.target;
 
-if (!cible || typeof cible.closest !== 'function') return;
+    if (!cible || typeof cible.closest !== 'function') return;
 
-const button = cible.closest('#rachatCards [data-rachat-select]');
-const editButton = cible.closest('#rachatCards [data-rachat-edit]');
+    const button = cible.closest('#rachatCards [data-rachat-select]');
+    const editButton = cible.closest('#rachatCards [data-rachat-edit]');
 
-if (!button && !editButton) return;
+    console.log('RACHAT : clic global détecté', cible);
+    console.log('RACHAT : bouton trouvé', !!button);
 
-console.log('RACHAT : clic reconnu', {
-    boutonSelection: !!button,
-    boutonModification: !!editButton
-});
-
-    console.log('RACHAT : bouton Sélectionner détecté');
-
-    // Continuer ici avec le traitement de sélection existant
+    if (!button && !editButton) return;
 
     if (editButton) {
-        const id = editButton.getAttribute('data-rachat-edit');
-        await modifierObjetRachat(id);
+        await modifierObjetRachat(
+            editButton.getAttribute('data-rachat-edit')
+        );
         return;
     }
+
+    console.log('RACHAT : démarrage de la sélection');
 
     // Bouton Sélectionner
     
