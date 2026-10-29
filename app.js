@@ -2654,7 +2654,12 @@ rachatCards.addEventListener('click', async event => {
 
     // Bouton Sélectionner
     const button = event.target.closest('[data-rachat-select]');
+
+    console.log('RACHAT : bouton Sélectionner trouvé ?', !!button);
+    
     if (!button) return;
+    
+    console.log('RACHAT : identifiant sélectionné', button.getAttribute('data-rachat-select'));
 
     const id = button.getAttribute('data-rachat-select');
     const input = rachatCards.querySelector(
