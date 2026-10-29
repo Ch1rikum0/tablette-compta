@@ -2651,6 +2651,15 @@ document.addEventListener('click', async event => {
     console.log('RACHAT : clic global détecté', cible);
     console.log('RACHAT : bouton trouvé', !!button);
     console.log(
+    'RACHAT : nombre de boutons Sélectionner',
+    document.querySelectorAll('#rachatCards [data-rachat-select]').length
+);
+
+console.log(
+    'RACHAT : cible du clic',
+    event.target.outerHTML
+);
+    console.log(
         'RACHAT : boutons présents dans le DOM',
         document.querySelectorAll('#rachatCards [data-rachat-select]').length
     );
