@@ -2628,6 +2628,16 @@ async function modifierObjetRachat(id) {
             return;
         }
 
+// Réinitialisation du calcul
+document.getElementById('rachatResetBtn').addEventListener('click', () => {
+    panierRachat = [];
+
+    sauvegarderPanierRachat();
+    afficherPanierRachat();
+
+    notify('Calcul réinitialisé.', 'success');
+});
+
 // Gestion des clics dans le catalogue Rachat
 document.addEventListener('click', async event => {
     const cible = event.target;
@@ -2640,52 +2650,6 @@ document.addEventListener('click', async event => {
 
     const editButton = cible.closest('[data-rachat-edit]');
     const button = cible.closest('[data-rachat-select]');
-
-    if (editButton) {
-        await modifierObjetRachat(
-            editButton.getAttribute('data-rachat-edit')
-        );
-        return;
-    }
-
-    if (!button) return;
-
-    const id = button.getAttribute('data-rachat-select');
-
-    const input = rachatCards.querySelector(
-        '[data-rachat-quantity="' + id + '"]'
-    );
-
-    if (!input) return;
-
-    const quantite = Number(input.value);
-
-    if (!Number.isInteger(quantite) || quantite < 1) {
-        notify('Saisis une quantité entière supérieure à zéro.', 'error');
-        return;
-    }
-
-    const objet = objetsRachat.find(
-        item => String(item.id) === String(id)
-    );
-
-    if (!objet) {
-        notify('Objet introuvable dans le catalogue.', 'error');
-        return;
-    }
-
-    ajouterAuPanierRachat({
-        id: objet.id,
-        name: objet.name,
-        unitPrice: objet.unitPrice,
-        quantity: quantite,
-        source: 'catalogue'
-    });
-
-    input.value = '1';
-
-    notify('Objet ajouté au calcul.', 'success');
-});
 
 // Modification des prix et quantités du panier
 document.addEventListener('change', event => {
@@ -2768,16 +2732,6 @@ document.getElementById('rachatManualForm').addEventListener('submit', event => 
     document.getElementById('rachatManualQuantity').value = '1';
 
     notify('Objet manuel ajouté au calcul.', 'success');
-});
-
-// Réinitialisation du calcul
-document.getElementById('rachatResetBtn').addEventListener('click', () => {
-    panierRachat = [];
-
-    sauvegarderPanierRachat();
-    afficherPanierRachat();
-
-    notify('Calcul réinitialisé.', 'success');
 });
 
         // Créer une seule fenêtre avec tous les champs
