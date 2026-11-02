@@ -2943,7 +2943,6 @@ if (rachatBasket) {
             sauvegarderPanierRachat();
             afficherPanierRachat();
         });
-    }
 
     /* Réinitialisation du calcul */
 
