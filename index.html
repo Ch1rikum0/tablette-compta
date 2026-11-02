@@ -251,10 +251,6 @@
 </section>
 </div>
 
-
-
-       
-
 <!-- PAGE OBJETS -->
 <section class="page" id="page-rachat">
 
@@ -470,41 +466,7 @@
 <!-- ONGLET RACHAT -->
 <div class="objet-tab-content" id="objet-content-rachat">
 
-    <article class="panel">
-        <h3>Calculateur de rachat</h3>
-        <p class="muted">
-            Prépare un calcul de rachat sans modifier le stock ni la comptabilité.
-        </p>
-
-        <div class="stock-stats">
-            <div class="stock-stat-card">
-                <span>Nombre de lignes</span>
-                <strong id="rachatCalcCount">0</strong>
-            </div>
-
-            <div class="stock-stat-card">
-                <span>Quantité totale</span>
-                <strong id="rachatCalcQuantity">0</strong>
-            </div>
-
-            <div class="stock-stat-card">
-                <span>Montant total</span>
-                <strong id="rachatCalcTotal">0 $</strong>
-            </div>
-        </div>
-    </article>
-
-    <article class="panel">
-        <h3>Ajouter depuis le catalogue</h3>
-        <p class="muted">
-            Le prix du catalogue est automatiquement utilisé.
-        </p>
-
-        <div id="rachatCards" class="stock-cards">
-            <p class="muted">Chargement des objets...</p>
-        </div>
-    </article>
-
+    <!-- AJOUT MANUEL -->
     <article class="panel">
         <h3>Ajouter un objet manuellement</h3>
 
@@ -549,6 +511,7 @@
         </form>
     </article>
 
+    <!-- CALCUL DE RACHAT -->
     <article class="panel">
         <div class="rachat-calc-heading">
             <div>
@@ -571,6 +534,43 @@
         </div>
     </article>
 
+    <!-- STATISTIQUES -->
+    <article class="panel">
+        <h3>Calculateur de rachat</h3>
+        <p class="muted">
+            Prépare un calcul de rachat sans modifier le stock ni la comptabilité.
+        </p>
+
+        <div class="stock-stats">
+            <div class="stock-stat-card">
+                <span>Nombre de lignes</span>
+                <strong id="rachatCalcCount">0</strong>
+            </div>
+
+            <div class="stock-stat-card">
+                <span>Quantité totale</span>
+                <strong id="rachatCalcQuantity">0</strong>
+            </div>
+
+            <div class="stock-stat-card">
+                <span>Montant total</span>
+                <strong id="rachatCalcTotal">0 $</strong>
+            </div>
+        </div>
+    </article>
+
+    <!-- CATALOGUE -->
+    <article class="panel">
+        <h3>Ajouter depuis le catalogue</h3>
+        <p class="muted">
+            Le prix du catalogue est automatiquement utilisé.
+        </p>
+
+        <div id="rachatCards" class="stock-cards">
+            <p class="muted">Chargement des objets...</p>
+        </div>
+    </article>
+
 </div>
 
     <!-- ONGLET VENTE -->
@@ -585,8 +585,6 @@
     </div>
 
 </section>
-
-  
       
 <!-- PAGE DROGUE -->
 
