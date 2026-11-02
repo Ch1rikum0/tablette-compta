@@ -3086,13 +3086,12 @@ supabaseClient
 
 /* Navigation des sous-onglets Objets */
 (() => {
-    const objetTabs = document.querySelectorAll(
-        '#page-rachat .objet-tabs [data-objet-tab]'
-    );
+    const objetContainer = document.querySelector('#page-rachat');
 
-    const objetContents = document.querySelectorAll(
-        '#page-rachat .objet-tab-content'
-    );
+    if (!objetContainer) return;
+
+    const objetTabs = objetContainer.querySelectorAll('[data-objet-tab]');
+    const objetContents = objetContainer.querySelectorAll('.objet-tab-content');
 
     objetTabs.forEach(tab => {
         tab.addEventListener('click', () => {
