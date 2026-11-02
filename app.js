@@ -2854,7 +2854,6 @@ if (!updatedRows || updatedRows.length === 0) {
         console.error('Erreur de modification du rachat :', error);
         notify('Impossible de charger les informations de cet objet.', 'error');
     }
-}
 
     if (editButton) {
         await modifierObjetRachat(
