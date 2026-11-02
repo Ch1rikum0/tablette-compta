@@ -469,34 +469,108 @@
 
 <!-- ONGLET RACHAT -->
 <div class="objet-tab-content" id="objet-content-rachat">
+
     <article class="panel">
-        <h3>Rachat d'objets</h3>
-        <p class="muted">Objets disponibles au rachat.</p>
+        <h3>Calculateur de rachat</h3>
+        <p class="muted">
+            Prépare un calcul de rachat sans modifier le stock ni la comptabilité.
+        </p>
 
         <div class="stock-stats">
             <div class="stock-stat-card">
-                <span>Nombre d'objets</span>
-                <strong id="rachatProductCount">0</strong>
+                <span>Nombre de lignes</span>
+                <strong id="rachatCalcCount">0</strong>
             </div>
 
             <div class="stock-stat-card">
-                <span>Poids Total</span>
-                <strong id="rachatQuantityTotal">0</strong>
+                <span>Quantité totale</span>
+                <strong id="rachatCalcQuantity">0</strong>
             </div>
 
             <div class="stock-stat-card">
-                <span>Valeur totale</span>
-                <strong id="rachatValueTotal">0 $</strong>
+                <span>Montant total</span>
+                <strong id="rachatCalcTotal">0 $</strong>
             </div>
         </div>
     </article>
 
     <article class="panel">
-        <h3>Objets disponibles au rachat</h3>
+        <h3>Ajouter depuis le catalogue</h3>
+        <p class="muted">
+            Le prix du catalogue est automatiquement utilisé.
+        </p>
+
         <div id="rachatCards" class="stock-cards">
             <p class="muted">Chargement des objets...</p>
         </div>
     </article>
+
+    <article class="panel">
+        <h3>Ajouter un objet manuellement</h3>
+
+        <form id="rachatManualForm" class="rachat-manual-form">
+            <div>
+                <label for="rachatManualName">Nom de l'objet</label>
+                <input
+                    type="text"
+                    id="rachatManualName"
+                    placeholder="Ex : Objet personnalisé"
+                    required
+                >
+            </div>
+
+            <div>
+                <label for="rachatManualPrice">Prix unitaire ($)</label>
+                <input
+                    type="number"
+                    id="rachatManualPrice"
+                    min="0"
+                    step="1"
+                    placeholder="Ex : 150"
+                    required
+                >
+            </div>
+
+            <div>
+                <label for="rachatManualQuantity">Quantité</label>
+                <input
+                    type="number"
+                    id="rachatManualQuantity"
+                    min="1"
+                    step="1"
+                    value="1"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="primary-btn">
+                Ajouter au calcul
+            </button>
+        </form>
+    </article>
+
+    <article class="panel">
+        <div class="rachat-calc-heading">
+            <div>
+                <h3>Calcul du rachat</h3>
+                <p class="muted">Modifie les prix et les quantités directement ici.</p>
+            </div>
+
+            <button type="button" id="rachatResetBtn" class="secondary-btn">
+                Réinitialiser
+            </button>
+        </div>
+
+        <div id="rachatBasket">
+            <p class="muted">Aucun objet ajouté au calcul.</p>
+        </div>
+
+        <div class="rachat-calc-footer">
+            <span>Total à payer</span>
+            <strong id="rachatBasketTotal">0 $</strong>
+        </div>
+    </article>
+
 </div>
 
     <!-- ONGLET VENTE -->
