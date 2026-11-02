@@ -463,103 +463,90 @@
 
 </div> <!-- FIN ONGLET STOCK -->
 
+
 <!-- ONGLET RACHAT -->
 <div class="objet-tab-content" id="objet-content-rachat">
 
     <!-- AJOUT MANUEL -->
-    <article class="panel">
-        <h3>Ajouter un objet manuellement</h3>
+    <article class="panel rachat-fold">
+        <h3 class="rachat-fold-title" data-rachat-toggle aria-expanded="true">
+            <span>Ajouter un objet manuellement</span>
+            <span class="rachat-fold-arrow">▼</span>
+        </h3>
 
-        <form id="rachatManualForm" class="rachat-manual-form">
-            <div>
-                <label for="rachatManualName">Nom de l'objet</label>
-                <input
-                    type="text"
-                    id="rachatManualName"
-                    placeholder="Ex : Objet personnalisé"
-                    required
-                >
-            </div>
+        <div class="rachat-fold-content">
+            <form id="rachatManualForm" class="rachat-manual-form">
+                <div>
+                    <label for="rachatManualName">Nom de l'objet</label>
+                    <input type="text" id="rachatManualName"
+                        placeholder="Ex : Objet personnalisé" required>
+                </div>
 
-            <div>
-                <label for="rachatManualPrice">Prix unitaire ($)</label>
-                <input
-                    type="number"
-                    id="rachatManualPrice"
-                    min="0"
-                    step="1"
-                    placeholder="Ex : 150"
-                    required
-                >
-            </div>
+                <div>
+                    <label for="rachatManualPrice">Prix unitaire ($)</label>
+                    <input type="number" id="rachatManualPrice"
+                        min="0" step="1" placeholder="Ex : 150" required>
+                </div>
 
-            <div>
-                <label for="rachatManualQuantity">Quantité</label>
-                <input
-                    type="number"
-                    id="rachatManualQuantity"
-                    min="1"
-                    step="1"
-                    value="1"
-                    required
-                >
-            </div>
+                <div>
+                    <label for="rachatManualQuantity">Quantité</label>
+                    <input type="number" id="rachatManualQuantity"
+                        min="1" step="1" value="1" required>
+                </div>
 
-            <button type="submit" class="primary-btn">
-                Ajouter au calcul
-            </button>
-        </form>
+                <button type="submit" class="primary-btn">
+                    Ajouter au calcul
+                </button>
+            </form>
+        </div>
     </article>
 
     <!-- CALCUL DE RACHAT -->
-    <article class="panel">
-        <div class="rachat-calc-heading">
-            <div>
-                <h3>Calcul du rachat</h3>
+    <article class="panel rachat-fold">
+        <h3 class="rachat-fold-title" data-rachat-toggle aria-expanded="true">
+            <span>Calcul du rachat</span>
+            <span class="rachat-fold-arrow">▼</span>
+        </h3>
+
+        <div class="rachat-fold-content">
+            <div class="rachat-calc-heading">
                 <p class="muted">Modifie les prix et les quantités directement ici.</p>
+
+                <button type="button" id="rachatResetBtn" class="secondary-btn">
+                    Réinitialiser
+                </button>
             </div>
 
-            <button type="button" id="rachatResetBtn" class="secondary-btn">
-                Réinitialiser
-            </button>
-        </div>
+            <div id="rachatBasket">
+                <p class="muted">Aucun objet ajouté au calcul.</p>
+            </div>
 
-        <div id="rachatBasket">
-            <p class="muted">Aucun objet ajouté au calcul.</p>
-        </div>
-
-        <div class="rachat-calc-footer">
-            <span>Total à payer</span>
-            <strong id="rachatBasketTotal">0 $</strong>
+            <div class="rachat-calc-footer">
+                <span>Total à payer</span>
+                <strong id="rachatBasketTotal">0 $</strong>
+            </div>
         </div>
     </article>
 
     <!-- CATALOGUE -->
-    <article class="panel">
-        <h3>Ajouter depuis le catalogue</h3>
-        <p class="muted">
-            Le prix du catalogue est automatiquement utilisé.
-        </p>
+    <article class="panel rachat-fold">
+        <h3 class="rachat-fold-title" data-rachat-toggle aria-expanded="true">
+            <span>Ajouter depuis le catalogue</span>
+            <span class="rachat-fold-arrow">▼</span>
+        </h3>
 
-        <div id="rachatCards" class="stock-cards">
-            <p class="muted">Chargement des objets...</p>
+        <div class="rachat-fold-content">
+            <p class="muted">
+                Le prix du catalogue est automatiquement utilisé.
+            </p>
+
+            <div id="rachatCards" class="stock-cards">
+                <p class="muted">Chargement des objets...</p>
+            </div>
         </div>
     </article>
 
 </div>
-
-    <!-- ONGLET VENTE -->
-    <div class="objet-tab-content" id="objet-content-vente">
-        <article class="panel">
-            <h3>Vente d'objets</h3>
-            <p class="muted">
-                Gestion des objets vendus aux joueurs.
-            </p>
-            <p>La fonctionnalité de vente sera ajoutée dans la prochaine étape.</p>
-        </article>
-    </div>
-
-</section>
       
 <!-- PAGE DROGUE -->
 
