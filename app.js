@@ -2388,11 +2388,11 @@ loadObjets();
 );
         
 
-        const count = document.getElementById('rachatCalcCount');
-        const quantity = document.getElementById('rachatCalcQuantity');
-        const total = document.getElementById('rachatCalcTotal');
-        const basketTotal = document.getElementById('rachatBasketTotal');
-        const basketWeight = document.getElementById('rachatBasketWeight');
+       const count = document.getElementById('rachatCalcCount');
+       const quantity = document.getElementById('rachatCalcQuantity');
+       const total = document.getElementById('rachatCalcTotal');
+       const basketTotal = document.getElementById('rachatBasketTotal');
+       const basketWeight = document.getElementById('rachatBasketWeight');
 
         if (count) count.textContent = nombreLignes;
         if (quantity) quantity.textContent = quantiteTotale;
