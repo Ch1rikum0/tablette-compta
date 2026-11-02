@@ -2322,6 +2322,11 @@ loadObjets();
 (() => {
    const rachatCards = document.getElementById('rachatCards');
 
+// Anciens compteurs désactivés
+const rachatProductCount = null;
+const rachatQuantityTotal = null;
+const rachatValueTotal = null;
+
 const RACHAT_CALCUL_KEY = 'silent-ghost-rachat-calcul-v1';
 
 let objetsRachat = [];
