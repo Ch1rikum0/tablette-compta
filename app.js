@@ -2032,7 +2032,7 @@ const objetsCategorie = objets.filter(function (item) {
         };
 
         const { error } = await supabaseClient
-            .from('objets_rachat')
+            .from('objets')
             .upsert(row, { onConflict: 'id' });
 
         if (error) throw error;
@@ -2292,7 +2292,7 @@ if (objetEditForm) {
 
             try {
                 const result = await supabaseClient
-                    .from('objets_rachat')
+                    .from('objets')
                     .delete()
                     .eq('id', id);
 
@@ -2314,8 +2314,6 @@ if (objetEditForm) {
 
 loadObjets();
 })();
-
-
 
 /* =================================
    CARTES DU RACHAT
