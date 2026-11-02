@@ -2371,16 +2371,41 @@ loadObjets();
             0
         );
 
+        const poidsTotal = panierRachat.reduce(
+    (total, item) => {
+        const objet = objetsRachat.find(
+            obj => String(obj.id) === String(item.id)
+        );
+
+        const poidsUnitaire = objet
+            ? Number(objet.weight) || 0
+            : Number(item.weight) || 0;
+
+        return total +
+            (Number(item.quantity) || 0) * poidsUnitaire;
+    },
+    0
+);
+        
+
         const count = document.getElementById('rachatCalcCount');
         const quantity = document.getElementById('rachatCalcQuantity');
         const total = document.getElementById('rachatCalcTotal');
         const basketTotal = document.getElementById('rachatBasketTotal');
+        const basketWeight = document.getElementById('rachatBasketWeight');
 
         if (count) count.textContent = nombreLignes;
         if (quantity) quantity.textContent = quantiteTotale;
         if (total) total.textContent = prixRachat(montantTotal);
         if (basketTotal) basketTotal.textContent = prixRachat(montantTotal);
     }
+
+    if (basketWeight) {
+    basketWeight.textContent =
+        poidsTotal.toLocaleString('fr-FR', {
+            maximumFractionDigits: 2
+        }) + ' kg';
+}
 
     function afficherPanierRachat() {
         if (!rachatBasket) {
@@ -2465,11 +2490,12 @@ loadObjets();
         if (existant) {
             existant.quantity += item.quantity;
         } else {
-            panierRachat.push({
+           panierRachat.push({
                 id: id,
                 name: item.name,
                 unitPrice: Number(item.unitPrice) || 0,
                 quantity: item.quantity,
+                weight: Number(item.weight) || 0,
                 source: item.source || 'catalogue'
             });
         }
