@@ -2926,7 +2926,6 @@ if (rachatBasket) {
         sauvegarderPanierRachat();
         afficherPanierRachat();
     });
-}
     
         /* Suppression d'une ligne du panier */
 
