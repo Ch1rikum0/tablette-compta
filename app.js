@@ -2316,168 +2316,175 @@ loadObjets();
 })();
 
 
+
 /* =================================
    CARTES DU RACHAT
 ================================= */
 (() => {
-   const rachatCards = document.getElementById('rachatCards');
+    const rachatCards = document.getElementById('rachatCards');
+    const rachatBasket = document.getElementById('rachatBasket');
 
-// Anciens compteurs désactivés
-const rachatProductCount = null;
-const rachatQuantityTotal = null;
-const rachatValueTotal = null;
+    const RACHAT_CALCUL_KEY = 'silent-ghost-rachat-calcul-v1';
 
-const RACHAT_CALCUL_KEY = 'silent-ghost-rachat-calcul-v1';
+    let objetsRachat = [];
+    let panierRachat = [];
 
-let objetsRachat = [];
-let panierRachat = [];
+    try {
+        panierRachat = JSON.parse(
+            localStorage.getItem(RACHAT_CALCUL_KEY)
+        ) || [];
 
-try {
-    panierRachat = JSON.parse(
-        localStorage.getItem(RACHAT_CALCUL_KEY)
-    ) || [];
-
-    if (!Array.isArray(panierRachat)) panierRachat = [];
-} catch (error) {
-    panierRachat = [];
-}
-
-function sauvegarderPanierRachat() {
-    localStorage.setItem(
-        RACHAT_CALCUL_KEY,
-        JSON.stringify(panierRachat)
-    );
-}
-
-function mettreAJourTotalRachat() {
-    const nombreLignes = panierRachat.length;
-
-    const quantiteTotale = panierRachat.reduce(
-        (total, item) => total + item.quantity,
-        0
-    );
-
-    const montantTotal = panierRachat.reduce(
-        (total, item) => total + item.quantity * item.unitPrice,
-        0
-    );
-
-    document.getElementById('rachatCalcCount').textContent =
-        nombreLignes;
-
-    document.getElementById('rachatCalcQuantity').textContent =
-        quantiteTotale;
-
-    document.getElementById('rachatCalcTotal').textContent =
-        prixRachat(montantTotal);
-
-    document.getElementById('rachatBasketTotal').textContent =
-        prixRachat(montantTotal);
-}
-
-function afficherPanierRachat() {
-    const zone = document.getElementById('rachatBasket');
-
-    if (!zone) return;
-
-    if (panierRachat.length === 0) {
-        zone.innerHTML =
-            '<p class="muted">Aucun objet ajouté au calcul.</p>';
-
-        mettreAJourTotalRachat();
-        return;
+        if (!Array.isArray(panierRachat)) {
+            panierRachat = [];
+        }
+    } catch (error) {
+        panierRachat = [];
     }
-
-    zone.innerHTML = panierRachat.map(item => {
-        const total = item.unitPrice * item.quantity;
-
-        return `
-            <div class="rachat-basket-item" data-panier-id="${escapeHtml(item.id)}">
-
-                <div class="rachat-basket-name">
-                    <strong>${escapeHtml(item.name)}</strong>
-                    <span>${item.source === 'manuel' ? 'Ajout manuel' : 'Catalogue'}</span>
-                </div>
-
-                <div class="rachat-basket-field">
-                    <label>Prix unitaire ($)</label>
-                    <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        value="${item.unitPrice}"
-                        data-panier-prix="${escapeHtml(item.id)}"
-                    >
-                </div>
-
-                <div class="rachat-basket-field">
-                    <label>Quantité</label>
-                    <input
-                        type="number"
-                        min="1"
-                        step="1"
-                        value="${item.quantity}"
-                        data-panier-quantite="${escapeHtml(item.id)}"
-                    >
-                </div>
-
-                <div class="rachat-basket-line-total">
-                    <span>Total</span>
-                    <strong>${prixRachat(total)}</strong>
-                </div>
-
-                <button
-                    type="button"
-                    class="secondary-btn"
-                    data-panier-remove="${escapeHtml(item.id)}"
-                >
-                    Supprimer
-                </button>
-
-            </div>
-        `;
-    }).join('');
-
-    mettreAJourTotalRachat();
-}
-
-function ajouterAuPanierRachat(item) {
-    const existant = panierRachat.find(
-        ligne => ligne.id === String(item.id)
-    );
-
-    if (existant) {
-        existant.quantity += item.quantity;
-    } else {
-        panierRachat.push({
-            id: String(item.id),
-            name: item.name,
-            unitPrice: Number(item.unitPrice) || 0,
-            quantity: item.quantity,
-            source: item.source
-        });
-    }
-
-    sauvegarderPanierRachat();
-    afficherPanierRachat();
-}
-
-    if (!rachatCards) {
-    console.error("RACHAT : l'élément rachatCards est introuvable.");
-    return;
-}
-
-console.log("RACHAT : éléments HTML détectés", {
-    compteur: !!rachatProductCount,
-    quantite: !!rachatQuantityTotal,
-    valeur: !!rachatValueTotal
-});
 
     function prixRachat(value) {
         return `${Math.round(Number(value) || 0).toLocaleString('fr-FR')} $`;
     }
 
+    function sauvegarderPanierRachat() {
+        try {
+            localStorage.setItem(
+                RACHAT_CALCUL_KEY,
+                JSON.stringify(panierRachat)
+            );
+        } catch (error) {
+            console.error('Erreur de sauvegarde du calcul :', error);
+            notify('Impossible de sauvegarder le calcul.', 'error');
+        }
+    }
+
+    function mettreAJourTotalRachat() {
+        const nombreLignes = panierRachat.length;
+
+        const quantiteTotale = panierRachat.reduce(
+            (total, item) => total + (Number(item.quantity) || 0),
+            0
+        );
+
+        const montantTotal = panierRachat.reduce(
+            (total, item) =>
+                total +
+                (Number(item.quantity) || 0) *
+                (Number(item.unitPrice) || 0),
+            0
+        );
+
+        const count = document.getElementById('rachatCalcCount');
+        const quantity = document.getElementById('rachatCalcQuantity');
+        const total = document.getElementById('rachatCalcTotal');
+        const basketTotal = document.getElementById('rachatBasketTotal');
+
+        if (count) count.textContent = nombreLignes;
+        if (quantity) quantity.textContent = quantiteTotale;
+        if (total) total.textContent = prixRachat(montantTotal);
+        if (basketTotal) basketTotal.textContent = prixRachat(montantTotal);
+    }
+
+    function afficherPanierRachat() {
+        if (!rachatBasket) {
+            mettreAJourTotalRachat();
+            return;
+        }
+
+        if (panierRachat.length === 0) {
+            rachatBasket.innerHTML =
+                '<p class="muted">Aucun objet ajouté au calcul.</p>';
+
+            mettreAJourTotalRachat();
+            return;
+        }
+
+        rachatBasket.innerHTML = panierRachat.map(item => {
+            const total =
+                (Number(item.unitPrice) || 0) *
+                (Number(item.quantity) || 0);
+
+            return `
+                <div class="rachat-basket-item"
+                     data-panier-id="${escapeHtml(item.id)}">
+
+                    <div class="rachat-basket-name">
+                        <strong>${escapeHtml(item.name)}</strong>
+                        <span>
+                            ${item.source === 'manuel'
+                                ? 'Ajout manuel'
+                                : 'Catalogue'}
+                        </span>
+                    </div>
+
+                    <div class="rachat-basket-field">
+                        <label>Prix unitaire ($)</label>
+                        <input
+                            type="number"
+                            min="0"
+                            step="1"
+                            value="${Number(item.unitPrice) || 0}"
+                            data-panier-prix="${escapeHtml(item.id)}"
+                        >
+                    </div>
+
+                    <div class="rachat-basket-field">
+                        <label>Quantité</label>
+                        <input
+                            type="number"
+                            min="1"
+                            step="1"
+                            value="${Number(item.quantity) || 1}"
+                            data-panier-quantite="${escapeHtml(item.id)}"
+                        >
+                    </div>
+
+                    <div class="rachat-basket-line-total">
+                        <span>Total</span>
+                        <strong>${prixRachat(total)}</strong>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="secondary-btn"
+                        data-panier-remove="${escapeHtml(item.id)}"
+                    >
+                        Supprimer
+                    </button>
+                </div>
+            `;
+        }).join('');
+
+        mettreAJourTotalRachat();
+    }
+
+    function ajouterAuPanierRachat(item) {
+        const id = String(item.id);
+
+        const existant = panierRachat.find(
+            ligne => String(ligne.id) === id
+        );
+
+        if (existant) {
+            existant.quantity += item.quantity;
+        } else {
+            panierRachat.push({
+                id: id,
+                name: item.name,
+                unitPrice: Number(item.unitPrice) || 0,
+                quantity: item.quantity,
+                source: item.source || 'catalogue'
+            });
+        }
+
+        sauvegarderPanierRachat();
+        afficherPanierRachat();
+    }
+
+    /* Chargement du catalogue */
+
     async function afficherObjetsRachat() {
+        if (!rachatCards) return;
+
         rachatCards.innerHTML =
             '<p class="muted">Chargement des objets...</p>';
 
@@ -2487,12 +2494,9 @@ console.log("RACHAT : éléments HTML détectés", {
                 .select('*')
                 .order('nom', { ascending: true });
 
-           if (error) throw error;
+            if (error) throw error;
 
-            console.log("RACHAT : données reçues de Supabase", data);
-            console.log("RACHAT : nombre d'objets reçus", (data || []).length);
-                        
-objetsRachat = (data || []).map(item => ({
+            objetsRachat = (data || []).map(item => ({
                 id: String(item.id),
                 name: item.nom || '',
                 category: item.categorie || '',
@@ -2516,127 +2520,444 @@ objetsRachat = (data || []).map(item => ({
                             onerror="this.style.display='none'">`
                     : '<div class="stock-product-placeholder">📦</div>';
 
-             return `
-                <article class="stock-product-card rachat-product-card">
-                    <div class="stock-product-visual">
-                        ${imageHtml}
-                    </div>
-            
-                    <div class="stock-product-info">
-                        <div class="stock-product-heading">
-                            <h4>${escapeHtml(item.name)}</h4>
-                            <strong>${prixRachat(item.unitPrice)}</strong>
+                return `
+                    <article class="stock-product-card rachat-product-card">
+                        <div class="stock-product-visual">
+                            ${imageHtml}
                         </div>
-            
-                        <span class="stock-product-category">
-                            ${escapeHtml(item.category)}
-                        </span>
-            
-                        <div class="stock-product-details">
-                            <span>Prix de rachat : ${prixRachat(item.unitPrice)}</span>
-                        </div>
-            
-                        <div class="stock-product-actions">
-                             
-                            
-                            <input
-                                type="number"
-                                min="1"
-                                step="1"
-                                value="1"
-                                aria-label="Quantité à racheter pour ${escapeHtml(item.name)}"
-                                data-rachat-quantity="${escapeHtml(item.id)}"
-                            >
 
+                        <div class="stock-product-info">
+                            <div class="stock-product-heading">
+                                <h4>${escapeHtml(item.name)}</h4>
+                                <strong>${prixRachat(item.unitPrice)}</strong>
+                            </div>
+
+                            <span class="stock-product-category">
+                                ${escapeHtml(item.category)}
+                            </span>
+
+                            <div class="stock-product-details">
+                                <span>Prix de rachat : ${prixRachat(item.unitPrice)}</span>
+                            </div>
+
+                            <div class="stock-product-actions">
+                                <input
+                                    type="number"
+                                    min="1"
+                                    step="1"
+                                    value="1"
+                                    aria-label="Quantité à calculer pour ${escapeHtml(item.name)}"
+                                    data-rachat-quantity="${escapeHtml(item.id)}"
+                                >
+
+                                <button
+                                    type="button"
+                                    class="primary-btn"
+                                    data-rachat-select="${escapeHtml(item.id)}"
+                                >
+                                    Sélectionner
+                                </button>
+                            </div>
+
+                            <p class="muted" data-rachat-total="${escapeHtml(item.id)}">
+                                Total : ${prixRachat(item.unitPrice)}
+                            </p>
 
                             <button
                                 type="button"
-                                class="primary-btn"
-                                data-rachat-select="${escapeHtml(item.id)}"
-                                ${item.quantity <= 0 ? 'disabled' : ''}
+                                class="rachat-edit-btn"
+                                data-rachat-edit="${escapeHtml(item.id)}"
                             >
-                                Sélectionner
+                                Modifier les informations
                             </button>
                         </div>
-            
-                        <p class="muted" data-rachat-total="${escapeHtml(item.id)}">
-                            Total : ${prixRachat(item.unitPrice)}
-                        </p>
-                        <button
-                            type="button"
-                            class="rachat-edit-btn"
-                            data-rachat-edit="${escapeHtml(item.id)}"
-                        >
-                            Modifier les informations
-                        </button>
-                    </div>
-                </article>
-            `;
+                    </article>
+                `;
             }).join('');
 
-            console.log(
-                "RACHAT : cartes HTML créées",
-                rachatCards.children.length
-            );
-            
-            console.log(
-                "RACHAT : contenu visible",
-                rachatCards.innerHTML.length
-            );
-            
         } catch (error) {
             console.error('Erreur de chargement du rachat :', error);
+
             rachatCards.innerHTML =
                 '<p class="muted">Impossible de charger les objets.</p>';
+
             notify('Impossible de charger les objets du rachat.', 'error');
         }
     }
 
-    rachatCards.addEventListener('input', event => {
-        const input = event.target.closest('[data-rachat-quantity]');
-        if (!input) return;
+    /* Mise à jour du total affiché dans les cartes */
 
-        const id = input.getAttribute('data-rachat-quantity');
-        const carte = input.closest('.stock-product-info');
-        const prixTexte = carte.querySelector(
-            '.stock-product-heading strong'
-        ).textContent;
+    if (rachatCards) {
+        rachatCards.addEventListener('input', event => {
+            const input = event.target.closest('[data-rachat-quantity]');
+            if (!input) return;
 
-        const prix = Number(
-            prixTexte.replace(/\s/g, '').replace('$', '').replace(',', '.')
-        ) || 0;
+            const id = input.getAttribute('data-rachat-quantity');
 
-        const quantite = Math.max(0, Number(input.value) || 0);
-        const total = carte.querySelector('[data-rachat-total]');
+            const objet = objetsRachat.find(
+                item => String(item.id) === String(id)
+            );
 
-        total.textContent = 'Total : ' + prixRachat(prix * quantite);
-    });
+            if (!objet) return;
 
+            const quantite = Math.max(0, Number(input.value) || 0);
+            const total = input.closest('.stock-product-info')
+                .querySelector('[data-rachat-total]');
 
-async function modifierObjetRachat(id) {
-    try {
-        const { data: objet, error } = await supabaseClient
-            .from('objets_rachat')
-            .select('*')
-            .eq('id', id)
-            .single();
+            if (total) {
+                total.textContent =
+                    'Total : ' + prixRachat(objet.unitPrice * quantite);
+            }
+        });
+    }
 
-        if (error) throw error;
+    /* Modification des informations d'un objet */
 
-        if (!objet) {
-            notify('Objet introuvable.', 'error');
-            return;
+    async function modifierObjetRachat(id) {
+        try {
+            const { data: objet, error } = await supabaseClient
+                .from('objets_rachat')
+                .select('*')
+                .eq('id', id)
+                .single();
+
+            if (error) throw error;
+
+            if (!objet) {
+                notify('Objet introuvable.', 'error');
+                return;
+            }
+
+            const ancienneFenetre =
+                document.getElementById('rachatEditModal');
+
+            if (ancienneFenetre) ancienneFenetre.remove();
+
+            const modal = document.createElement('div');
+            modal.id = 'rachatEditModal';
+            modal.className = 'rachat-edit-modal';
+
+            modal.innerHTML = `
+                <div class="rachat-edit-window">
+                    <h2>Modifier les informations</h2>
+                    <p class="muted">Modifie les informations de cet objet.</p>
+
+                    <form id="rachatEditForm">
+                        <label for="editRachatNom">Nom de l'objet</label>
+                        <input id="editRachatNom" type="text" required
+                            value="${escapeHtml(objet.nom || '')}">
+
+                        <label for="editRachatCategorie">Catégorie</label>
+                        <input id="editRachatCategorie" type="text" required
+                            value="${escapeHtml(objet.categorie || '')}">
+
+                        <label for="editRachatImage">URL de l'image</label>
+                        <input id="editRachatImage" type="text"
+                            value="${escapeHtml(objet.image || '')}">
+
+                        <label for="editRachatPoids">Poids (kg)</label>
+                        <input id="editRachatPoids" type="number"
+                            min="0" step="0.01" required
+                            value="${Number(objet.poids) || 0}">
+
+                        <label for="editRachatPrix">Prix unitaire ($)</label>
+                        <input id="editRachatPrix" type="number"
+                            min="0" step="any" required
+                            value="${Number(objet.prix_unitaire) || 0}">
+
+                        <div class="rachat-edit-buttons">
+                            <button type="button" id="cancelRachatEdit">
+                                Annuler
+                            </button>
+                            <button type="submit" id="saveRachatEdit">
+                                Enregistrer
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            document.getElementById('cancelRachatEdit').onclick = () => {
+                modal.remove();
+            };
+
+            document.getElementById('rachatEditForm').onsubmit = async event => {
+                event.preventDefault();
+
+                const nom = document.getElementById('editRachatNom').value.trim();
+                const categorie = document.getElementById('editRachatCategorie').value.trim();
+                const image = document.getElementById('editRachatImage').value.trim();
+
+                const poidsTexte = document.getElementById('editRachatPoids').value;
+                const prixTexte = document.getElementById('editRachatPrix').value;
+
+                const poids = Number(poidsTexte);
+                const prix = Number(prixTexte);
+
+                if (
+                    !nom ||
+                    !categorie ||
+                    poidsTexte.trim() === '' ||
+                    !Number.isFinite(poids) ||
+                    poids < 0 ||
+                    prixTexte.trim() === '' ||
+                    !Number.isFinite(prix) ||
+                    prix < 0
+                ) {
+                    notify('Vérifie les informations saisies.', 'error');
+                    return;
+                }
+
+                const saveButton =
+                    document.getElementById('saveRachatEdit');
+
+                saveButton.disabled = true;
+                saveButton.textContent = 'Enregistrement...';
+
+                try {
+                    const { data: updatedRows, error: updateError } =
+                        await supabaseClient
+                            .from('objets_rachat')
+                            .update({
+                                nom: nom,
+                                categorie: categorie,
+                                image: image,
+                                poids: poids,
+                                prix_unitaire: prix
+                            })
+                            .eq('id', id)
+                            .select('id');
+
+                    if (updateError) throw updateError;
+
+                    if (!updatedRows || updatedRows.length === 0) {
+                        throw new Error(
+                            "Aucun objet modifié. Vérifie l'identifiant et les permissions Supabase."
+                        );
+                    }
+
+                    modal.remove();
+
+                    await afficherObjetsRachat();
+
+                    notify('Objet modifié avec succès.', 'success');
+
+                } catch (saveError) {
+                    console.error('Erreur de sauvegarde :', saveError);
+
+                    notify('Impossible d’enregistrer les modifications.', 'error');
+
+                    saveButton.disabled = false;
+                    saveButton.textContent = 'Enregistrer';
+                }
+            };
+
+        } catch (error) {
+            console.error('Erreur de modification du rachat :', error);
+            notify('Impossible de charger les informations de cet objet.', 'error');
         }
+    }
 
-// Réinitialisation du calcul
-document.getElementById('rachatResetBtn').addEventListener('click', () => {
-    panierRachat = [];
+    /* Clics sur les cartes du catalogue */
 
-    sauvegarderPanierRachat();
+    if (rachatCards) {
+        rachatCards.addEventListener('click', async event => {
+            const cible = event.target;
+
+            if (!cible || typeof cible.closest !== 'function') return;
+
+            const editButton = cible.closest('[data-rachat-edit]');
+
+            if (editButton) {
+                await modifierObjetRachat(
+                    editButton.getAttribute('data-rachat-edit')
+                );
+                return;
+            }
+
+            const button = cible.closest('[data-rachat-select]');
+
+            if (!button) return;
+
+            const id = button.getAttribute('data-rachat-select');
+
+            const objet = objetsRachat.find(
+                item => String(item.id) === String(id)
+            );
+
+            if (!objet) {
+                notify('Objet introuvable dans le catalogue.', 'error');
+                return;
+            }
+
+            const input = rachatCards.querySelector(
+                '[data-rachat-quantity="' + id + '"]'
+            );
+
+            if (!input) return;
+
+            const quantite = Number(input.value);
+
+            if (
+                !Number.isInteger(quantite) ||
+                quantite < 1
+            ) {
+                notify('Saisis une quantité entière supérieure à zéro.', 'error');
+                return;
+            }
+
+            ajouterAuPanierRachat({
+                id: objet.id,
+                name: objet.name,
+                unitPrice: objet.unitPrice,
+                quantity: quantite,
+                source: 'catalogue'
+            });
+
+            input.value = '1';
+
+            notify('Objet ajouté au calcul.', 'success');
+        });
+    }
+
+    /* Modification du prix et de la quantité dans le panier */
+
+    if (rachatBasket) {
+        rachatBasket.addEventListener('change', event => {
+            const cible = event.target;
+
+            const inputPrix = cible.closest('[data-panier-prix]');
+            const inputQuantite = cible.closest('[data-panier-quantite]');
+
+            if (!inputPrix && !inputQuantite) return;
+
+            const id = inputPrix
+                ? inputPrix.getAttribute('data-panier-prix')
+                : inputQuantite.getAttribute('data-panier-quantite');
+
+            const ligne = panierRachat.find(
+                item => String(item.id) === String(id)
+            );
+
+            if (!ligne) return;
+
+            if (inputPrix) {
+                const prix = Number(inputPrix.value);
+
+                if (!Number.isFinite(prix) || prix < 0) {
+                    notify('Le prix doit être supérieur ou égal à zéro.', 'error');
+                    afficherPanierRachat();
+                    return;
+                }
+
+                ligne.unitPrice = prix;
+            }
+
+            if (inputQuantite) {
+                const quantite = Number(inputQuantite.value);
+
+                if (!Number.isInteger(quantite) || quantite < 1) {
+                    notify('La quantité doit être supérieure à zéro.', 'error');
+                    afficherPanierRachat();
+                    return;
+                }
+
+                ligne.quantity = quantite;
+            }
+
+            sauvegarderPanierRachat();
+            afficherPanierRachat();
+        });
+
+        /* Suppression d'une ligne du panier */
+
+        rachatBasket.addEventListener('click', event => {
+            const bouton = event.target.closest('[data-panier-remove]');
+
+            if (!bouton) return;
+
+            const id = bouton.getAttribute('data-panier-remove');
+
+            panierRachat = panierRachat.filter(
+                item => String(item.id) !== String(id)
+            );
+
+            sauvegarderPanierRachat();
+            afficherPanierRachat();
+        });
+    }
+
+    /* Réinitialisation du calcul */
+
+    const resetButton = document.getElementById('rachatResetBtn');
+
+    if (resetButton) {
+        resetButton.addEventListener('click', () => {
+            panierRachat = [];
+
+            sauvegarderPanierRachat();
+            afficherPanierRachat();
+
+            notify('Calcul réinitialisé.', 'success');
+        });
+    }
+
+    /* Ajout manuel d'un objet */
+
+    const manualForm = document.getElementById('rachatManualForm');
+
+    if (manualForm) {
+        manualForm.addEventListener('submit', event => {
+            event.preventDefault();
+
+            const nom =
+                document.getElementById('rachatManualName').value.trim();
+
+            const prix =
+                Number(document.getElementById('rachatManualPrice').value);
+
+            const quantite =
+                Number(document.getElementById('rachatManualQuantity').value);
+
+            if (
+                !nom ||
+                !Number.isFinite(prix) ||
+                prix < 0 ||
+                !Number.isInteger(quantite) ||
+                quantite < 1
+            ) {
+                notify('Vérifie les informations saisies.', 'error');
+                return;
+            }
+
+            ajouterAuPanierRachat({
+                id: 'manuel-' + Date.now() + '-' +
+                    Math.random().toString(16).slice(2),
+                name: nom,
+                unitPrice: prix,
+                quantity: quantite,
+                source: 'manuel'
+            });
+
+            manualForm.reset();
+
+            const quantityInput =
+                document.getElementById('rachatManualQuantity');
+
+            if (quantityInput) quantityInput.value = '1';
+
+            notify('Objet manuel ajouté au calcul.', 'success');
+        });
+    }
+
+    /* Démarrage */
+
     afficherPanierRachat();
+    afficherObjetsRachat();
 
-    notify('Calcul réinitialisé.', 'success');
-});
+})();
 
 // Gestion des clics dans le catalogue Rachat
 document.addEventListener('click', async event => {
