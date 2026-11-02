@@ -2320,10 +2320,142 @@ loadObjets();
    CARTES DU RACHAT
 ================================= */
 (() => {
-    const rachatCards = document.getElementById('rachatCards');
-    const rachatProductCount = document.getElementById('rachatProductCount');
-    const rachatQuantityTotal = document.getElementById('rachatQuantityTotal');
-    const rachatValueTotal = document.getElementById('rachatValueTotal');
+   const rachatCards = document.getElementById('rachatCards');
+
+const RACHAT_CALCUL_KEY = 'silent-ghost-rachat-calcul-v1';
+
+let objetsRachat = [];
+let panierRachat = [];
+
+try {
+    panierRachat = JSON.parse(
+        localStorage.getItem(RACHAT_CALCUL_KEY)
+    ) || [];
+
+    if (!Array.isArray(panierRachat)) panierRachat = [];
+} catch (error) {
+    panierRachat = [];
+}
+
+function sauvegarderPanierRachat() {
+    localStorage.setItem(
+        RACHAT_CALCUL_KEY,
+        JSON.stringify(panierRachat)
+    );
+}
+
+function mettreAJourTotalRachat() {
+    const nombreLignes = panierRachat.length;
+
+    const quantiteTotale = panierRachat.reduce(
+        (total, item) => total + item.quantity,
+        0
+    );
+
+    const montantTotal = panierRachat.reduce(
+        (total, item) => total + item.quantity * item.unitPrice,
+        0
+    );
+
+    document.getElementById('rachatCalcCount').textContent =
+        nombreLignes;
+
+    document.getElementById('rachatCalcQuantity').textContent =
+        quantiteTotale;
+
+    document.getElementById('rachatCalcTotal').textContent =
+        prixRachat(montantTotal);
+
+    document.getElementById('rachatBasketTotal').textContent =
+        prixRachat(montantTotal);
+}
+
+function afficherPanierRachat() {
+    const zone = document.getElementById('rachatBasket');
+
+    if (!zone) return;
+
+    if (panierRachat.length === 0) {
+        zone.innerHTML =
+            '<p class="muted">Aucun objet ajouté au calcul.</p>';
+
+        mettreAJourTotalRachat();
+        return;
+    }
+
+    zone.innerHTML = panierRachat.map(item => {
+        const total = item.unitPrice * item.quantity;
+
+        return `
+            <div class="rachat-basket-item" data-panier-id="${escapeHtml(item.id)}">
+
+                <div class="rachat-basket-name">
+                    <strong>${escapeHtml(item.name)}</strong>
+                    <span>${item.source === 'manuel' ? 'Ajout manuel' : 'Catalogue'}</span>
+                </div>
+
+                <div class="rachat-basket-field">
+                    <label>Prix unitaire ($)</label>
+                    <input
+                        type="number"
+                        min="0"
+                        step="1"
+                        value="${item.unitPrice}"
+                        data-panier-prix="${escapeHtml(item.id)}"
+                    >
+                </div>
+
+                <div class="rachat-basket-field">
+                    <label>Quantité</label>
+                    <input
+                        type="number"
+                        min="1"
+                        step="1"
+                        value="${item.quantity}"
+                        data-panier-quantite="${escapeHtml(item.id)}"
+                    >
+                </div>
+
+                <div class="rachat-basket-line-total">
+                    <span>Total</span>
+                    <strong>${prixRachat(total)}</strong>
+                </div>
+
+                <button
+                    type="button"
+                    class="secondary-btn"
+                    data-panier-remove="${escapeHtml(item.id)}"
+                >
+                    Supprimer
+                </button>
+
+            </div>
+        `;
+    }).join('');
+
+    mettreAJourTotalRachat();
+}
+
+function ajouterAuPanierRachat(item) {
+    const existant = panierRachat.find(
+        ligne => ligne.id === String(item.id)
+    );
+
+    if (existant) {
+        existant.quantity += item.quantity;
+    } else {
+        panierRachat.push({
+            id: String(item.id),
+            name: item.name,
+            unitPrice: Number(item.unitPrice) || 0,
+            quantity: item.quantity,
+            source: item.source
+        });
+    }
+
+    sauvegarderPanierRachat();
+    afficherPanierRachat();
+}
 
     if (!rachatCards) {
     console.error("RACHAT : l'élément rachatCards est introuvable.");
@@ -2355,7 +2487,7 @@ console.log("RACHAT : éléments HTML détectés", {
             console.log("RACHAT : données reçues de Supabase", data);
             console.log("RACHAT : nombre d'objets reçus", (data || []).length);
                         
-           const objetsRachat = (data || []).map(item => ({
+objetsRachat = (data || []).map(item => ({
                 id: String(item.id),
                 name: item.nom || '',
                 category: item.categorie || '',
@@ -2364,33 +2496,6 @@ console.log("RACHAT : éléments HTML détectés", {
                 unitPrice: Number(item.prix_unitaire) || 0,
                 weight: Number(item.poids) || 0
             }));
-const totalQuantity = objetsRachat.reduce(
-    (total, item) => total + item.quantity, 0
-);
-
-const totalWeight = objetsRachat.reduce(
-    (total, item) => total + (item.weight * item.quantity),
-    0
-);
-
-const totalValue = objetsRachat.reduce(
-    (total, item) => total + (item.quantity * item.unitPrice), 0
-);
-
-if (rachatProductCount) {
-    rachatProductCount.textContent = objetsRachat.length;
-}
-
-if (rachatQuantityTotal) {
-    rachatQuantityTotal.textContent =
-        totalWeight.toLocaleString('fr-FR', {
-            maximumFractionDigits: 2
-        }) + ' kg';
-}
-
-if (rachatValueTotal) {
-    rachatValueTotal.textContent = prixRachat(totalValue);
-}
 
             if (objetsRachat.length === 0) {
                 rachatCards.innerHTML =
