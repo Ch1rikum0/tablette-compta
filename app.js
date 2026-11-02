@@ -3009,6 +3009,52 @@ if (rachatBasket) {
         });
     }
 
+/* Synchronisation des prix en direct entre les joueurs */
+
+supabaseClient
+    .channel('rachat-prix-synchronisation')
+    .on(
+        'postgres_changes',
+        {
+            event: 'UPDATE',
+            schema: 'public',
+            table: 'objets_rachat'
+        },
+        payload => {
+            const objetModifie = payload.new;
+
+            if (!objetModifie) return;
+
+            const id = String(objetModifie.id);
+            const nouveauPrix = Number(objetModifie.prix_unitaire) || 0;
+
+            /* Actualiser le catalogue */
+            const objet = objetsRachat.find(
+                item => String(item.id) === id
+            );
+
+            if (objet) {
+                objet.unitPrice = nouveauPrix;
+            }
+
+            /* Actualiser les calculs des joueurs */
+            panierRachat.forEach(item => {
+                if (
+                    String(item.id) === id &&
+                    item.source === 'catalogue'
+                ) {
+                    item.unitPrice = nouveauPrix;
+                }
+            });
+
+            sauvegarderPanierRachat();
+
+            afficherPanierRachat();
+            afficherObjetsRachat();
+        }
+    )
+    .subscribe();
+
     /* Démarrage */
 
     afficherPanierRachat();
