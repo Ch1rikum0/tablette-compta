@@ -2822,55 +2822,112 @@ loadObjets();
         });
     }
 
-    /* Modification du prix et de la quantité dans le panier */
+  /* Modification du prix et de la quantité dans le panier */
 
-    if (rachatBasket) {
-        rachatBasket.addEventListener('change', event => {
-            const cible = event.target;
+if (rachatBasket) {
+    rachatBasket.addEventListener('change', async event => {
+        const cible = event.target;
 
-            const inputPrix = cible.closest('[data-panier-prix]');
-            const inputQuantite = cible.closest('[data-panier-quantite]');
+        if (!cible || typeof cible.closest !== 'function') return;
 
-            if (!inputPrix && !inputQuantite) return;
+        const inputPrix = cible.closest('[data-panier-prix]');
+        const inputQuantite = cible.closest('[data-panier-quantite]');
 
-            const id = inputPrix
-                ? inputPrix.getAttribute('data-panier-prix')
-                : inputQuantite.getAttribute('data-panier-quantite');
+        if (!inputPrix && !inputQuantite) return;
 
-            const ligne = panierRachat.find(
+        const id = inputPrix
+            ? inputPrix.getAttribute('data-panier-prix')
+            : inputQuantite.getAttribute('data-panier-quantite');
+
+        const ligne = panierRachat.find(
+            item => String(item.id) === String(id)
+        );
+
+        if (!ligne) return;
+
+        /* Modification du prix */
+        if (inputPrix) {
+            const prix = Number(inputPrix.value);
+
+            if (!Number.isFinite(prix) || prix < 0) {
+                notify('Le prix doit être supérieur ou égal à zéro.', 'error');
+                afficherPanierRachat();
+                return;
+            }
+
+            const objetCatalogue = objetsRachat.find(
                 item => String(item.id) === String(id)
             );
 
-            if (!ligne) return;
+            /* Si l'objet vient du catalogue, enregistrer dans Supabase */
+            if (ligne.source === 'catalogue' || objetCatalogue) {
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('objets_rachat')
+                        .update({ prix_unitaire: prix })
+                        .eq('id', id)
+                        .select('id');
 
-            if (inputPrix) {
-                const prix = Number(inputPrix.value);
+                    if (error) throw error;
 
-                if (!Number.isFinite(prix) || prix < 0) {
-                    notify('Le prix doit être supérieur ou égal à zéro.', 'error');
+                    if (!data || data.length === 0) {
+                        throw new Error('Aucun objet modifié dans Supabase.');
+                    }
+
+                    /* Actualiser le catalogue local */
+                    if (objetCatalogue) {
+                        objetCatalogue.unitPrice = prix;
+                    }
+
+                    /* Actualiser toutes les lignes correspondantes */
+                    panierRachat.forEach(item => {
+                        if (
+                            String(item.id) === String(id) &&
+                            item.source === 'catalogue'
+                        ) {
+                            item.unitPrice = prix;
+                        }
+                    });
+
+                    sauvegarderPanierRachat();
+
+                    await afficherObjetsRachat();
                     afficherPanierRachat();
-                    return;
+
+                    notify('Prix du catalogue actualisé pour tous les joueurs.', 'success');
+
+                } catch (error) {
+                    console.error('Erreur de synchronisation du prix :', error);
+
+                    notify('Impossible de synchroniser le prix.', 'error');
+                    afficherPanierRachat();
                 }
 
-                ligne.unitPrice = prix;
+                return;
             }
 
-            if (inputQuantite) {
-                const quantite = Number(inputQuantite.value);
+            /* Objet ajouté manuellement : prix indépendant */
+            ligne.unitPrice = prix;
+        }
 
-                if (!Number.isInteger(quantite) || quantite < 1) {
-                    notify('La quantité doit être supérieure à zéro.', 'error');
-                    afficherPanierRachat();
-                    return;
-                }
+        /* Modification de la quantité */
+        if (inputQuantite) {
+            const quantite = Number(inputQuantite.value);
 
-                ligne.quantity = quantite;
+            if (!Number.isInteger(quantite) || quantite < 1) {
+                notify('La quantité doit être supérieure à zéro.', 'error');
+                afficherPanierRachat();
+                return;
             }
 
-            sauvegarderPanierRachat();
-            afficherPanierRachat();
-        });
+            ligne.quantity = quantite;
+        }
 
+        sauvegarderPanierRachat();
+        afficherPanierRachat();
+    });
+}
+    
         /* Suppression d'une ligne du panier */
 
         rachatBasket.addEventListener('click', event => {
