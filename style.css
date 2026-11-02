@@ -4034,3 +4034,11 @@ article.panel.link-panel.tokyo-panel {
     flex-direction: column;
     gap: 20px;
 }
+
+#page-rachat .objet-tab-content {
+    display: none !important;
+}
+
+#page-rachat .objet-tab-content.active {
+    display: block !important;
+}
