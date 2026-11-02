@@ -3057,7 +3057,6 @@ supabaseClient
 
     afficherPanierRachat();
     afficherObjetsRachat();
-
 })();
 
 /* Navigation des sous-onglets Objets */
