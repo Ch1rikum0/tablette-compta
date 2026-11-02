@@ -3989,3 +3989,36 @@ article.panel.link-panel.tokyo-panel {
         grid-template-columns: 1fr;
     }
 }
+
+
+/* MENUS PLIANTS RACHAT */
+
+.rachat-fold-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    gap: 15px;
+}
+
+.rachat-fold-arrow {
+    font-size: 14px;
+    transition: transform 0.2s ease;
+}
+
+.rachat-fold-content {
+    display: block;
+}
+
+.rachat-fold.closed .rachat-fold-content {
+    display: none;
+}
+
+.rachat-fold-title:hover {
+    color: var(--blue);
+}
+
+.rachat-fold-arrow {
+    color: var(--blue);
+}
