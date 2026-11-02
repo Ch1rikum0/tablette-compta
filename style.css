@@ -4027,3 +4027,10 @@ article.panel.link-panel.tokyo-panel {
 .rachat-fold-arrow {
     color: #ffffff !important;
 }
+
+/* Espacement entre les cadres Rachat */
+#objet-content-rachat {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
