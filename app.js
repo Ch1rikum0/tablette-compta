@@ -2623,6 +2623,158 @@ async function modifierObjetRachat(id) {
             return;
         }
 
+// Gestion des clics dans le catalogue Rachat
+document.addEventListener('click', async event => {
+    const cible = event.target;
+
+    if (!cible || typeof cible.closest !== 'function') return;
+
+    const zoneRachat = document.getElementById('rachatCards');
+
+    if (!zoneRachat || !zoneRachat.contains(cible)) return;
+
+    const editButton = cible.closest('[data-rachat-edit]');
+    const button = cible.closest('[data-rachat-select]');
+
+    if (editButton) {
+        await modifierObjetRachat(
+            editButton.getAttribute('data-rachat-edit')
+        );
+        return;
+    }
+
+    if (!button) return;
+
+    const id = button.getAttribute('data-rachat-select');
+
+    const input = rachatCards.querySelector(
+        '[data-rachat-quantity="' + id + '"]'
+    );
+
+    if (!input) return;
+
+    const quantite = Number(input.value);
+
+    if (!Number.isInteger(quantite) || quantite < 1) {
+        notify('Saisis une quantité entière supérieure à zéro.', 'error');
+        return;
+    }
+
+    const objet = objetsRachat.find(
+        item => String(item.id) === String(id)
+    );
+
+    if (!objet) {
+        notify('Objet introuvable dans le catalogue.', 'error');
+        return;
+    }
+
+    ajouterAuPanierRachat({
+        id: objet.id,
+        name: objet.name,
+        unitPrice: objet.unitPrice,
+        quantity: quantite,
+        source: 'catalogue'
+    });
+
+    input.value = '1';
+
+    notify('Objet ajouté au calcul.', 'success');
+});
+
+// Modification des prix et quantités du panier
+document.addEventListener('change', event => {
+    const cible = event.target;
+
+    const inputPrix = cible.closest('[data-panier-prix]');
+    const inputQuantite = cible.closest('[data-panier-quantite]');
+
+    if (!inputPrix && !inputQuantite) return;
+
+    const id = inputPrix
+        ? inputPrix.getAttribute('data-panier-prix')
+        : inputQuantite.getAttribute('data-panier-quantite');
+
+    const ligne = panierRachat.find(
+        item => String(item.id) === String(id)
+    );
+
+    if (!ligne) return;
+
+    if (inputPrix) {
+        ligne.unitPrice = Math.max(0, Number(inputPrix.value) || 0);
+    }
+
+    if (inputQuantite) {
+        const quantite = Number(inputQuantite.value);
+
+        if (!Number.isInteger(quantite) || quantite < 1) {
+            notify('La quantité doit être supérieure à zéro.', 'error');
+            afficherPanierRachat();
+            return;
+        }
+
+        ligne.quantity = quantite;
+    }
+
+    sauvegarderPanierRachat();
+    afficherPanierRachat();
+});
+
+// Suppression d'une ligne
+document.addEventListener('click', event => {
+    const bouton = event.target.closest('[data-panier-remove]');
+
+    if (!bouton) return;
+
+    const id = bouton.getAttribute('data-panier-remove');
+
+    panierRachat = panierRachat.filter(
+        item => String(item.id) !== String(id)
+    );
+
+    sauvegarderPanierRachat();
+    afficherPanierRachat();
+});
+
+// Ajout manuel
+document.getElementById('rachatManualForm').addEventListener('submit', event => {
+    event.preventDefault();
+
+    const nom = document.getElementById('rachatManualName').value.trim();
+    const prix = Number(document.getElementById('rachatManualPrice').value);
+    const quantite = Number(document.getElementById('rachatManualQuantity').value);
+
+    if (!nom || !Number.isFinite(prix) || prix < 0 ||
+        !Number.isInteger(quantite) || quantite < 1) {
+        notify('Vérifie les informations saisies.', 'error');
+        return;
+    }
+
+    ajouterAuPanierRachat({
+        id: 'manuel-' + Date.now(),
+        name: nom,
+        unitPrice: prix,
+        quantity: quantite,
+        source: 'manuel'
+    });
+
+    event.target.reset();
+    document.getElementById('rachatManualQuantity').value = '1';
+
+    notify('Objet manuel ajouté au calcul.', 'success');
+});
+
+// Réinitialisation du calcul
+document.getElementById('rachatResetBtn').addEventListener('click', () => {
+    panierRachat = [];
+
+    sauvegarderPanierRachat();
+    afficherPanierRachat();
+
+    notify('Calcul réinitialisé.', 'success');
+});
+
         // Créer une seule fenêtre avec tous les champs
         const ancienneFenetre = document.getElementById('rachatEditModal');
         if (ancienneFenetre) ancienneFenetre.remove();
@@ -2745,37 +2897,6 @@ if (!updatedRows || updatedRows.length === 0) {
     }
 }
 
-document.addEventListener('click', async event => {
-    const cible = event.target;
-
-    if (!cible || typeof cible.closest !== 'function') return;
-
-    // Ne traiter que les clics dans la zone Rachat
-    const zoneRachat = document.getElementById('rachatCards');
-    if (!zoneRachat || !zoneRachat.contains(cible)) return;
-
-    const editButton = cible.closest('[data-rachat-edit]');
-    const button = cible.closest('[data-rachat-select]');
-
-document.addEventListener('click', function (event) {
-    const cible = event.target;
-
-    console.log('RACHAT TEST — élément cliqué :', cible);
-
-    const bouton = cible.closest(
-        '#page-rachat #rachatCards [data-rachat-select]'
-    );
-
-    console.log('RACHAT TEST — bouton Sélectionner trouvé :', bouton);
-
-    if (bouton) {
-        console.log(
-            'RACHAT TEST — identifiant :',
-            bouton.getAttribute('data-rachat-select')
-        );
-    }
-}, true);
-
     if (editButton) {
         await modifierObjetRachat(
             editButton.getAttribute('data-rachat-edit')
@@ -2792,6 +2913,12 @@ document.addEventListener('click', function (event) {
         'RACHAT : bouton Sélectionner détecté',
         button.getAttribute('data-rachat-select')
     );
+
+// Charger les objets au démarrage
+afficherObjetsRachat();
+
+// Restaurer le calcul sauvegardé
+afficherPanierRachat();
 
     // Bouton Sélectionner
     
