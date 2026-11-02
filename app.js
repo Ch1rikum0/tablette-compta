@@ -2394,18 +2394,18 @@ loadObjets();
        const basketTotal = document.getElementById('rachatBasketTotal');
        const basketWeight = document.getElementById('rachatBasketWeight');
 
-        if (count) count.textContent = nombreLignes;
-        if (quantity) quantity.textContent = quantiteTotale;
-        if (total) total.textContent = prixRachat(montantTotal);
-        if (basketTotal) basketTotal.textContent = prixRachat(montantTotal);
-    }
-
-    if (basketWeight) {
-    basketWeight.textContent =
-        poidsTotal.toLocaleString('fr-FR', {
-            maximumFractionDigits: 2
-        }) + ' kg';
-}
+       if (count) count.textContent = nombreLignes;
+       if (quantity) quantity.textContent = quantiteTotale;
+       if (total) total.textContent = prixRachat(montantTotal);
+       if (basketTotal) basketTotal.textContent = prixRachat(montantTotal);
+    
+       if (basketWeight) {
+            basketWeight.textContent =
+                poidsTotal.toLocaleString('fr-FR', {
+                    maximumFractionDigits: 2
+                }) + ' kg';
+        }
+        }
 
     function afficherPanierRachat() {
         if (!rachatBasket) {
