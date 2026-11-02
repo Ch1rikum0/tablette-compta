@@ -3896,3 +3896,96 @@ article.panel.link-panel.tokyo-panel {
 #page-rachat .rachat-product-card .stock-product-actions button {
     cursor: pointer;
 }
+
+/* CALCULATEUR RACHAT */
+
+.rachat-manual-form {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+    align-items: end;
+}
+
+.rachat-manual-form > div,
+.rachat-basket-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.rachat-manual-form input,
+.rachat-basket-field input {
+    width: 100%;
+    min-width: 0;
+}
+
+.rachat-manual-form button {
+    grid-column: 1 / -1;
+}
+
+.rachat-calc-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.rachat-basket-item {
+    display: grid;
+    grid-template-columns: minmax(150px, 2fr) minmax(110px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr) auto;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    margin-top: 12px;
+    background: var(--panel2);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+}
+
+.rachat-basket-name {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.rachat-basket-name span,
+.rachat-basket-line-total span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.rachat-basket-line-total {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.rachat-calc-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 18px;
+    border-top: 1px solid var(--line);
+    font-size: 16px;
+}
+
+.rachat-calc-footer strong {
+    color: var(--green);
+    font-size: 23px;
+}
+
+@media (max-width: 850px) {
+    .rachat-basket-item {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .rachat-basket-name,
+    .rachat-basket-item > button {
+        grid-column: 1 / -1;
+    }
+
+    .rachat-manual-form {
+        grid-template-columns: 1fr;
+    }
+}
