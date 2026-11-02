@@ -3156,3 +3156,24 @@ supabaseClient
         });
     });
 })();
+
+
+/* MENUS PLIANTS RACHAT */
+
+document.querySelectorAll('[data-rachat-toggle]').forEach(title => {
+    title.addEventListener('click', () => {
+        const panel = title.closest('.rachat-fold');
+
+        if (!panel) return;
+
+        const isClosed = panel.classList.toggle('closed');
+
+        title.setAttribute('aria-expanded', String(!isClosed));
+
+        const arrow = title.querySelector('.rachat-fold-arrow');
+
+        if (arrow) {
+            arrow.textContent = isClosed ? '▶' : '▼';
+        }
+    });
+});
