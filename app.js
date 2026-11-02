@@ -2959,58 +2959,6 @@ loadObjets();
 
 })();
 
-// Gestion des clics dans le catalogue Rachat
-document.addEventListener('click', async event => {
-    const cible = event.target;
-
-    if (!cible || typeof cible.closest !== 'function') return;
-
-    const zoneRachat = document.getElementById('rachatCards');
-
-    if (!zoneRachat || !zoneRachat.contains(cible)) return;
-
-    const editButton = cible.closest('[data-rachat-edit]');
-    const button = cible.closest('[data-rachat-select]');
-
-// Modification des prix et quantités du panier
-document.addEventListener('change', event => {
-    const cible = event.target;
-
-    const inputPrix = cible.closest('[data-panier-prix]');
-    const inputQuantite = cible.closest('[data-panier-quantite]');
-
-    if (!inputPrix && !inputQuantite) return;
-
-    const id = inputPrix
-        ? inputPrix.getAttribute('data-panier-prix')
-        : inputQuantite.getAttribute('data-panier-quantite');
-
-    const ligne = panierRachat.find(
-        item => String(item.id) === String(id)
-    );
-
-    if (!ligne) return;
-
-    if (inputPrix) {
-        ligne.unitPrice = Math.max(0, Number(inputPrix.value) || 0);
-    }
-
-    if (inputQuantite) {
-        const quantite = Number(inputQuantite.value);
-
-        if (!Number.isInteger(quantite) || quantite < 1) {
-            notify('La quantité doit être supérieure à zéro.', 'error');
-            afficherPanierRachat();
-            return;
-        }
-
-        ligne.quantity = quantite;
-    }
-
-    sauvegarderPanierRachat();
-    afficherPanierRachat();
-});
-
 /* Navigation des sous-onglets Objets */
 (() => {
     const objetTabs = document.querySelectorAll('[data-objet-tab]');
@@ -3033,8 +2981,6 @@ document.addEventListener('change', event => {
         });
     });
 })();
-
-
 
 /* Ouverture et fermeture du formulaire Objet */
 (() => {
