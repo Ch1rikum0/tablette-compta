@@ -2727,7 +2727,7 @@ document.addEventListener('change', event => {
 });
 
 // Suppression d'une ligne
-document.addEventListener('click', event => {
+document.addEventListener('click', async event => {
     const bouton = event.target.closest('[data-panier-remove]');
 
     if (!bouton) return;
