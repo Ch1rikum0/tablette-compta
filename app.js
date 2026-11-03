@@ -2986,41 +2986,66 @@ if (rachatBasket) {
 
     /* Ajout manuel d'un objet */
 
-    const manualForm = document.getElementById('rachatManualForm');
+/* Ajout manuel d'un objet au catalogue et au calcul */
 
-    if (manualForm) {
-        manualForm.addEventListener('submit', event => {
-            event.preventDefault();
+const manualForm = document.getElementById('rachatManualForm');
 
-            const nom =
-                document.getElementById('rachatManualName').value.trim();
+if (manualForm) {
+    manualForm.addEventListener('submit', async event => {
+        event.preventDefault();
 
-            const prix =
-                Number(document.getElementById('rachatManualPrice').value);
+        const nom = document.getElementById('rachatManualName').value.trim();
+        const prix = Number(document.getElementById('rachatManualPrice').value);
+        const quantite = Number(document.getElementById('rachatManualQuantity').value);
 
-            const quantite =
-                Number(document.getElementById('rachatManualQuantity').value);
+        if (
+            !nom ||
+            !Number.isFinite(prix) ||
+            prix < 0 ||
+            !Number.isInteger(quantite) ||
+            quantite < 1
+        ) {
+            notify('Vérifie les informations saisies.', 'error');
+            return;
+        }
 
-            if (
-                !nom ||
-                !Number.isFinite(prix) ||
-                prix < 0 ||
-                !Number.isInteger(quantite) ||
-                quantite < 1
-            ) {
-                notify('Vérifie les informations saisies.', 'error');
-                return;
-            }
+        const bouton = manualForm.querySelector('button[type="submit"]');
 
+        if (bouton) bouton.disabled = true;
+
+        const id = 'manuel-' + Date.now() + '-' +
+            Math.random().toString(16).slice(2);
+
+        try {
+            // Enregistrer l'objet dans le catalogue Supabase
+            const { error } = await supabaseClient
+                .from('objets_rachat')
+                .insert({
+                    id: id,
+                    nom: nom,
+                    categorie: 'Ajout manuel',
+                    image: '',
+                    quantite: quantite,
+                    prix_unitaire: prix,
+                    poids: 0
+                });
+
+            if (error) throw error;
+
+            // Ajouter également l'objet au calcul du rachat
             ajouterAuPanierRachat({
-                id: 'manuel-' + Date.now() + '-' +
-                    Math.random().toString(16).slice(2),
+                id: id,
                 name: nom,
                 unitPrice: prix,
                 quantity: quantite,
+                weight: 0,
                 source: 'manuel'
             });
 
+            // Actualiser le catalogue
+            await afficherObjetsRachat();
+
+            // Vider le formulaire
             manualForm.reset();
 
             const quantityInput =
@@ -3028,9 +3053,18 @@ if (rachatBasket) {
 
             if (quantityInput) quantityInput.value = '1';
 
-            notify('Objet manuel ajouté au calcul.', 'success');
-        });
-    }
+            notify('Objet ajouté au catalogue et au calcul.', 'success');
+
+        } catch (error) {
+            console.error('Erreur lors de l’ajout manuel :', error);
+
+            notify('Impossible d’ajouter l’objet au catalogue.', 'error');
+
+        } finally {
+            if (bouton) bouton.disabled = false;
+        }
+    });
+}
 
 /* Synchronisation des prix en direct entre les joueurs */
 
